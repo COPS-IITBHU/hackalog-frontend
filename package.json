@@ -5,9 +5,11 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "export": "next build && next export"
   },
   "dependencies": {
+    "bootstrap": "^4.5.2",
     "next": "9.5.5",
     "react": "16.13.1",
     "react-dom": "16.13.1"

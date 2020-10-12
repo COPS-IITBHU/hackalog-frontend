@@ -1,65 +1,71 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-
 export default function Home() {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <div>
+      <div className="py-5">
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+      </div>
+      <div>
+        <div className="container">
+          <div className="py-1 py-md-5 text-center">
+            <h3>
+              "That sometimes it is the very people no one images anything of, who do things no one can imagine." - Alan Turing
+            </h3>
+          </div>
+          <div className="py-3 py-md-5">
+            <div className="row no-gutters align-items-stretch justify-content-center">
+              <div className="col-12 col-md-4 p-3">
+                <div className="p-4 bs-light h-100">
+                  <div className="icon-container">
+                    <img src="/images/icon1.png" />
+                  </div>
+                  <h5>Collaborate</h5>
+                  <div>
+                    To cooperate with or willingly assist an enemy of one's country and especially an occupying force
+                  </div>
+                </div>
+              </div>
+              <div className="col-12 col-md-4 p-3">
+                <div className="p-4 bs-light h-100">
+                  <div className="icon-container">
+                    <img src="/images/icon2.jpg" />
+                  </div>
+                  <h5>Learn</h5>
+                  <div>
+                    To cooperate with or willingly assist an enemy of one's country and especially an occupying force
+                  </div>
+                </div>
+              </div>
+              <div className="col-12 col-md-4 p-3">
+                <div className="p-4 bs-light h-100">
+                  <div className="icon-container">
+                    <img src="/images/icon3.png" />
+                  </div>
+                  <h5>Share</h5>
+                  <div>
+                    A portion belonging to, due to, or contributed by an individual or group
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </main>
+      </div>
+      <div className="listhackathon-container py-4">
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+      </div>
+      <style jsx>{`
+        .icon-container {
+          text-align: left;
+        }
+        .icon-container img {
+          margin: 20px 0px;
+          max-width: 60px;
+          border-radius: 50%;
+        }
+        .listhackathon-container {
+          background: linear-gradient(to top left, #2986a5,#0d6697,#00879a,#00776b);
+        }
+      `}</style>
     </div>
   )
 }
