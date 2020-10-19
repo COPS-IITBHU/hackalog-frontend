@@ -1,6 +1,6 @@
 import { Card, ListGroupItem, Image } from 'react-bootstrap';
 
-const t = <Image
+const hackathonParticipants = <Image
     src="images/profilepic.jpg"
     width={25}
     height={25}
@@ -20,7 +20,7 @@ export default function ProjectCard() {
             </Card.Text>
                 <Card.Subtitle className="mb-2 text-muted">Team</Card.Subtitle>
                 <ListGroupItem className="d-flex align-items-center justify-content-between rounded-pill bg-light">
-                    {t}{t}{t}{t}
+                    {hackathonParticipants}{hackathonParticipants}{hackathonParticipants}{hackathonParticipants}
                 </ListGroupItem>
             </Card.Body>
         </Card>

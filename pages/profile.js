@@ -17,8 +17,8 @@ const Profile = () => {
             {/* FOOTER TO BE INSERTED HERE */}
             <footer
                 className="footer"
-                style={{ backgroundColor: "#EAEAEA", height: 150 }}>
-                <div className="container">
+                style={{ backgroundColor: "#EAEAEA", height: 120 }}>
+                <Container>
                     <div className="row pt-3 justify-content-center">
                         <div className="col-auto">
                             <h6>
@@ -28,17 +28,16 @@ const Profile = () => {
                                     height={50}
                                     className="rounded-circle"
                                 />{" "}
-                        COPS IIT (BHU)
-                        </h6>
+                                COPS IIT (BHU)
+                            </h6>
                             <div className="row">
                                 <a className="ml-0">Home</a>
                                 <a className="ml-3">Hackathons</a>
                                 <a className="ml-3">FAQ</a>
                             </div>
                         </div>
-
                     </div>
-                </div>
+                </Container>
             </footer>
         </div>
 
@@ -47,52 +46,3 @@ const Profile = () => {
 }
 
 export default Profile;
-/*
-
-<div className="col-xl-5 col-lg-4 col-md-6 mb-4">
-                                        <div className="bg-white rounded shadow-sm">
-                                            <img
-                                                src="https://www.ipfcc.org/images/rainbow-bulb-bgBlue.png"
-
-                                                className="card-img-top "
-                                            />
-                                            <div className="card-body">
-                                                <h5 className="card-title">Project Name</h5>
-                                                <p className="card-text small">
-                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                                    sed do eiusmod tempor incididunt ut labore et dolore
-                                                    magna aliqua.
-                      </p>
-                                                <p className="font-weight-bold">Team</p>
-                                                <div className="d-flex row align-items-center justify-content-between rounded-pill bg-light mx-1 px-3 py-2 mt-4">
-                                                    <img
-                                                        src="images/profilepic.jpg"
-                                                        width={25}
-                                                        height={25}
-                                                        className="rounded-circle"
-                                                    />
-                                                    <img
-                                                        src="images/profilepic.jpg"
-                                                        width={25}
-                                                        height={25}
-                                                        className="rounded-circle"
-                                                    />
-                                                    <img
-                                                        src="images/profilepic.jpg"
-                                                        width={25}
-                                                        height={25}
-                                                        className="rounded-circle"
-                                                    />
-                                                    <img
-                                                        src="images/profilepic.jpg"
-                                                        width={25}
-                                                        height={25}
-                                                        className="rounded-circle"
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <p />
-                                    </div>
-
-*/

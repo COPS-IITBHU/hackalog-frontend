@@ -5,18 +5,18 @@ import ProjectCard from './ProjectCard'
 
 export default function ProfileTabs() {
     return (
-        <Tab.Container defaultActiveKey="first">
-            <Nav variant="tabs" defaultActiveKey="first" className="nav-fill">
+        <Tab.Container defaultActiveKey="myProjects">
+            <Nav variant="tabs" defaultActiveKey="myProjects" className="nav-fill">
                 <Nav.Item>
-                    <Nav.Link eventKey="first"><h5>Projects</h5></Nav.Link>
+                    <Nav.Link eventKey="myProjects"><h5>Projects</h5></Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link eventKey="second"><h5>Hackathons</h5></Nav.Link>
+                    <Nav.Link eventKey="myHackathons"><h5>Hackathons</h5></Nav.Link>
                 </Nav.Item>
             </Nav>
             <br />
             <Tab.Content>
-                <Tab.Pane eventKey="first" >
+                <Tab.Pane eventKey="myProjects">
                     {/* PROJECTS  */}
                     <div className="container">
                         <CardColumn>
@@ -28,11 +28,11 @@ export default function ProfileTabs() {
                         </CardColumn>
                     </div>
                 </Tab.Pane>
-                <Tab.Pane eventKey="second">
+                <Tab.Pane eventKey="myHackathons">
                     <Container>
                         {/* HACKATHON CARDS TO BE INSERTED HERE  */}
                                 Here's cards for hackathons shall be displayed
-                            </Container>
+                    </Container>
                 </Tab.Pane>
             </Tab.Content>
         </Tab.Container>

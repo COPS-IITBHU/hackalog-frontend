@@ -31,9 +31,8 @@ class ProfileJumbotron extends React.Component {
                                 <h5>About Me</h5>
                                 <hr style={{ borderColor: "white" }} />
                                 <p className="text-break">
-                                  DevOps & Backend Engineer | Graphic designer | I love to create and learn new things
+                                  DevOps &amp; Backend Engineer | Graphic designer | I love to create and learn new things
                                   Javascript Lover | Canvas, Web Interactivity, Web Physics Simulations | CreativeCoder 
-                                  
                                 </p>
                             </Col>
                         </Row>
