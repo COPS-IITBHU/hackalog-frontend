@@ -21,13 +21,7 @@ const Profile = () => {
                 <Container>
                     <div className="row pt-3 justify-content-center">
                         <div className="col-auto">
-                            <h6>
-                                <img
-                                    src="images/cops_logo.png"
-                                    width={50}
-                                    height={50}
-                                    className="rounded-circle"
-                                />{" "}
+                            <h6 className="text-center">
                                 COPS IIT (BHU)
                             </h6>
                             <div className="row">

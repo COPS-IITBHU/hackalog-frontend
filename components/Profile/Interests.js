@@ -6,7 +6,9 @@ const Interests = () => {
     const skills = techStack.map((e, id) => {
         return (
             <li key={id} className="list-unstyled d-inline-flex">
-                <h5><span className="badge badge-info mr-1">{e}</span> </h5>
+                <h5><span className="badge badge-info mr-1" style={{
+                    padding: "0.4rem 0.9rem;"
+                }} >{e}</span> </h5>
             </li>
         );
     });

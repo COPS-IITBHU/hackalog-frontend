@@ -1,4 +1,5 @@
 import { Jumbotron, Col, Container, Row, Image } from 'react-bootstrap';
+import { FaGithub } from 'react-icons/fa';
 
 class ProfileJumbotron extends React.Component {
     render() {
@@ -11,12 +12,21 @@ class ProfileJumbotron extends React.Component {
                     <Container>
                         <Row>
                             <Col md={4} className="text-center">
+                                <div style={{
+                                        height:30
+                                    }} className="d-none d-sm-block"></div>
                                 <Image
                                     src="images/profilepic.jpg"
                                     fluid style={{
-                                        borderRadius: 50,
-                                        maxWidth: 200
-                                    }} />
+                                        "box-shadow": "1px 1px 40px 1px black",
+                                        border: "2px solid white",
+                                        "border radius": 50,
+                                        width: 200,
+                                        height:200
+                                    }} roundedCircle  />
+                                <div style={{
+                                        height:30
+                                    }} className="d-block d-sm-none"></div>
                             </Col>
                             <Col md={8}>
                                 <div style={{ height: 20 }} className="d-sm-block d-none" />
@@ -24,7 +34,7 @@ class ProfileJumbotron extends React.Component {
                                 <Row>
                                     <div className="col-6">College</div>
                                     <a href="#" className="col-6 text-white text-right">
-                                        <i className="fa fa-github" /> overTheInternet
+                                        <FaGithub /> overTheInternet
                                     </a>
                                 </Row>
                                 <br />
