@@ -15,7 +15,8 @@ export const AuthProvider = ({ children }) => {
     firebase.auth().onAuthStateChanged(authUser => {
       console.log("firebase user: ", authUser)
       setFirebaseUser(authUser)
-      authUser.getIdToken(true)
+      if(authUser){
+        authUser.getIdToken(true)
         .then(idToken => {
           axios.post("login/", { id_token: idToken })
             .then(response => {
@@ -33,6 +34,7 @@ export const AuthProvider = ({ children }) => {
             console.log(error)
             setLoading(false)
         });
+      }
     });
   }
 
