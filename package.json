@@ -9,7 +9,9 @@
     "export": "next build && next export"
   },
   "dependencies": {
+    "axios": "^0.20.0",
     "bootstrap": "^4.5.2",
+    "firebase": "^7.24.0",
     "next": "9.5.5",
     "react": "16.13.1",
     "react-dom": "16.13.1"
