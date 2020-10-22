@@ -1,22 +1,67 @@
 body {
-  font-family: "Raleway";
-  font-weight: 500;
+    font-family: "Raleway";
+    font-weight: 500;
 }
 
-a, a:hover {
-  text-decoration: none;
+a,
+a:hover {
+    text-decoration: none;
 }
 
-h1,h2,h3,h4,h5,h6 {
-  font-weight: bold;
-  color: #003e54;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: bold;
+    color: #003e54;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: bold;
 }
 
 .text-monospace {
-  font-family: "Inconsolata";
+    font-family: "Inconsolata";
 }
 
 .bs-light {
-  box-shadow: 0px 0px 15px 1px rgba(27, 95, 138, 0.13);
-  border-radius: 8px;
+    box-shadow: 0px 0px 15px 1px rgba(27, 95, 138, 0.13);
+    border-radius: 8px;
+}
+
+.jumbotron-heading {
+    font-weight: 700;
+    font-size: 2.5rem;
+    color: #003e54;
+}
+
+.jumbotron-sub-heading {
+    font-weight: 500;
+    font-size: 2rem;
+    color: #003e54;
+}
+
+.card-title {
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: #003e54;
+}
+
+.card-sub-title {
+    font-weight: 500;
+    font-size: 1rem;
+    color: #003e54;
+}
+
+.regular-text {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #748f99;
 }
