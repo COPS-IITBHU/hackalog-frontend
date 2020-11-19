@@ -24,20 +24,13 @@ function Profile() {
         )
             .then(res => {
                 console.log('SHI hai', res.data);
-
-                const user = {
-                    name: res.data.name,
-                    handle: res.data.github_handle,
-                    bio: res.data.bio,
-                    interest: res.data.interests,
-                    college: res.data.college
-                }
                 setUserRequest({
                     loading: false,
-                    user: user
+                    user: res.data
                 })
-                const arr = [res.data.name, res.data.github_handle, res.data.interests, res.data.bio];
-                if (arr.every((elm) => elm === "")) setcheck(true);
+                const arr = [res.data.name, res.data.username, res.data.interests, res.data.bio, res.data.github_handle];
+                // Check for null fields
+                if (!arr.every((elm) => (elm !== "" && elm !== null))) setcheck(true);
 
             }).catch(err => {
                 console.log("Error during request", err.message)
@@ -56,18 +49,14 @@ function Profile() {
     }
     else return (
         <div>
-            {check && <EditProfile name={userRequest.user.name} handle={userRequest.user.handle} bio={userRequest.user.bio} interest={userRequest.user.interest} />}
-
+            {check && <EditProfile username={userRequest.user.username} name={userRequest.user.name} handle={userRequest.user.github_handle} bio={userRequest.user.bio} interest={userRequest.user.interests} />}
             <Jumbotron style={{
                 background: 'url("images/profile_cover.jpg") no-repeat',
                 backgroundSize: "cover"
             }} className="text-white">
                 <Container>
                     <Row>
-                        <Col md={4} className="text-center">
-                            <div style={{
-                                height: 30
-                            }} className="d-none d-sm-block"></div>
+                        <Col md={4} className="text-center pt-sm-3">
                             <Image
                                 src={url}
                                 fluid style={{
@@ -77,18 +66,16 @@ function Profile() {
                                     width: 200,
                                     height: 200
                                 }} roundedCircle />
-                            <div style={{
-                                height: 30
-                            }} className="d-block d-sm-none"></div>
+                            <p className="h4 p-sm-3">{userRequest.user.username}</p>
                         </Col>
                         <Col md={8}>
                             <div style={{ height: 20 }} className="d-sm-block d-none" />
                             <h2 style={{ color: "white" }}>{userRequest.user.name}</h2>
                             <Row>
                                 <div className="col-6">{"IIT (BHU) Varanasi"}</div>
-                                <a href={`https://github.com/${userRequest.user.handle}`} className="col-6 text-white text-right">
-                                    <FaGithub /> {userRequest.user.handle}
-                                </a>
+                                {userRequest.user.github_handle && <a href={`https://github.com/${userRequest.user.github_handle}`} className="col-6 text-white text-right">
+                                    <FaGithub /> {userRequest.user.github_handle}
+                                </a>}
                             </Row>
                             <br />
                             <h5 className="text-white">About Me</h5>
@@ -99,54 +86,51 @@ function Profile() {
                     </Row>
                 </Container>
             </Jumbotron>
-
-
             <div className="container">
-                <Interests interests={userRequest.user.interest} />
+                <Interests interests={userRequest.user.interests} />
                 <ProfileTabs />
             </div>
             <Footer />
         </div>
     );
 }
-//<ProfileJumbotron pic={url} name={userRequest.user.name} handle={userRequest.user.handle} college='IIT (BHU) Varanasi' bio={userRequest.user.bio} />
 
-const EditProfile = ({ handle, bio, interest, name }) => {
+const EditProfile = ({ handle, bio, interest, name, username }) => {
     const handleClose = () => setShow(false);
     const [err, seterr] = useState("");
     const [wait, setwait] = useState(false);
     const [show, setShow] = useState(true);
-
     const handleFind = () => {
         const name = document.getElementById('name').value.trim();
         const handle = document.getElementById('handle').value.trim();
         const bio = document.getElementById('bio').value.trim();
         const interests = document.getElementById('interest').value.trim();
-
-        var check = [name, handle, interests, bio].every((elm) => { return (elm !== ""); });
-
+        const username = document.getElementById('username').value.trim();
+        var check = [name, handle, username, interests, bio].every((elm) => { return (elm !== ""); });
         if (check) {
-            console.log('YES', name, handle, interests, bio);
             setwait(true)
-            axios.patch(
-                `profile/`,
-                {
-                    "name": name ?? "",
-                    "github_handle": handle ?? "",
-                    "college": "IIT (BHU) VARANASI",
-                    "bio": bio ?? "",
-                    "interests": interests ?? ""
-                }
-            )
+            const data = {
+                "name": name ?? "",
+                "college": "IIT (BHU) VARANASI",
+                "bio": bio ?? "",
+                "interests": interests ?? "",
+                "username": username,
+                "github_handle": handle
+            };
+
+            axios.patch(`profile/`, data)
                 .then(setwait(false))
                 .then(res => {
+                    console.log(res)
                     handleClose();
                     window.location.reload(false);
                 }).catch(err => {
-                    seterr('Some Error Occurred Communicating with the Server')
+                    console.log(err.response.data);
+                    if (err.response.data.username) seterr(String(err.response.data.username))
+                    else seterr('Some Error Occurred Communicating with the Server')
                 });
         }
-        else seterr('All Fields must be Filled')
+        else seterr('All Required Fields must be Filled')
     };
     return (
         <Container className="text-center align-middle">
@@ -156,31 +140,42 @@ const EditProfile = ({ handle, bio, interest, name }) => {
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
+
+                        <Form.Text className="text-right">*Required Fields</Form.Text>
                         <Form.Group controlId="name">
-                            <Form.Label>Name</Form.Label>
+                            <Form.Label>Name* </Form.Label>
                             <Form.Control type="text" placeholder="Enter name" defaultValue={name} />
                         </Form.Group>
-                        <Form.Group controlId="handle">
-                            <Form.Label>Handle</Form.Label>
-                            <Form.Control type="text" placeholder="GitHub Handle" defaultValue={handle} />
-                        </Form.Group>
+                        <Form.Row>
+                            <Col>
+                                <Form.Group controlId="handle">
+                                    <Form.Label>Handle</Form.Label>
+                                    <Form.Control type="text" placeholder="GitHub Handle" defaultValue={handle} />
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group controlId="username">
+                                    <Form.Label>Username*</Form.Label>
+                                    <Form.Control type="text" placeholder="Username" defaultValue={username} />
+                                </Form.Group>
+                            </Col>
+                        </Form.Row>
                         <Form.Group controlId="bio">
-                            <Form.Label>Bio</Form.Label>
+                            <Form.Label>Bio*</Form.Label>
                             <Form.Control type="text" placeholder="Bio" defaultValue={bio} />
                         </Form.Group>
                         <Form.Group controlId="interest">
-                            <Form.Label>Interests</Form.Label>
+                            <Form.Label>Interests*</Form.Label>
                             <Form.Control type="text" placeholder="Enter " defaultValue={interest} />
                             <Form.Text className="text-muted">Enter Your Interests Separated by Comma. E.g. React, Vue</Form.Text>
                         </Form.Group>
                     </Form>
-                    <p className="text-danger text-small">{err}</p>
-
+                    <p className="text-danger ">{err}</p>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="primary" onClick={handleFind}>Submit</Button>
                     {wait && <Spinner animation="border" role="status" >
-                        <span className="sr-only">Loading...</span>
+                        <span className="sr-only">Submitting...</span>
                     </Spinner>}
                 </Modal.Footer>
             </Modal>
