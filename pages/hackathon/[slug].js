@@ -37,8 +37,8 @@ export default function Hackathon() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-12 col-lg-8 order-2 order-lg-1">
-                            <div>
+                        <div className="col-12 col-lg-8 order-2 order-lg-1 text-justify">
+                            <div className="p-3">
                                 <h1 className="mb-3 mb-lg-5">Hackathon Name - New one </h1>
                                 <p className="pt-3">
                                     The contest is based on Machine Learning, AI and Analytics for software development under the Image Recognition theme during 3 days and based on a pre-delivered (by the organization) dataset.

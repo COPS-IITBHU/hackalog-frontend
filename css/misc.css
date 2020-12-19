@@ -1,0 +1,22 @@
+.pt-6 {padding-top: 3.5rem;}
+.pt-7 {padding-top: 4rem;}
+.pt-8 {padding-top: 4.5rem;}
+.pt-9 {padding-top: 5rem;}
+.pt-10 {padding-top: 5.5rem;}
+.pb-6 {padding-bottom: 3.5rem;}
+.pb-7 {padding-bottom: 4rem;}
+.pb-8 {padding-bottom: 4.5rem;}
+.pb-9 {padding-bottom: 5rem;}
+.pb-10 {padding-bottom: 5.5rem;}
+.py-6 {padding: 3.5rem 0rem;}
+.py-7 {padding: 4rem 0rem;}
+.py-8 {padding: 4.5rem 0rem;}
+.py-9 {padding: 5rem 0rem;}
+.py-10 {padding: 5.5rem 0rem;}
+
+.cursor-pointer { cursor: pointer; }
+.container-lg { max-width: 90vw; }
+.mt-light { font-family: "madetommy-light"; }
+.mt-thin { font-family: "madetommy-thin"; }
+.mt-bold { font-family: "madetommy-bold"; }
+.mt-regular { font-family: "madetommy-regular"; }
