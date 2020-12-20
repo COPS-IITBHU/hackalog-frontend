@@ -67,7 +67,7 @@ export default function Home() {
     const previousHackathons = [];
     return (
         <div>
-            <div class={visible ? "" : "d-none"} ref={ref}>
+            <div className={visible ? "" : "d-none"} ref={ref}>
                 {visible ? (<Header />) : ""}
             </div>
             <div style={{

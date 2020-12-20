@@ -26,6 +26,7 @@ function Profile() {
             </Container>
         );
     }
+    console.log(val.token)
     var url = val.firebaseUser !== null ? val.firebaseUser.photoURL : "";
     const editProfile = () => {
         setclosable(true);
@@ -153,7 +154,7 @@ function Profile() {
                 </Jumbotron>
                 <div className="container">
                     <Interests interests={userRequest.user.interests} />
-                    <ProfileTabs />
+                    <ProfileTabs teams={userRequest.user.teams} />
                 </div>
                 <Footer />
             </div>

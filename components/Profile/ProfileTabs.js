@@ -1,9 +1,10 @@
 import { Nav, Container, Tab } from 'react-bootstrap';
+import HackathonCard from "../HackathonCard/HackathonCard"
 import CardColumn from 'react-bootstrap/CardColumns'
-import ProjectCard from './ProjectCard'
+import TeamCard from './TeamCard'
 
 
-export default function ProfileTabs() {
+export default function ProfileTabs({ teams }) {
     return (
         <Tab.Container defaultActiveKey="myProjects">
             <Nav variant="tabs" defaultActiveKey="myProjects" className="nav-fill">
@@ -17,22 +18,25 @@ export default function ProfileTabs() {
             <br />
             <Tab.Content>
                 <Tab.Pane eventKey="myProjects">
-                    {/* PROJECTS  */}
                     <div className="container">
                         <CardColumn>
-                            <ProjectCard />
-                            <ProjectCard />
-                            <ProjectCard />
-                            <ProjectCard />
-                            <ProjectCard />
+                            <TeamCard team={teams[0]} />
                         </CardColumn>
                     </div>
                 </Tab.Pane>
                 <Tab.Pane eventKey="myHackathons">
-                    <Container>
-                        {/* HACKATHON CARDS TO BE INSERTED HERE  */}
-                                Here's cards for hackathons shall be displayed
-                    </Container>
+                    <div className="row">
+                        {teams ?
+                            teams.map(({ hackathon }) =>
+                                <div className="col-12 col-sm-6">
+                                    <HackathonCard
+                                        hackathon={hackathon}
+                                        key={hackathon.slug}
+                                    ></HackathonCard>
+                                </div>)
+                            : null
+                        }
+                    </div>
                 </Tab.Pane>
             </Tab.Content>
         </Tab.Container>
