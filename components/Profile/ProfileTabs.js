@@ -27,22 +27,29 @@ export default function ProfileTabs({ teams }) {
 				<Tab.Pane eventKey="myProjects">
 					<div className="container">
 						<CardColumn>
-							<TeamCard team={teams[0]} />
+							{
+								teams.length ?
+									teams.map(team => <TeamCard team={team} />)
+									: <p>No Teams to Show</p>
+							}
+
 						</CardColumn>
 					</div>
 				</Tab.Pane>
 				<Tab.Pane eventKey="myHackathons">
 					<div className="row">
-						{teams
-							? teams.map(({ hackathon, id }) => (
+						{
+							teams.length
+								? teams.map(({ hackathon, id }) => (
 									<div key={id} className="col-12 col-sm-6">
 										<HackathonCard
 											hackathon={hackathon}
 											key={hackathon.slug}
 										></HackathonCard>
 									</div>
-							  ))
-							: null}
+								))
+								: <p>No Participation in Hackathons to Show</p>
+						}
 					</div>
 				</Tab.Pane>
 			</Tab.Content>
