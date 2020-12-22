@@ -166,9 +166,11 @@ const EditProfile = ({
 	const [wait, setwait] = useState(false);
 	const handleChange = (newValue) => setSelectedSkills(newValue);
 	const [selectedSkills, setSelectedSkills] = useState(
-		interest.split(',').map((s) => {
-			return { label: s.trim(), value: s.trim() };
-		})
+		interest.length
+			? interest.split(',').map((s) => {
+				return { label: s.trim(), value: s.trim() };
+			})
+			: []
 	);
 	const handleFind = () => {
 		const name = document.getElementById('name').value.trim();
@@ -204,8 +206,8 @@ const EditProfile = ({
 						err.response.data.username
 							? seterr(String(err.response.data.username))
 							: seterr(
-									'Some Error Occurred Communicating with the Server'
-							  );
+								'Some Error Occurred Communicating with the Server'
+							);
 					}
 				);
 		} else seterr('All Required Fields must be Filled');
