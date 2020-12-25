@@ -1,19 +1,11 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useRouter } from "next/router"
 import axios from "axios"
-import {
-    Div,
-    Row,
-    Col,
-    Text,
-    Button,
-    Input,
-    Icon,
-    Notification,
-} from "atomize"
+import { Div, Row, Col, Text, Button, Input, Icon, Notification } from "atomize"
 import { useAuth } from "../../../context/auth"
 import { useState } from "react"
 import { API_URL } from "../../../util/constants"
+import Clipboard from "../../../components/Clipboard/Clipboard"
 
 export default function register() {
     const { token } = useAuth()
@@ -23,6 +15,7 @@ export default function register() {
         show: false,
         bg: "info700",
     })
+    const [code, editCode] = useState({ code: "", show: false })
     const [joinCode, editJoinCode] = useState("")
     const router = useRouter()
     const hackathonId = router.query.slug
@@ -36,14 +29,21 @@ export default function register() {
         try {
             axios.defaults.headers.common[
                 "Authorization"
-            ] = `Token cee066735b0b039fa589a6b5fc3240e717275469`
+            ] = `Token ${token}`
             const response = await axios.post(
                 `${API_URL}/hackathons/${hackathonId}/teams/`,
                 { name: name }
             )
-            // const response = await axios.post(`http://127.0.0.1:8000/hackathons/${Number.parseInt(hackathonId)}/teams/`, { name: name });
-            if (response.status === 200) {
+            // const response = await axios.post(
+            //     `http://127.0.0.1:8000/hackathons/${Number.parseInt(
+            //         hackathonId
+            //     )}/teams/`,
+            //     { name: name }
+            // )
+            if (response.status === 201) {
                 notifHandler("Team creation successful", true, "success700")
+                editCode({ code: response.data.team_id, show: true })
+                console.log("code updated successfully!")
             } else {
                 notifHandler(
                     "Some unexpected error in client!",
@@ -53,7 +53,11 @@ export default function register() {
             }
         } catch (exc) {
             if (exc.response.status === 400) {
-                notifHandler(`${exc.response.data.detail}`, true, "info600") // same team name or already present in some team.
+                notifHandler(
+                    `${exc.response.data.non_field_errors[0]}`,
+                    true,
+                    "info600"
+                ) // same team name or. // already present in some team non-field
             } else if (exc.response.status === 404) {
                 notifHandler("Hackathon not found", true, "info600")
             } else if (exc.response.status === 403) {
@@ -93,13 +97,17 @@ export default function register() {
         try {
             axios.defaults.headers.common[
                 "Authorization"
-            ] = `Token cee066735b0b039fa589a6b5fc3240e717275469`
+            ] = `Token ${token}`
             const response = await axios.patch(
                 `${API_URL}/hackathons/${hackathonId}/teams/join/${code}/`,
                 {}
             )
-            // const response = await axios.patch(`http://127.0.0.1:8000/hackathons/${hackathonId}/teams/join/${code}/`, {});
+            // const response = await axios.patch(
+            //     `http://127.0.0.1:8000/hackathons/${hackathonId}/teams/join/${code}/`,
+            //     {}
+            // )
             if (response.status === 200) {
+                // editCode(response.data.)
                 notifHandler(
                     "Successfully joined the team!",
                     true,
@@ -189,7 +197,7 @@ export default function register() {
             >
                 {notif.message}
             </Notification>
-            <Row justify="center" m={{ t: "1.5rem", b: "2.5rem", x: "0.5rem" }}>
+            <Row justify="center" m={{ t: "3.5rem", b: "2.5rem", x: "0.5rem" }}>
                 <Text
                     tag="h1"
                     textSize="display2"
@@ -239,34 +247,18 @@ export default function register() {
                                 }
                             ></Input>
                         </Div>
-                        <Row m={{x:"1.2rem"}}>
-                            <Text
-                                tag="h4"
-                                textSize="title"
-                                textColor="#003e54"
-                                fontFamily="madetommy-regular"
-                                m={{r:"1rem"}}
-                            >
-                                Team Code
-                            </Text>
-                            <Input
-                                disabled
-                                suffix={
-                                    <Button
-                                        pos="absolute"
-                                        onClick={handleJoin}
-                                        w="3rem"
-                                        top="0"
-                                        right="0"
-                                        rounded={{ r: "md" }}
-                                        bg="#178a80"
-                                        hoverBg="success600"
-                                    >
-                                        <Icon name="Rename" size="20px" color="white" />
-                                    </Button>
-                                }
-                            ></Input>
-                        </Row>
+                        {code.show ? (
+                            <Clipboard
+                                code={code.code}
+                                notify={() => {
+                                    notifHandler(
+                                        "Code copied!",
+                                        true,
+                                        "success700"
+                                    )
+                                }}
+                            ></Clipboard>
+                        ) : null}
                         <Row justify="center">
                             <Text
                                 tag="h4"
