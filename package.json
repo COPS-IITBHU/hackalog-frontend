@@ -22,5 +22,9 @@
     "react-transition-group": "^4.4.1",
     "styletron-engine-atomic": "^1.4.6",
     "styletron-react": "^5.2.7"
+  },
+  "devDependencies": {
+    "eslint": "^7.16.0",
+    "eslint-plugin-react": "^7.21.5"
   }
 }
