@@ -9,7 +9,7 @@ const Clipboard = (props) => {
         props.notify()
     }
     return (
-        <Row m={{ x: "1.2rem" }} align="center">
+        <Row align="center">
             <Text
                 tag="h4"
                 textSize="title"
