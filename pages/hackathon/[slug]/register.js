@@ -27,11 +27,9 @@ export default function register() {
     const doRegister = async (name) => {
         console.log("hackathonId =", hackathonId)
         try {
-            axios.defaults.headers.common[
-                "Authorization"
-            ] = `Token ${token}`
+            axios.defaults.headers.common["Authorization"] = `Token ${token}`
             const response = await axios.post(
-                `${API_URL}/hackathons/${hackathonId}/teams/`,
+                `${API_URL}hackathons/${Number.parseInt(hackathonId)}/teams/`,
                 { name: name }
             )
             // const response = await axios.post(
@@ -79,11 +77,6 @@ export default function register() {
                     notifHandler("Invalid team name!", true, "danger700")
                 } else {
                     doRegister(teamName)
-                    notifHandler(
-                        "Team created successfully!",
-                        true,
-                        "success700"
-                    )
                 }
             } else {
                 notifHandler("Invalid hackathon id.", true, "danger700")
@@ -95,11 +88,11 @@ export default function register() {
 
     const doJoin = async (code) => {
         try {
-            axios.defaults.headers.common[
-                "Authorization"
-            ] = `Token ${token}`
+            axios.defaults.headers.common["Authorization"] = `Token ${token}`
             const response = await axios.patch(
-                `${API_URL}/hackathons/${hackathonId}/teams/join/${code}/`,
+                `${API_URL}hackathons/${Number.parseInt(
+                    hackathonId
+                )}/teams/join/${code}/`,
                 {}
             )
             // const response = await axios.patch(
@@ -107,7 +100,6 @@ export default function register() {
             //     {}
             // )
             if (response.status === 200) {
-                // editCode(response.data.)
                 notifHandler(
                     "Successfully joined the team!",
                     true,
@@ -248,16 +240,18 @@ export default function register() {
                             ></Input>
                         </Div>
                         {code.show ? (
-                            <Clipboard
-                                code={code.code}
-                                notify={() => {
-                                    notifHandler(
-                                        "Code copied!",
-                                        true,
-                                        "success700"
-                                    )
-                                }}
-                            ></Clipboard>
+                            <Div m={{ x: "1.2rem" }}>
+                                <Clipboard
+                                    code={code.code}
+                                    notify={() => {
+                                        notifHandler(
+                                            "Code copied!",
+                                            true,
+                                            "success700"
+                                        )
+                                    }}
+                                ></Clipboard>
+                            </Div>
                         ) : null}
                         <Row justify="center">
                             <Text
