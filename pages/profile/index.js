@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import {
 	Spinner, Jumbotron, Row, Col,
-	Button, Container, Image
+	Button, Container, Image,
 } from "react-bootstrap";
 import { FaGithub } from "react-icons/fa";
 import axios from "../../util/axios";
 import { useAuth } from "../../context/auth";
 import Footer from "../../components/Footer/Footer";
-import { EditProfile, Interests, ProfileTabs } from '../../components/Profile'
+import { EditProfile, Interests, ProfileTabs } from "../../components/Profile";
 
 function Profile() {
 	const { firebaseUser, token, loading } = useAuth();
@@ -18,7 +18,7 @@ function Profile() {
 	useEffect(() => {
 		if (token) {
 			setUserRequest({ loading: true });
-			axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+			axios.defaults.headers.common["Authorization"] = `Token ${token}`;
 			axios.get(`profile/`).then((res) => {
 				setUserRequest({
 					loading: false,
@@ -32,7 +32,7 @@ function Profile() {
 					res.data.github_handle,
 				];
 				// Check for null fields
-				if (!arr.every((elm) => elm !== '' && elm !== null)) {
+				if (!arr.every((elm) => elm !== "" && elm !== null)) {
 					setEdit({
 						show: true,
 						closable: false,
@@ -42,15 +42,17 @@ function Profile() {
 		}
 	}, [token]);
 
-	let url = (userRequest.user) ? userRequest.user.photoURL : '../images/person.jpeg';
+	let url = userRequest.user
+		? userRequest.user.photoURL
+		: "../images/person.jpeg";
 	if (url === "" && firebaseUser) url = firebaseUser.photoURL;
 	if (loading || userRequest.loading)
 		return (
 			<Container className="text-center">
 				<Spinner
 					style={{
-						position: 'absolute',
-						top: '50%',
+						position: "absolute",
+						top: "50%",
 					}}
 					className="mt-auto mb-auto"
 					animation="border"
@@ -86,7 +88,7 @@ function Profile() {
 			<Jumbotron
 				style={{
 					background: 'url("images/profile_cover.jpg") no-repeat',
-					backgroundSize: 'cover',
+					backgroundSize: "cover",
 				}}
 				className="text-white"
 			>
@@ -97,47 +99,37 @@ function Profile() {
 								src={url}
 								fluid
 								style={{
-									boxShadow: '1px 1px 40px 1px black',
-									border: '2px solid white',
-									'border radius': 50,
+									boxShadow: "1px 1px 40px 1px black",
+									border: "2px solid white",
+									"border radius": 50,
 									width: 200,
 									height: 200,
 								}}
 								roundedCircle
 							/>
-							<p className="h4 p-sm-3">
-								{userRequest.user.username}
-							</p>
+							<p className="h4 p-sm-3">{userRequest.user.username}</p>
 						</Col>
 						<Col md={8}>
-							<div
-								style={{ height: 20 }}
-								className="d-sm-block d-none"
-							/>
-							<h2 style={{ color: 'white' }}>
-								{userRequest.user.name}
-							</h2>
+							<div style={{ height: 20 }} className="d-sm-block d-none" />
+							<h2 style={{ color: "white" }}>{userRequest.user.name}</h2>
 							<Row>
-								<div className="col-6">
-									{'IIT (BHU) Varanasi'}
-								</div>
+								<div className="col-6">{"IIT (BHU) Varanasi"}</div>
 								{userRequest.user.github_handle && (
 									<a
 										href={`https://github.com/${userRequest.user.github_handle}`}
 										className="col-6 text-white text-right"
 									>
-										<FaGithub />{' '}
-										{userRequest.user.github_handle}
+										<FaGithub /> {userRequest.user.github_handle}
 									</a>
 								)}
 							</Row>
 							<br />
 							<h5 className="text-white">About Me</h5>
-							<hr style={{ borderColor: 'white' }} />
+							<hr style={{ borderColor: "white" }} />
 							<p className="text-break">{userRequest.user.bio}</p>
 							<Button variant="light" onClick={editProfile}>
 								Edit Profile
-							</Button>
+              </Button>
 						</Col>
 					</Row>
 				</Container>
@@ -150,7 +142,5 @@ function Profile() {
 		</div>
 	);
 }
-
-
 
 export default Profile;
