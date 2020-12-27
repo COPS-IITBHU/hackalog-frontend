@@ -44,7 +44,7 @@ function Profile() {
 		}
 	}, [token]);
 
-	const url = firebaseUser !== null ? firebaseUser.photoURL : '';
+	const url = (userRequest.user) ? userRequest.user.photoURL : '../images/person.jpeg';
 	if (loading || userRequest.loading)
 		return (
 			<Container className="text-center">
@@ -75,6 +75,7 @@ function Profile() {
 					handleClose={handleClose}
 					show={editDialog.show}
 					closable={editDialog.closable}
+					url={url}
 					username={userRequest.user.username}
 					name={userRequest.user.name}
 					handle={userRequest.user.github_handle}

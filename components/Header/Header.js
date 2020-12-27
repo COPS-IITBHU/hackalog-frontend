@@ -2,6 +2,8 @@ import { Button } from "atomize";
 import { useAuth } from "../../context/auth";
 import { loadFirebase } from "../../context/firebase";
 import axiosInstance from "../../util/axios";
+import Link from 'next/link'
+
 
 export default function Header() {
     const { setFirebaseUser, token, setToken } = useAuth()
@@ -40,15 +42,26 @@ export default function Header() {
                 </div>
                 <div>
                     <div className="d-flex align-items-center">
-                        <div className="p-2">
-                            <Button shadow="3" hoverShadow="4" m={{ r: "1rem" }} p="1rem">
-                                Hackathons
-                            </Button>
+                        <div className="py-2">
+                            <Link href="/hackathons">
+                                <Button shadow="3" hoverShadow="4" m={{ r: "1rem" }} p="1rem">
+                                    Hackathons
+                                </Button>
+                            </Link>
                         </div>
                         {token ?
-                            <Button shadow="3" hoverShadow="4" m={{ r: "1rem" }} p="1rem" onClick={() => handleLogout()}>
-                                Logout
-                            </Button>
+                            <>
+                                <div className="py-2">
+                                    <Link href="/profile">
+                                        <Button shadow="3" hoverShadow="4" m={{ r: "1rem" }} p="1rem">
+                                            Profile
+                                    </Button>
+                                    </Link>
+                                </div>
+                                <Button shadow="3" hoverShadow="4" m={{ r: "1rem" }} p="1rem" onClick={() => handleLogout()}>
+                                    Logout
+                                </Button>
+                            </>
                             :
                             <Button shadow="3" hoverShadow="4" m={{ r: "1rem" }} p="1rem" onClick={() => handleSignIn()}>
                                 Login with Google

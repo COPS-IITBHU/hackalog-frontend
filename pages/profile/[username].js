@@ -78,7 +78,7 @@ function Profile() {
 
 
 
-	const url = (firebaseUser !== null && currentUser) ? firebaseUser.photoURL : '../images/person.jpeg';
+	const url = (userRequest.user) ? userRequest.user.photoURL : '../images/person.jpeg';
 	if (loading || userRequest.loading)
 		return (
 			<Container className="text-center">
@@ -102,6 +102,7 @@ function Profile() {
 				<EditProfile
 					handleClose={handleClose}
 					show={editDialog.show}
+					url={url}
 					closable={editDialog.closable}
 					username={userRequest.user.username}
 					name={userRequest.user.name}

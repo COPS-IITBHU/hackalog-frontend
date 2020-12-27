@@ -5,10 +5,10 @@ import {
 } from "react-bootstrap";
 import CreatableSelect from "react-select/creatable";
 import axios from "../../util/axios";
-import {options} from "./SkillOptions";
+import { options } from "./SkillOptions";
 
 export const EditProfile = ({
-    handle, bio, interest, name,
+    handle, bio, interest, name, url,
     username, handleClose, show, closable,
 }) => {
     const [err, seterr] = useState('');
@@ -41,6 +41,7 @@ export const EditProfile = ({
                 interests: interests ?? '',
                 username: username,
                 github_handle: handle,
+                photoURL: url
             };
             i =
                 axios
