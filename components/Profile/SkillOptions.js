@@ -22,6 +22,6 @@ const skillsList = [
 ];
 
 
-export default skillsList.sort().map(s => {
+export const options =  skillsList.sort().map(s => {
     return { label: s.trim(), value: s.trim() };
 });

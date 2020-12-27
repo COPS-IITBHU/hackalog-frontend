@@ -1,9 +1,9 @@
 import { Nav, Tab, Col, Row } from 'react-bootstrap';
 import HackathonCard from '../HackathonCard/HackathonCard';
 import CardColumn from 'react-bootstrap/CardColumns';
-import TeamCard from './TeamCard';
+import { TeamCard } from './TeamCard';
 
-export default function ProfileTabs({ teams }) {
+export function ProfileTabs({ teams }) {
 	return (
 		<Tab.Container defaultActiveKey="myProjects">
 			<Nav
@@ -30,8 +30,8 @@ export default function ProfileTabs({ teams }) {
 							{
 								teams.length ?
 									teams.map(team =>
-										<Col className="pb-3" sm={6} md={4}>
-											<TeamCard key={team} team={team} />
+										<Col className="pb-3" sm={6} md={4} key={team.id}>
+											<TeamCard team={team} />
 										</Col>
 									) : <p>No Teams to Show</p>
 							}
@@ -43,12 +43,11 @@ export default function ProfileTabs({ teams }) {
 						{
 							teams.length
 								? teams.map(({ hackathon, id }) => (
-									<div key={id} className="col-12 col-sm-6">
+									<Col sm={6} md={4} key={hackathon.slug}>
 										<HackathonCard
 											hackathon={hackathon}
-											key={hackathon.slug}
 										></HackathonCard>
-									</div>
+									</Col>
 								))
 								: <p>No Participation in Hackathons to Show</p>
 						}

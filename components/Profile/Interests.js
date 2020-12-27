@@ -1,6 +1,6 @@
 import { Container, Row } from 'react-bootstrap';
 
-const Interests = ({ interests }) => {
+export const Interests = ({ interests }) => {
 	const skills = interests.length
 		? interests.split(',').map((skill, id) => {
 				return (
@@ -33,4 +33,3 @@ const Interests = ({ interests }) => {
 		</Container>
 	);
 };
-export default Interests;

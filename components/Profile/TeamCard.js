@@ -1,7 +1,7 @@
 import { Card } from 'react-bootstrap';
 import { Text } from 'atomize';
 
-export default function TeamCard({ team }) {
+export function TeamCard({ team }) {
 	const date = new Date(team.hackathon.end);
 	return (
 		<Card className="shadow-sm">

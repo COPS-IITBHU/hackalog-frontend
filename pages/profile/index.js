@@ -1,36 +1,27 @@
 import React, { useState, useEffect } from "react";
 import {
-	Button,
-	Spinner, Jumbotron, Row,
-	Col, Container, Image
+	Spinner, Jumbotron, Row, Col,
+	Button, Container, Image
 } from "react-bootstrap";
 import { FaGithub } from "react-icons/fa";
 import axios from "../../util/axios";
 import { useAuth } from "../../context/auth";
+
 import Footer from "../../components/Footer/Footer";
+
 import { EditProfile, Interests, ProfileTabs } from '../../components/Profile'
-import { useRouter } from 'next/router'
-
-import DefaultErrorPage from 'next/error'
-
 
 function Profile() {
-	const router = useRouter()
-	const { username } = router.query
-	console.log('Username', username)
 	const { firebaseUser, token, loading } = useAuth();
 	const [userRequest, setUserRequest] = useState({ loading: false });
-	const [currentUser, setCurrentUser] = useState(false);
-
 	const [editDialog, setEdit] = useState({ show: false, closable: true });
 	const editProfile = () => setEdit({ show: true, closable: true });
 	const handleClose = () => setEdit({ show: false, closable: false });
-
 	useEffect(() => {
-		if (username) {
+		if (token) {
 			setUserRequest({ loading: true });
-			axios.get(`profile/${username.toLowerCase()}`).then((res) => {
-				console.log('DONE')
+			axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+			axios.get(`profile/`).then((res) => {
 				setUserRequest({
 					loading: false,
 					user: res.data,
@@ -49,36 +40,11 @@ function Profile() {
 						closable: false,
 					});
 				}
-			}).catch((err) => {
-				setUserRequest({
-					loading: false,
-					user: "NOT FOUND",
-				});
-				console.log('NOT FOUND ', err.response.data)
-			});
-		}
-
-	}, [username]);
-
-	useEffect(() => {
-
-		console.log("RUN\n\n\n")
-		if (userRequest.user && token) {
-			console.log("HAHAHA")
-			axios.defaults.headers.common['Authorization'] = `Token ${token}`;
-			axios.get(`profile/`).then((res) => {
-				console.log("RESULT: ", res)
-				console.log("Check: ", res.data.username, username)
-				if (res.data.username === username) setCurrentUser(true);
 			}, console.error);
-
 		}
+	}, [token]);
 
-	}, [userRequest, token])
-
-
-
-	const url = (firebaseUser !== null && currentUser) ? firebaseUser.photoURL : '../images/person.jpeg';
+	const url = firebaseUser !== null ? firebaseUser.photoURL : '';
 	if (loading || userRequest.loading)
 		return (
 			<Container className="text-center">
@@ -95,10 +61,16 @@ function Profile() {
 				</Spinner>
 			</Container>
 		);
-	else if (userRequest.user === "NOT FOUND") return <DefaultErrorPage statusCode={404} />
+	else if (!firebaseUser || !userRequest.user) {
+		return (
+			<Container className="text-center">
+				Please Login to View this Page
+			</Container>
+		);
+	}
 	return (
 		<div>
-			{currentUser && editDialog.show &&
+			{editDialog.show && (
 				<EditProfile
 					handleClose={handleClose}
 					show={editDialog.show}
@@ -109,10 +81,11 @@ function Profile() {
 					bio={userRequest.user.bio}
 					interest={userRequest.user.interests}
 				/>
-			}
+			)}
+
 			<Jumbotron
 				style={{
-					background: 'url("../images/profile_cover.jpg") no-repeat',
+					background: 'url("images/profile_cover.jpg") no-repeat',
 					backgroundSize: 'cover',
 				}}
 				className="text-white"
@@ -162,9 +135,9 @@ function Profile() {
 							<h5 className="text-white">About Me</h5>
 							<hr style={{ borderColor: 'white' }} />
 							<p className="text-break">{userRequest.user.bio}</p>
-							{currentUser && <Button variant="light" onClick={editProfile}>
+							<Button variant="light" onClick={editProfile}>
 								Edit Profile
-							</Button>}
+							</Button>
 						</Col>
 					</Row>
 				</Container>
@@ -177,5 +150,7 @@ function Profile() {
 		</div>
 	);
 }
+
+
 
 export default Profile;
