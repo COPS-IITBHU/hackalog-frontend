@@ -43,23 +43,24 @@ export const EditProfile = ({
                 github_handle: handle,
                 photoURL: url
             };
-            i =
-                axios
-                    .patch(`profile/`, data)
-                    .then(setwait(false))
-                    .then(
-                        () => {
-                            handleClose();
-                            location.reload();
-                        },
-                        (err) => {
-                            err.response.data.username
-                                ? seterr(String(err.response.data.username))
-                                : seterr(
-                                    'Some Error Occurred Communicating with the Server'
-                                );
-                        }
-                    );
+            console.log(url)
+            axios
+                .patch(`profile/`, data)
+                .then(setwait(false))
+                .then(
+                    () => {
+                        handleClose();
+                        location.reload();
+                    },
+                    (err) => {
+                        console.log(err.response.data)
+                        err.response.data.username
+                            ? seterr(String(err.response.data.username))
+                            : seterr(
+                                'Some Error Occurred Communicating with the Server'
+                            );
+                    }
+                );
         } else seterr('All Required Fields must be Filled');
     };
     return (

@@ -6,9 +6,7 @@ import {
 import { FaGithub } from "react-icons/fa";
 import axios from "../../util/axios";
 import { useAuth } from "../../context/auth";
-
 import Footer from "../../components/Footer/Footer";
-
 import { EditProfile, Interests, ProfileTabs } from '../../components/Profile'
 
 function Profile() {
@@ -44,7 +42,8 @@ function Profile() {
 		}
 	}, [token]);
 
-	const url = (userRequest.user) ? userRequest.user.photoURL : '../images/person.jpeg';
+	let url = (userRequest.user) ? userRequest.user.photoURL : '../images/person.jpeg';
+	if (url === "" && firebaseUser) url = firebaseUser.photoURL;
 	if (loading || userRequest.loading)
 		return (
 			<Container className="text-center">

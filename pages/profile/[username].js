@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
-	Button,
-	Spinner, Jumbotron, Row,
+	Button, Spinner, Jumbotron, Row,
 	Col, Container, Image
 } from "react-bootstrap";
 import { FaGithub } from "react-icons/fa";
@@ -10,14 +9,12 @@ import { useAuth } from "../../context/auth";
 import Footer from "../../components/Footer/Footer";
 import { EditProfile, Interests, ProfileTabs } from '../../components/Profile'
 import { useRouter } from 'next/router'
-
 import DefaultErrorPage from 'next/error'
 
 
 function Profile() {
 	const router = useRouter()
 	const { username } = router.query
-	console.log('Username', username)
 	const { firebaseUser, token, loading } = useAuth();
 	const [userRequest, setUserRequest] = useState({ loading: false });
 	const [currentUser, setCurrentUser] = useState(false);
@@ -30,7 +27,6 @@ function Profile() {
 		if (username) {
 			setUserRequest({ loading: true });
 			axios.get(`profile/${username.toLowerCase()}`).then((res) => {
-				console.log('DONE')
 				setUserRequest({
 					loading: false,
 					user: res.data,
@@ -54,31 +50,25 @@ function Profile() {
 					loading: false,
 					user: "NOT FOUND",
 				});
-				console.log('NOT FOUND ', err.response.data)
 			});
 		}
 
 	}, [username]);
 
 	useEffect(() => {
-
-		console.log("RUN\n\n\n")
 		if (userRequest.user && token) {
-			console.log("HAHAHA")
 			axios.defaults.headers.common['Authorization'] = `Token ${token}`;
 			axios.get(`profile/`).then((res) => {
-				console.log("RESULT: ", res)
-				console.log("Check: ", res.data.username, username)
 				if (res.data.username === username) setCurrentUser(true);
 			}, console.error);
-
 		}
-
 	}, [userRequest, token])
 
-
-
-	const url = (userRequest.user) ? userRequest.user.photoURL : '../images/person.jpeg';
+	const url = (userRequest.user) ?
+		(userRequest.user.photoURL) ?
+			userRequest.user.photoURL
+			: '../images/person.jpeg'
+		: '../images/person.jpeg';
 	if (loading || userRequest.loading)
 		return (
 			<Container className="text-center">
