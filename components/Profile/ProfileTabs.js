@@ -29,7 +29,7 @@ export default function ProfileTabs({ teams }) {
 						<CardColumn>
 							{
 								teams.length ?
-									teams.map(team => <TeamCard team={team} />)
+									teams.map(team => <TeamCard key={team} team={team} />)
 									: <p>No Teams to Show</p>
 							}
 

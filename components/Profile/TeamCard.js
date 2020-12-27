@@ -2,6 +2,7 @@ import { Card } from 'react-bootstrap';
 import { Text } from 'atomize';
 
 export default function TeamCard({ team }) {
+	const date = new Date(team.hackathon.end);
 	return (
 		<Card className="shadow-sm">
 			<Card.Img
@@ -17,7 +18,7 @@ export default function TeamCard({ team }) {
 					Participated in {team.hackathon.title}
 				</Card.Subtitle>
 				<Text textSize="subheader" textWeight="500">
-					Ended on {team.hackathon.end.substr(0, 10)}
+					{date < Date.now() ? 'Ended on ' + date.toDateString() : 'Ends on ' + date.toDateString()}
 				</Text>
 			</Card.Body>
 		</Card>
