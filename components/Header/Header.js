@@ -35,11 +35,13 @@ export default function Header() {
     return (
         <div className="position-fixed w-100 bg-white" style={{ zIndex: "10" }}>
             <div className="d-flex align-items-center justify-content-between w-100 p-3">
-                <div>
-                    <div className="font-weight-bold">
-                        COPS <span className="text-monospace">Hackalog</span>
-                    </div>
-                </div>
+                <Link href="/">
+                    <a className="text-dark">
+                        <div className="font-weight-bold">
+                            COPS <span className="text-monospace">Hackalog</span>
+                        </div>
+                    </a>
+                </Link>
                 <div>
                     <div className="d-flex align-items-center">
                         <div className="py-2">
