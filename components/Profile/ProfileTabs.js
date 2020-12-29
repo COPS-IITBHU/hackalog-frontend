@@ -1,6 +1,5 @@
 import { Nav, Tab, Col, Row } from 'react-bootstrap';
 import HackathonCard from '../HackathonCard/HackathonCard';
-import CardColumn from 'react-bootstrap/CardColumns';
 import { TeamCard } from './TeamCard';
 
 export function ProfileTabs({ teams }) {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
     Form, Spinner, Col,
     Modal, Button, Container
@@ -7,7 +7,7 @@ import CreatableSelect from "react-select/creatable";
 import axios from "../../util/axios";
 import { options } from "./SkillOptions";
 
-export const EditProfile = ({
+const EditProfile = ({
     handle, bio, interest, name, url,
     username, handleClose, show, closable,
 }) => {
@@ -145,3 +145,5 @@ export const EditProfile = ({
         </Container>
     );
 };
+
+export default EditProfile;

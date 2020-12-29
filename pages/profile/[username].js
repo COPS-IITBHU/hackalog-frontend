@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import {
 	Button, Spinner, Jumbotron,
 	Row, Col, Container, Image,
@@ -7,9 +7,10 @@ import { FaGithub } from "react-icons/fa";
 import axios from "../../util/axios";
 import { useAuth } from "../../context/auth";
 import Footer from "../../components/Footer/Footer";
-import { EditProfile, Interests, ProfileTabs } from "../../components/Profile";
+import { Interests, ProfileTabs } from "../../components/Profile";
 import { useRouter } from "next/router";
 import DefaultErrorPage from "next/error";
+const EditProfile = lazy(() => import('../../components/Profile/EditProfileModal'));
 
 function Profile() {
 	const router = useRouter();
@@ -91,17 +92,19 @@ function Profile() {
 	return (
 		<div>
 			{currentUser && editDialog.show && (
-				<EditProfile
-					handleClose={handleClose}
-					show={editDialog.show}
-					url={url}
-					closable={editDialog.closable}
-					username={userRequest.user.username}
-					name={userRequest.user.name}
-					handle={userRequest.user.github_handle}
-					bio={userRequest.user.bio}
-					interest={userRequest.user.interests}
-				/>
+				<Suspense fallback={<h1>Loading...</h1>}>
+					<EditProfile
+						handleClose={handleClose}
+						show={editDialog.show}
+						url={url}
+						closable={editDialog.closable}
+						username={userRequest.user.username}
+						name={userRequest.user.name}
+						handle={userRequest.user.github_handle}
+						bio={userRequest.user.bio}
+						interest={userRequest.user.interests}
+					/>
+				</Suspense>
 			)}
 			<Jumbotron
 				style={{
