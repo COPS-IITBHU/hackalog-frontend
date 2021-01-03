@@ -96,6 +96,7 @@ export default function Hackathon() {
                     min-height: 350px;
                     width: 100%;
                     background: linear-gradient(to top left, #2986a5,#0d6697,#00879a,#00776b);
+                    background-image: ;
                 }
                 
                .body {
