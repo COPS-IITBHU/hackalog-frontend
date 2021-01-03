@@ -1,25 +1,32 @@
-import { useState, useEffect, lazy, Suspense } from "react";
+import { useState, useEffect, lazy, Suspense } from "react"
+import { useRouter } from "next/router"
+import DefaultErrorPage from "next/error"
 import {
-	Button, Spinner, Jumbotron,
-	Row, Col, Container, Image,
+	Spinner, Row, Col, Container, Tab, Nav
 } from "react-bootstrap";
-import { FaGithub } from "react-icons/fa";
-import axios from "../../util/axios";
-import { useAuth } from "../../context/auth";
-import Footer from "../../components/Footer/Footer";
-import { Interests, ProfileTabs } from "../../components/Profile";
-import { useRouter } from "next/router";
-import DefaultErrorPage from "next/error";
-const EditProfile = lazy(() => import('../../components/Profile/EditProfileModal'));
+import { Text, Image, Button, Div } from 'atomize' 
+import { FaGithub } from "react-icons/fa"
+import { MdLocationOn } from 'react-icons/md'
+
+import axios from "../../util/axios"
+import { useAuth } from "../../context/auth"
+import Footer from "../../components/Footer/Footer"
+import { Interests } from "../../components/Profile"
+import TeamCard from '../../components/Profile/TeamCard'
+import HackathonCard from '../../components/HackathonCard/HackathonCard'
+
+
+const EditProfile = lazy(() => import('../../components/Profile/EditProfileModal'))
 
 function Profile() {
 	const router = useRouter();
 	const { username } = router.query;
-	const { token, loading } = useAuth();
+	const { token, profile, loading } = useAuth();
+
 	const [userRequest, setUserRequest] = useState({ loading: false });
 	const [currentUser, setCurrentUser] = useState(false);
-
 	const [editDialog, setEdit] = useState({ show: false, closable: true });
+
 	const editProfile = () => setEdit({ show: true, closable: true });
 	const handleClose = () => setEdit({ show: false, closable: false });
 
@@ -49,22 +56,22 @@ function Profile() {
 					}
 				})
 				.catch((err) => {
+					console.log(err)
 					setUserRequest({
 						loading: false,
-						user: "NOT FOUND",
+						user: "NOT FOUND", //dev things, sorry for the changes
 					});
 				});
 		}
 	}, [username]);
 
 	useEffect(() => {
-		if (userRequest.user && token) {
-			axios.defaults.headers.common["Authorization"] = `Token ${token}`;
-			axios.get(`profile/`).then((res) => {
-				if (res.data.username === username) setCurrentUser(true);
-			}, console.error);
+		if (userRequest.user && token && profile) {
+			if (profile.username === username) setCurrentUser(true)
+		}else {
+			setCurrentUser(false)
 		}
-	}, [userRequest, token]);
+	}, [profile]);
 
 	const url = userRequest.user
 		? userRequest.user.photoURL
@@ -90,7 +97,7 @@ function Profile() {
 	else if (userRequest.user === "NOT FOUND")
 		return <DefaultErrorPage statusCode={404} />;
 	return (
-		<div>
+		<div style={{background: "#87a3bb17"}}>
 			{currentUser && editDialog.show && (
 				<Suspense fallback={<h1>Loading...</h1>}>
 					<EditProfile
@@ -106,62 +113,129 @@ function Profile() {
 					/>
 				</Suspense>
 			)}
-			<Jumbotron
-				style={{
-					background: 'url("../images/profile_cover.jpg") no-repeat',
-					backgroundSize: "cover",
-				}}
-				className="text-white"
-			>
-				<Container>
-					<Row>
-						<Col md={4} className="text-center pt-sm-3">
-							<Image
-								src={url}
-								fluid
-								style={{
-									boxShadow: "1px 1px 40px 1px black",
-									border: "2px solid white",
-									"border radius": 50,
-									width: 200,
-									height: 200,
-								}}
-								roundedCircle
-							/>
-							<p className="h4 p-sm-3">{userRequest.user.username}</p>
-						</Col>
-						<Col md={8}>
-							<div style={{ height: 20 }} className="d-sm-block d-none" />
-							<h2 style={{ color: "white" }}>{userRequest.user.name}</h2>
-							<Row>
-								<div className="col-6">{"IIT (BHU) Varanasi"}</div>
-								{userRequest.user.github_handle && (
-									<a
-										href={`https://github.com/${userRequest.user.github_handle}`}
-										className="col-6 text-white text-right"
-									>
-										<FaGithub /> {userRequest.user.github_handle}
-									</a>
-								)}
-							</Row>
-							<br />
-							<h5 className="text-white">About Me</h5>
-							<hr style={{ borderColor: "white" }} />
-							<p className="text-break">{userRequest.user.bio}</p>
-							{currentUser && (
-								<Button variant="light" onClick={editProfile}>
-									Edit Profile
-								</Button>
-							)}
-						</Col>
-					</Row>
-				</Container>
-			</Jumbotron>
-			<div className="container">
-				<Interests interests={userRequest.user.interests} />
-				<ProfileTabs teams={userRequest.user.teams} />
-			</div>
+			<Div shadow="2" p={{ t: "15rem" }} className="cover-image-container"></Div>
+			{userRequest && 
+				<div className="container-md">
+					<Tab.Container id="left-tabs-example" defaultActiveKey="profile">			
+						<div className="row no-gutters py-5">
+							<div className="col-12 col-md-4 sidebar">
+								<div className="text-center">
+									<Image src={url} className="profile-image" shadow="4" />
+								</div>
+								<div className="p-3 p-md-5">
+									<Text tag="h3" textSize="title" textColor="#003e54" fontFamily="madetommy-bold" m={{ b: "0.5rem" }}>
+										{userRequest.user.name}
+									</Text>
+									<p className="text-muted">@{userRequest.user.username}</p>
+									{userRequest.user.github_handle && (
+										<a href={`https://github.com/${userRequest.user.github_handle}`} className="d-flex align-items-center text-muted">
+											<FaGithub className="mr-1" /> {userRequest.user.github_handle}
+										</a>
+									)}
+									<p className="text-muted"><MdLocationOn /> IIT BHU Varanasi</p>
+									<Nav variant="pills" className="flex-column pt-4">
+										<Nav.Item>
+											<Nav.Link eventKey="profile">Profile</Nav.Link>
+										</Nav.Item>
+										<Nav.Item>
+											<Nav.Link eventKey="projects">Projects</Nav.Link>
+										</Nav.Item>
+										<Nav.Item>
+											<Nav.Link eventKey="hackathons">Hackathons</Nav.Link>
+										</Nav.Item>
+									</Nav>
+								</div>
+							</div>
+							<div className="col-12 col-md-8 px-2 px-md-3">
+								<Tab.Content>
+									<Tab.Pane eventKey="profile">
+										<div>
+											{currentUser && (
+												<Button shadow="3" hoverShadow="4" m={{ r: "1rem", b: "2rem" }} p="1rem" onClick={editProfile}>
+													Edit Profile
+												</Button>
+											)}
+											<div>
+												<Text tag="h4" textSize="title" textColor="#003e54" fontFamily="madetommy-bold">
+													About Me
+												</Text>
+												<Text tag="p" textSize="paragraph" textColor="#003e54">
+													{userRequest.user.bio}
+												</Text>
+											</div>
+											<br />
+											<Interests interests={userRequest.user.interests} />
+										</div>
+									</Tab.Pane>
+									<Tab.Pane eventKey="projects">
+										<div>
+											<Row>
+												{ userRequest.user.teams && userRequest.user.teams.length
+													? userRequest.user.teams.map(team =>
+														<Col className="pb-3" sm={6} key={team.id}>
+															<TeamCard team={team} />
+														</Col>
+													) : <p>No Teams to Show</p>
+												}
+											</Row>
+										</div>
+									</Tab.Pane>
+									<Tab.Pane eventKey="hackathons">
+										<div>
+											<Row>
+												{ userRequest.user.teams && userRequest.user.teams.length
+													? userRequest.user.teams.map(({ hackathon, id }) => (
+														<Col sm={6} className="pb-3" key={hackathon.slug} key={id}>
+															<HackathonCard
+																hackathon={hackathon}
+															></HackathonCard>
+														</Col>
+													))
+													: <p>No Participation in Hackathons to Show</p>
+												}
+											</Row>
+										</div>
+									</Tab.Pane>
+								</Tab.Content>
+							</div>
+						</div>
+					</Tab.Container>
+				</div>
+			}
 			<Footer />
+			<style>{`
+				.cover-image-container {
+					background-image: url("/backgrounds/bg2.jpg");
+					background-size: cover;
+					background-position: center;
+				}
+				@media(min-width: 772px){
+					.sidebar {
+						position: relative;
+						top: -100px;
+					}
+				}
+				.profile-image {
+					width: 80%;
+					max-width: 200px;
+					border-radius: 50%;
+				}
+				.nav-link {
+					color: grey !important;
+					transition: 0.3s;
+				}
+				.nav-pills .nav-link.active, .nav-pills .show>.nav-link{
+					background: white;
+					border-radius: 10px;
+					color: #003e54 !important;
+					font-size: 1rem;
+					padding: 1rem 1rem;
+					//font-family: madetommy-bold;
+				}
+				// a {
+				// 	color: #003e54;
+				// }
+			`}</style>
 		</div>
 	);
 }

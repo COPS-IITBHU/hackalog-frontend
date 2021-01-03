@@ -87,7 +87,7 @@ export default function Home() {
             <div className="container fluid">
                 <div className="py-5">
                     <div className="row no-gutters align-items-stretch justify-content-center">
-                        <div className="col-12 pl-3 py-4">
+                        <div className="col-12 py-4">
                             <Text tag="h3" textSize="title" textColor="#003e54" fontFamily="madetommy-bold">
                                 Built for you to:
                             </Text>
@@ -201,24 +201,24 @@ export default function Home() {
             </div>
             <div className="listhackathon-container py-4"></div>
             <style jsx>{`
-        .icon-container {
-          text-align: left;
-        }
-        .icon-container img {
-          margin: 20px 0px;
-          max-width: 60px;
-          border-radius: 50%;
-        }
-        .listhackathon-container {
-          background: linear-gradient(
-            to top left,
-            #2986a5,
-            #0d6697,
-            #00879a,
-            #00776b
-          );
-        }
-      `}</style>
+                .icon-container {
+                    text-align: left;
+                }
+                .icon-container img {
+                    margin: 20px 0px;
+                    max-width: 60px;
+                    border-radius: 50%;
+                }
+                .listhackathon-container {
+                    background: linear-gradient(
+                        to top left,
+                        #2986a5,
+                        #0d6697,
+                        #00879a,
+                        #00776b
+                    );
+                }
+            `}</style>
         </div>
     );
 }

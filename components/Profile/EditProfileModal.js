@@ -1,8 +1,9 @@
 import { useState } from "react";
 import {
     Form, Spinner, Col,
-    Modal, Button, Container
+    Modal, Container
 } from "react-bootstrap";
+import { Button, Text } from 'atomize'
 import CreatableSelect from "react-select/creatable";
 import axios from "../../util/axios";
 import { options } from "./SkillOptions";
@@ -70,16 +71,19 @@ const EditProfile = ({
                 onHide={handleClose}
                 backdrop={closable ? true : 'static'}
                 keyboard={false}
-                size="lg"
+                centered={true}
+                size="md"
             >
-                <Modal.Header closeButton={closable}>
-                    <Modal.Title>Complete Your Profile</Modal.Title>
-                </Modal.Header>
                 <Modal.Body>
-                    <Form>
-                        <Form.Text className="text-right">
+                    <div className="text-center mb-3">
+                        <Text tag="h3" textSize="title" textColor="#003e54" fontFamily="madetommy-bold">
+                            Edit Profile
+                        </Text>
+                    </div>
+                    <Form style={{maxWidth: "400px"}} className="mx-auto">
+                        {/* <Form.Text className="text-right">
                             *Required Fields
-						</Form.Text>
+						</Form.Text> */}
                         <Form.Group controlId="name">
                             <Form.Label>Name* </Form.Label>
                             <Form.Control
@@ -113,7 +117,7 @@ const EditProfile = ({
                         <Form.Group controlId="bio">
                             <Form.Label>Bio*</Form.Label>
                             <Form.Control
-                                type="text"
+                                type="textarea"
                                 placeholder="Bio"
                                 defaultValue={bio}
                             />
@@ -132,9 +136,12 @@ const EditProfile = ({
                     <p className="text-danger ">{err}</p>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="primary" onClick={handleSubmit}>
+                    <Button shadow="3" hoverShadow="4" p="1rem" onClick={handleClose}>
+                        Cancel
+                    </Button>
+                    <Button shadow="3" hoverShadow="4" p="1rem" onClick={handleSubmit}>
                         Submit
-					</Button>
+                    </Button>
                     {wait && (
                         <Spinner animation="border" role="status">
                             <span className="sr-only">Submitting...</span>
