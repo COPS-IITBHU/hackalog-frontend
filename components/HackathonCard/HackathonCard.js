@@ -1,12 +1,19 @@
 import { Div, Row, Col, Text, Image, Button } from 'atomize'
+import Link from 'next/link';
 import Date from "../Date/Date";
 
 export default function HackathonCard({ hackathon }) {
   return (
         <>
             <Div bg="white" shadow="4" rounded="xl" m={{ b: "1rem" }}>
-                <Div>
-                    <Image src={hackathon.image} rounded={{ t: "xl" }} />
+                <Div
+                    bgImg={hackathon.image}
+                    bgSize="cover"
+                    bgPos="center"
+                    h="12rem"
+                    rounded={{ t: "xl" }}
+                >
+                    {/* <Image src= rounded={{ t: "xl" }} maxH="9rem" /> */}
                 </Div>
                 <Div p="1.5rem">
                     <Text tag="h3" textSize="title" textColor="#003e54" fontFamily="madetommy-bold">
@@ -25,9 +32,13 @@ export default function HackathonCard({ hackathon }) {
                             </Text>
                         </Col>
                         <Col size="5">
-                            <Button m={{ l: "auto" }}>
-                                See more...
-                            </Button>
+                            <Link href={`/hackathon/${hackathon.id}`}>
+                                <a>
+                                    <Button m={{ l: "auto" }}>
+                                        See more...
+                                    </Button>
+                                </a>
+                            </Link>
                         </Col>
                     </Row>
                 </Div>

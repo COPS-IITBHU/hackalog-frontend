@@ -95,3 +95,20 @@ h6 {
 .modal-footer {
     border: none;
 }
+
+.hackathon-nav .nav {
+    justify-content: center;
+    padding: 1rem 0rem;
+}
+.hackathon-nav .nav-link {
+    color: grey !important;
+    transition: 0.3s;
+    padding: 0.5rem 1rem;
+}
+.hackathon-nav .nav-item .nav-link.active, .hackathon-nav .nav-item .show>.nav-link{
+    background: white;
+    border-radius: 10px;
+    color: #003e54 !important;
+    font-size: 1rem;
+    padding: 0.5rem 1.5rem;
+}

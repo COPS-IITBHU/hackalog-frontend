@@ -34,7 +34,7 @@ function Profile() {
 		if (username) {
 			setUserRequest({ loading: true });
 			axios
-				.get(`profile/${username.toLowerCase()}`)
+				.get(`profile/${username.toLowerCase()}/`)
 				.then((res) => {
 					setUserRequest({
 						loading: false,
@@ -114,7 +114,7 @@ function Profile() {
 				</Suspense>
 			)}
 			<Div shadow="2" p={{ t: "15rem" }} className="cover-image-container"></Div>
-			{userRequest && 
+			{userRequest && userRequest.user && 
 				<div className="container-md">
 					<Tab.Container id="left-tabs-example" defaultActiveKey="profile">			
 						<div className="row no-gutters py-5">

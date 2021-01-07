@@ -1,152 +1,197 @@
 import Link from 'next/link';
+import { useRouter } from "next/router"
 import { useEffect, useState } from 'react';
-import axios from "../../util/axios";
-import { useAuth } from "../../context/auth";
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
-import Date from "../../components/Date/Date";
+import axios from "../../../util/axios";
+import { useAuth } from "../../../context/auth";
+// import Tab from 'react-bootstrap/Tab';
+// import Tabs from 'react-bootstrap/Tabs';
+import { Nav, Tab, Container, Spinner } from 'react-bootstrap'
+import { Text } from 'atomize'
 
 export default function Hackathon() {
-    const { firebaseUser, token, loading } = useAuth();
-    const [hackathon, setHackathon] = useState([]);
-    const [id, setId] = useState([]);
-    const [participants, setParticipants] = useState([]);
-    const [activeTab, setActiveTab] = useState([]);
-    const [allSubmissions, setAllSubmisssions]  = useState([]);
-    useEffect(
-        () => {
+    const router = useRouter()
+    const hackathonId = router.query.slug
+
+    const { firebaseUser, token, loading } = useAuth()
+    const [ hackathon, setHackathon ] = useState([])
+    const [ id, setId ] = useState([])
+    const [ participants, setParticipants ] = useState([])
+    const [ activeTab, setActiveTab ] = useState([])
+    const [ allSubmissions, setAllSubmisssions ]  = useState([])
+
+    useEffect(() => {
+        if(hackathonId && token){
+            console.log("hackathon id: ", hackathonId)
             axios.defaults.headers.common['Authorization'] = `Token ${token}`;
-            axios.get('/hackathon/iitbhuhack/').then(
-                (response) => {
-                setHackathon(response.data);
-                setId(hackathon.id);
-                }
-            ).catch(
-                (err) => null
-            )
-            axios.get('/hackathons/1/teams/').then(
-                (response) => setParticipants(response.data)
-            ).catch(
-               (err) => null 
-            )
-            axios.get('/hackathons/1/submissions/').then(
-                (response) => setAllSubmisssions(response.data.sort((a,b) => b.score >  a.score? 1: -1).slice (0,10))
-            ).catch(
-               (err) => null 
-            )
-        }, []
-    )
+            axios.get(`/hackathons/${hackathonId}/`)
+                .then((response) => {
+                    console.log("hackathon response: ", response.data)
+                    let hackathon = response.data
+                    if(!hackathon.image) hackathon.image = "/images/home-jumbo.jpg"
+                    setHackathon(hackathon)
+                    setId(hackathon.id)
+                }).catch((err) => {
+                    console.log(err)
+                })
+            axios.get(`/hackathons/${hackathonId}/teams/`)
+                .then((response) => {
+                    console.log("teams response: ", response.data)
+                    setParticipants(response.data)
+                }).catch((err) => {
+                    console.log(err)
+                    console.log(err.response.data)
+                })
+            axios.get(`/hackathons/${hackathonId}/submissions/`)
+                .then((response) => {
+                    console.log("submissions response: ", response.data)
+                    setAllSubmisssions(response.data.sort((a,b) => b.score >  a.score? 1: -1).slice (0,10))
+                }).catch((err) => {
+                    console.log(err)
+                    console.log(err.response.data)
+                })
+        }
+    }, [hackathonId, token])
 
     return(
-        <div>
-            <div className="banner-section" style = {{background :`url(${hackathon.image})`}}>
-                <div>
-                    
-                </div>
-            </div>
-            <div className = "body ">
-                <div className = "tabs">
-                
-                <Tabs defaultActiveKey="overview" >
-                        <Tab title ="  "></Tab>
-                        <Tab eventKey= "overview" title='Overview'>
-                        <div className =" tabContent">
-                        <Overview hackathon = {hackathon}/>
-                        </div>
-                        </Tab>
-                        <Tab eventKey= "participants" title='Participants'>
-                            <div className =" tabContent">
-                            <Participants participants = {participants}/>
-                            </div>
-                        </Tab>
-                        <Tab eventKey= "upadtes" title='Updates'>
-                            <div className =" tabContent">
-                            <Overview hackathon = {hackathon}/>
-                            </div>
-                        </Tab>
-                        <Tab eventKey = "leaderboard" title = "Leaderboard">
-                            <div className =" tabContent">
-                            <Leaderboard submissions = {allSubmissions}/>
-                            </div>
-                        </Tab>
-                </Tabs>
-                </div>
-                <div >
-                <div className="container py-3 py-md-5">
-                    <div className="row no-gutters">
-                        <div className="col-12 col-lg-4 order-1 order-lg-2 ">
-                            <div className="pb-5 pb-lg-0 ">
-                                <div className="bg-grey p-3 p-md-4 wid" >
-                                    <div className="pb-3">Join to receive hackathon updates, find teammates, and submit a project.
-                                    </div>
-                                    <div>
-                                        <div className="btn btn-success w-100">Join Hackathon</div>
-                                    </div>
-                                </div>
-
-                            </div>
+        <>
+            {loading ?
+                <Container className="text-center">
+                    <Spinner
+                        style={{
+                            position: "absolute",
+                            top: "50%",
+                        }}
+                        className="mt-auto mb-auto"
+                        animation="border"
+                        role="status"
+                    >
+                        <span className="sr-only">Loading...</span>
+                    </Spinner>
+                </Container>
+            :
+                <div style={{background: "#87a3bb17", minHeight: "100vh"}}>
+                    <div className="banner-section" style = {{backgroundImage:`url(${hackathon.image})`}}>
+                        <div>
+                            
                         </div>
                     </div>
-                </div> 
+                    <div className="hackathon-nav">
+                        <Tab.Container defaultActiveKey="overview">
+                            <div className="text-center">
+                                <Nav>
+                                    <Nav.Item>
+                                        <Nav.Link eventKey="overview">Overview</Nav.Link>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                        <Nav.Link eventKey="participants">Participants</Nav.Link>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                        <Nav.Link eventKey="updates">Updates</Nav.Link>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                        <Nav.Link eventKey="leaderboard">Leaderboard</Nav.Link>
+                                    </Nav.Item>
+                                </Nav>
+                            </div>
+                            <div className="row no-gutters container-lg mx-auto align-items-start">
+                                <div className="col-9 p-2">
+                                    <Tab.Content>
+                                        <Tab.Pane eventKey="overview" title='Overview'>
+                                            <div className="tabContent">
+                                                <Overview hackathon={hackathon} />
+                                            </div>
+                                        </Tab.Pane>
+                                        <Tab.Pane eventKey="participants" title='Participants'>
+                                            <div className="tabContent">
+                                                <Participants participants={participants} />
+                                            </div>
+                                        </Tab.Pane>
+                                        <Tab.Pane eventKey="updates" title='Updates'>
+                                            <div className="tabContent">
+                                                <Overview hackathon={hackathon} />
+                                            </div>
+                                        </Tab.Pane>
+                                        <Tab.Pane eventKey="leaderboard" title="Leaderboard">
+                                            <div className="tabContent">
+                                                <Leaderboard submissions={allSubmissions} />
+                                            </div>
+                                        </Tab.Pane>
+                                    </Tab.Content>
+                                </div>
+                                <div className="col-3 p-2">
+                                    <div className="">
+                                        <div className="pb-5 pb-lg-0">
+                                            <div className="bg-grey p-3 p-md-4" >
+                                                <div className="pb-3">Join to receive hackathon updates, find teammates, and submit a project.
+                                                </div>
+                                                <div>
+                                                    <div className="btn btn-success w-100">Join Hackathon</div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </Tab.Container>
+                    </div>
+                    <style jsx>{`
+                        .banner-section {
+                            min-height: 350px;
+                            width: 100%;
+                            background: linear-gradient(to top left, #2986a5,#0d6697,#00879a,#00776b);
+                            background-size: cover;
+                            box-shadow: 0px 0px 40px 41px #21212135 inset;
+                        }
+                        .bg-grey {
+                            background-color: rgba(0,0,0,0.04);
+                        }
+                    `}</style>
                 </div>
-            </div>
-            
-            <style jsx>{`
-                .banner-section {
-                    min-height: 350px;
-                    width: 100%;
-                    background: linear-gradient(to top left, #2986a5,#0d6697,#00879a,#00776b);
-                    background-image: ;
-                }
-                
-               .body {
-                   display: flex;
-               }
-               .tabs {
-                   width: 100vw;
-                    height: 10vh;
-                   
-               }
-               .wid {
-                   width: 30vw;
-               }
-               .menu-item {
-                    
-                    color: rgba(0,0,0,0.7);
-                }
-                .menu-item:hover {
-                    color: black;
-                }
-                .bg-grey {
-                    background-color: rgba(0,0,0,0.04);
-                }
-            `}</style>
-        </div>
+            }
+        </>
     )
 }
 function Overview( {hackathon} )  {
     return (
         <div className = "overview_body">
             <div className="p-3">
-                    <h1 className=" title"> {hackathon.title} </h1>
-                    <p className="pt-3">
-                        {hackathon.description}
-                    </p>
-                    <p className="pt-3">
-                        <h6> START DATE: </h6> 9th December
-                    </p>
-                    <p className="pt-3">
-                        <h6>END DATE:</h6> 10th December 
-                    </p>
-                    <p className="pt-3">
-                        <h6> STATUS:</h6> {hackathon.status}
-                    </p>
-                    <p className="pt-3">
-                        <h6> RESULTS DECLARED: </h6> {hackathon.results_declared ? "Yes" : "No"}
-                    </p>
-                    <p className="pt-3">
-                        <h6> MAXIMUM TEAM SIZE:</h6> {hackathon.max_team_size}
-                    </p>
+                <Text tag="h1" textSize="display1" m={{ b: "1rem" }} fontFamily="madetommy-bold">
+                    {hackathon.title}
+                </Text>
+                <div className="pb-3">
+                    {hackathon.description}
+                </div>
+                <div className="pb-3">
+                    <Text tag="h6" textSize="subheader" fontFamily="madetommy-bold">
+                        START DATE:
+                    </Text>
+                    9th December
+                </div>
+                <div className="pb-3">
+                    <Text tag="h6" textSize="subheader" fontFamily="madetommy-bold">
+                        END DATE:
+                    </Text>
+                    10th December 
+                </div>
+                <div className="pb-3">
+                    <Text tag="h6" textSize="subheader" fontFamily="madetommy-bold">
+                        STATUS:
+                    </Text>
+                    {hackathon.status}
+                </div>
+                <div className="pb-3">
+                    <Text tag="h6" textSize="subheader" fontFamily="madetommy-bold">
+                        RESULTS DECLARED:
+                    </Text>
+                    {hackathon.results_declared ? "Yes" : "No"}
+                </div>
+                <div className="pb-3">
+                    <Text tag="h6" textSize="subheader" fontFamily="madetommy-bold">
+                        MAX TEAM SIZE:
+                    </Text>
+                    {hackathon.max_team_size}
+                </div>
             </div>
             <style jsx>{`
                 .p3 {
@@ -171,15 +216,15 @@ function Participants({participants}) {
            { participants.map( (team, index) => team.name.indexOf('Team Ongoing') == -1 ?
             ( <div className = "bg-grey"><h6>{index}. {team.name}</h6> 
              <style jsx>{`
-             .bg-grey {
-                 background-color: rgba(0.9,0,0,0.04);
-                 height: 7vh;
-                 margin-left: 50px;
-                 margin-bottom: 4px;
-                 padding: 10px;
+                .bg-grey {
+                    background-color: rgba(0.9,0,0,0.04);
+                    height: 7vh;
+                    margin-left: 50px;
+                    margin-bottom: 4px;
+                    padding: 10px;
                  
-             }
-             `}</style></div> ) : <ol> </ol>
+                }
+            `}</style></div> ) : <ol> </ol>
             )}
         </div>
     )
@@ -188,41 +233,30 @@ function Participants({participants}) {
 function Leaderboard({submissions}) {
         return (
         <div>
-            <div className = "bg-grey heading"> 
-                <div className = "rank"> <h6>RANK</h6> </div>
-                <div className = "team"> <h6>TEAM NAME</h6> </div>
-                <div className = "score"> <h6>SCORE</h6> </div>
+            <div className="bg-grey heading row no-gutters px-3 px-md-5 align-items-center rounded-top"> 
+                <div className="col-2"> <h6>RANK</h6> </div>
+                <div className="col-7"> <h6>TEAM NAME</h6> </div>
+                <div className="col-3"> <h6>SCORE</h6> </div>
             </div>
         
-            { submissions.map( (submission,index) => 
-                    <div className = "bg-grey">
-                        <div className = "rank"> {index + 1}.</div>
-                        <div className = "team"> {submission.team} </div>
-                        <div className = "score"> {submission.score} </div>
-                    </div>
+            {submissions && submissions.map((submission, index) => 
+                <div className={`bg-grey row no-gutters px-3 px-md-5 align-items-center ${index === submissions.length-1 && "rounded-bottom"}`} key={index}>
+                    <div className="col-2"> {index + 1}.</div>
+                    <div className="col-7"> {submission.team} </div>
+                    <div className="col-3"> {submission.score} </div>
+                </div>
             )}
            <style jsx>{`
-                .rank {
-                    width: 10vw;
-                }
-                .team {
-                    width:20vw;
-                }
-                .score {
-                    width: 10vw;
-                }
                 .bg-grey {
-                 background-color: rgba(0.9,0,0,0.04);
-                 display : flex;
-                 height: 7vh;
-                 margin-left: 50px;
-                 margin-bottom: 4px;
-                 margin-top: 4px;
-                 color: rgba(0.9,0,0,0.8);
-                 padding: 10px;
+                    background-color: rgba(0.9,0,0,0.04);
+                    display : flex;
+                    height: 7vh;
+                    margin-bottom: 4px;
+                    color: rgba(0.9,0,0,0.8);
+                    padding: 10px;
                 }
                 .heading {
-                 color: black
+                    color: black
                 }
             `}</style>
         </div>
