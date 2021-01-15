@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
         provider.addScope('profile');
         firebase.auth().signInWithPopup(provider)
             .then(() => {
-                console.log("login success")
+                console.log("firebase login success")
             })
             .catch(err => {
                 alert('Error Processing request, try again.');

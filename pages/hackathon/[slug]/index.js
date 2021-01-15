@@ -13,6 +13,7 @@ export default function Hackathon() {
     const hackathonId = router.query.slug
 
     const { firebaseUser, token, loading } = useAuth()
+    const [ localLoading, setLocalLoading ] = useState(true)
     const [ hackathon, setHackathon ] = useState([])
     const [ id, setId ] = useState([])
     const [ participants, setParticipants ] = useState([])
@@ -20,9 +21,9 @@ export default function Hackathon() {
     const [ allSubmissions, setAllSubmisssions ]  = useState([])
 
     useEffect(() => {
-        if(hackathonId && token){
+        if(hackathonId){
             console.log("hackathon id: ", hackathonId)
-            axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+            //axios.defaults.headers.common['Authorization'] = `Token ${token}`;
             axios.get(`/hackathons/${hackathonId}/`)
                 .then((response) => {
                     console.log("hackathon response: ", response.data)
@@ -30,6 +31,7 @@ export default function Hackathon() {
                     if(!hackathon.image) hackathon.image = "/images/home-jumbo.jpg"
                     setHackathon(hackathon)
                     setId(hackathon.id)
+                    setLocalLoading(false)
                 }).catch((err) => {
                     console.log(err)
                 })
@@ -54,7 +56,7 @@ export default function Hackathon() {
 
     return(
         <>
-            {loading ?
+            {loading || localLoading ?
                 <Container className="text-center">
                     <Spinner
                         style={{
@@ -160,13 +162,13 @@ function Overview( {hackathon} )  {
                     <Text tag="h6" textSize="subheader" fontFamily="madetommy-bold">
                         START DATE:
                     </Text>
-                    9th December
+                    {(new Date(hackathon.start)).toString()}
                 </div>
                 <div className="pb-3">
                     <Text tag="h6" textSize="subheader" fontFamily="madetommy-bold">
                         END DATE:
                     </Text>
-                    10th December 
+                    {(new Date(hackathon.end)).toString()} 
                 </div>
                 <div className="pb-3">
                     <Text tag="h6" textSize="subheader" fontFamily="madetommy-bold">

@@ -2,6 +2,8 @@ import HackathonCard from "../components/HackathonCard/HackathonCard"
 import Sorry from "../components/Sorry/Sorry";
 import Header from "../components/Header/Header";
 import { Text, Button, Div } from "atomize";
+import { Spinner } from "react-bootstrap";
+import axiosInstance from "../util/axios";
 
 
 function useOnScreen(options) {
@@ -29,41 +31,50 @@ function useOnScreen(options) {
 
 
 export default function Home() {
+    const [ hackathons, setHackathons ] = React.useState()
     const [ref, visible] = useOnScreen({
         rootMargin: '-100px'
     })
-    const hackathons = [
-        {
-            title: "Hackathon-1",
-            description:
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliquI",
-            start: "2020-11-09",
-            end: "2020-11-10",
-            image: "https://miro.medium.com/max/1924/1*OengjbOmGldeir-D6k1sYA.png",
-            link: "#",
-            slug: "slug-1",
-        },
-        {
-            title: "Hackathon-2",
-            description:
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliquI",
-            start: "2020-11-09",
-            end: "2020-11-10",
-            image: "https://miro.medium.com/max/1924/1*OengjbOmGldeir-D6k1sYA.png",
-            link: "#",
-            slug: "slug-2",
-        },
-        {
-            title: "Hackathon-3",
-            description:
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliquI",
-            start: "2020-11-09",
-            end: "2020-11-10",
-            image: "https://miro.medium.com/max/1924/1*OengjbOmGldeir-D6k1sYA.png",
-            link: "#",
-            slug: "slug-3",
-        },
-    ];
+    React.useEffect(() => {
+        axiosInstance.get('hackathons').then((response) => {
+            console.log(response.data);
+            setHackathons(response.data.slice(0,3))
+        }).catch(err => {
+            console.log(err)
+        })
+    }, [])
+    // const hackathons = [
+    //     {
+    //         title: "Hackathon-1",
+    //         description:
+    //             "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliquI",
+    //         start: "2020-11-09",
+    //         end: "2020-11-10",
+    //         image: "https://miro.medium.com/max/1924/1*OengjbOmGldeir-D6k1sYA.png",
+    //         link: "#",
+    //         slug: "slug-1",
+    //     },
+    //     {
+    //         title: "Hackathon-2",
+    //         description:
+    //             "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliquI",
+    //         start: "2020-11-09",
+    //         end: "2020-11-10",
+    //         image: "https://miro.medium.com/max/1924/1*OengjbOmGldeir-D6k1sYA.png",
+    //         link: "#",
+    //         slug: "slug-2",
+    //     },
+    //     {
+    //         title: "Hackathon-3",
+    //         description:
+    //             "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliquI",
+    //         start: "2020-11-09",
+    //         end: "2020-11-10",
+    //         image: "https://miro.medium.com/max/1924/1*OengjbOmGldeir-D6k1sYA.png",
+    //         link: "#",
+    //         slug: "slug-3",
+    //     },
+    // ];
     const previousHackathons = [];
     return (
         <div>
@@ -143,26 +154,32 @@ export default function Home() {
                     </div>
                 </div>
                 <div className="py-3 py-md-5">
-                    {hackathons.length ? (
-                        <div className="row no-gutters align-items-stretch justify-content-center">
-                            {hackathons.map((hackathon) => {
-                                return (
-                                    <div className="col-12 col-md-4 p-3">
-                                        <HackathonCard
-                                            hackathon={hackathon}
-                                            key={hackathon.slug}
-                                        ></HackathonCard>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    ) : (
-                            <div className="row align-items-stretch justify-content-center">
-                                <div className="col-12 col-md-4 p-3">
-                                    <Sorry />
+                    {hackathons ? 
+                        <>
+                            {hackathons.length ? (
+                                <div className="row no-gutters align-items-stretch justify-content-start">
+                                    {hackathons.map((hackathon) => {
+                                        return (
+                                            <div className="col-12 col-md-4 p-3">
+                                                <HackathonCard
+                                                    hackathon={hackathon}
+                                                    key={hackathon.slug}
+                                                ></HackathonCard>
+                                            </div>
+                                        );
+                                    })}
                                 </div>
-                            </div>
-                        )}
+                            ) : (
+                                <div className="row align-items-stretch justify-content-center">
+                                    <div className="col-12 col-md-4 p-3">
+                                        <Sorry />
+                                    </div>
+                                </div>
+                            )}
+                        </>
+                        :
+                        <Spinner />
+                    }
                 </div>
                 <div className="row justify-content-between align-items-center">
                     <div className="pl-3">
