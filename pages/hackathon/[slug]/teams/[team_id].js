@@ -45,7 +45,7 @@ export default function manageTeam() {
                 //     "Authorization"
                 // ] = `Token b672633aab1e632e0520bbbd0ff38b5919126604`
                 const [responseTeam, responseUser] = await Promise.all([
-                    axios.get(`${API_URL}teams/${router.query.team_id}`),
+                    axios.get(`${API_URL}teams/${router.query.team_id}/`),
                     axios.get(`${API_URL}profile/`),
                 ])
                 // const responseTeam = await axios.get(

@@ -189,32 +189,33 @@ export default function register() {
             >
                 {notif.message}
             </Notification>
-            <Row justify="center" m={{ t: "3.5rem", b: "2.5rem", x: "0.5rem" }}>
+            <Row justify="center" m={{ t: "3.5rem", b: "1.5rem", x: "0.5rem" }}>
                 <Text
                     tag="h1"
-                    textSize="display2"
+                    textSize="display1"
                     textColor="#003e54"
                     fontFamily="madetommy-regular"
-                    textDecor="underline"
                     textAlign="center"
                 >
                     Glad to see that you are interested!
                 </Text>
             </Row>
             <Row justify="center" m={{ t: { md: "3rem" } }}>
-                <Col size={{ xs: "12", md: "8" }}>
+                <Col size={{ xs: "12", md: "5" }}>
                     <Div
                         bg="white"
                         shadow={{ md: "4" }}
                         rounded="xl"
                         m={{ b: "1rem" }}
+                        p={{ x: "1rem", y: "2rem" }}
                     >
-                        <Div p="1rem">
+                        <Div p="1rem" m={{ b: "1rem" }}>
                             <Text
                                 tag="h3"
                                 textSize="title"
                                 textColor="#003e54"
                                 fontFamily="madetommy-regular"
+                                m={{ b: "0.5rem" }}
                             >
                                 Register a new team
                             </Text>
@@ -227,7 +228,7 @@ export default function register() {
                                     <Button
                                         pos="absolute"
                                         onClick={handleRegister}
-                                        w="3rem"
+                                        w="6rem"
                                         top="0"
                                         right="0"
                                         bg="#178a80"
@@ -260,7 +261,7 @@ export default function register() {
                                 textColor="gray800"
                                 fontFamily="madetommy-regular"
                             >
-                                Or
+                                OR
                             </Text>
                         </Row>
                         <Div p="1rem">
@@ -269,6 +270,7 @@ export default function register() {
                                 textSize="title"
                                 textColor="#003e54"
                                 fontFamily="madetommy-regular"
+                                m={{ b: "0.5rem" }}
                             >
                                 Join a Team
                             </Text>
@@ -281,7 +283,7 @@ export default function register() {
                                     <Button
                                         pos="absolute"
                                         onClick={handleJoin}
-                                        w="3rem"
+                                        w="6rem"
                                         top="0"
                                         right="0"
                                         rounded={{ r: "md" }}

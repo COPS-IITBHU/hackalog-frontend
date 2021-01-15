@@ -97,35 +97,29 @@ export default function Hackathon() {
                                 <div className="col-9 p-2">
                                     <Tab.Content>
                                         <Tab.Pane eventKey="overview" title='Overview'>
-                                            <div className="tabContent">
-                                                <Overview hackathon={hackathon} />
-                                            </div>
+                                            <Overview hackathon={hackathon} />
                                         </Tab.Pane>
                                         <Tab.Pane eventKey="participants" title='Participants'>
-                                            <div className="tabContent">
-                                                <Participants participants={participants} />
-                                            </div>
+                                            <Participants participants={participants} />
                                         </Tab.Pane>
                                         <Tab.Pane eventKey="updates" title='Updates'>
-                                            <div className="tabContent">
-                                                <Overview hackathon={hackathon} />
-                                            </div>
+                                            <Overview hackathon={hackathon} />
                                         </Tab.Pane>
                                         <Tab.Pane eventKey="leaderboard" title="Leaderboard">
-                                            <div className="tabContent">
-                                                <Leaderboard submissions={allSubmissions} />
-                                            </div>
+                                            <Leaderboard submissions={allSubmissions} />
                                         </Tab.Pane>
                                     </Tab.Content>
                                 </div>
                                 <div className="col-3 p-2">
                                     <div className="">
                                         <div className="pb-5 pb-lg-0">
-                                            <div className="bg-grey p-3 p-md-4" >
+                                            <div className="bg-grey p-3 p-md-4 rounded" >
                                                 <div className="pb-3">Join to receive hackathon updates, find teammates, and submit a project.
                                                 </div>
                                                 <div>
-                                                    <div className="btn btn-success w-100">Join Hackathon</div>
+                                                    <Link href={`/hackathon/${hackathonId}/register`}>
+                                                        <a className="btn btn-success w-100">Join Hackathon</a>
+                                                    </Link>
                                                 </div>
                                             </div>
 
@@ -211,23 +205,33 @@ function Overview( {hackathon} )  {
 }
 
 function Participants({participants}) {
-    return (
-        <div >
-           { participants.map( (team, index) => team.name.indexOf('Team Ongoing') == -1 ?
-            ( <div className = "bg-grey"><h6>{index}. {team.name}</h6> 
-             <style jsx>{`
-                .bg-grey {
-                    background-color: rgba(0.9,0,0,0.04);
-                    height: 7vh;
-                    margin-left: 50px;
-                    margin-bottom: 4px;
-                    padding: 10px;
-                 
-                }
-            `}</style></div> ) : <ol> </ol>
-            )}
-        </div>
-    )
+    if(participants){
+        return (
+            <div>
+               {participants.length ?
+                    participants.map((team, index) => 
+                        team.name.indexOf('Team Ongoing') == -1 ?
+                            <div className="bg-grey d-flex align-items-center px-3 rounded" key={index}>
+                                <h6>{index}. {team.name}</h6>
+                                <style jsx>{`
+                                    .bg-grey {
+                                        background-color: rgba(0.9,0,0,0.04);
+                                        height: 7vh;
+                                        margin-bottom: 4px;
+                                    }
+                                `}</style>
+                            </div>
+                        :
+                        <div></div>
+                    )
+                :
+                <div>Empty</div>
+            }
+            </div>
+        )
+    }else{
+        return null
+    }
 }
 
 function Leaderboard({submissions}) {
