@@ -1,54 +1,98 @@
 import React from 'react'
 import { loadFirebase } from './firebase'
 import axios from '../util/axios'
-import { API_URL } from '../util/constants'
 
 const AuthContext = React.createContext({})
 
 export const AuthProvider = ({ children }) => {
-  const [ firebaseUser, setFirebaseUser ] = React.useState(null)
-  const [ token, setToken ] = React.useState(null)
-  const [ loading, setLoading ] = React.useState(true)
+    const [ firebaseUser, setFirebaseUser ] = React.useState(null)
+    const [ token, setToken ] = React.useState(null)
+    const [ profile, setProfile ] = React.useState(null)
+    const [ loading, setLoading ] = React.useState(true)
 
-  const checkAuth = async () => {
-    let firebase = await loadFirebase()
-    firebase.auth().onAuthStateChanged(authUser => {
-      console.log("firebase user: ", authUser)
-      setFirebaseUser(authUser)
-      if(authUser){
-        authUser.getIdToken(true)
-        .then(idToken => {
-          axios.post("login/", { id_token: idToken })
-            .then(response => {
-              console.log(response.status, response.data)
-              setToken(response.data.token)
-              setLoading(false)
+    const updateProfile = (token) => {
+        axios.defaults.headers.common["Authorization"] = `Token ${token}`;
+        return axios.get(`profile/`)
+    }
+
+    const handleSignIn = async () => {
+        var firebase = await loadFirebase();
+        var provider = new firebase.auth.GoogleAuthProvider();
+        provider.addScope('email');
+        provider.addScope('profile');
+        firebase.auth().signInWithPopup(provider)
+            .then(() => {
+                console.log("firebase login success")
             })
-            .catch(error => {
-              console.log(error)
-              console.log(error.response)
-              setLoading(false)
-            })
-        })
-        .catch(error => {
-            console.log(error)
-            setLoading(false)
+            .catch(err => {
+                alert('Error Processing request, try again.');
+                console.log(err);
+            });
+    }
+
+    const handleLogout = async () => {
+        var firebase = await loadFirebase();
+        firebase.auth().signOut().then(function () {
+            setFirebaseUser(null)
+            setToken(null)
+            setProfile(null)
+            delete axios.defaults.headers.common['Authentication']
+        }).catch(function (err) {
+            alert('Error Processing request, try again.');
+            console.log(err);
         });
-      }
-    });
-  }
+    }
 
-  React.useEffect(() => {
-    checkAuth()
-  } ,[])
+    const checkAuth = async () => {
+        setLoading(true)
+        let firebase = await loadFirebase()
+        firebase.auth().onAuthStateChanged(authUser => {
+            console.log("firebase user: ", authUser)
+            setFirebaseUser(authUser)
+            if (authUser) {
+                authUser.getIdToken(true)
+                    .then(idToken => {
+                        axios.post("login/", { id_token: idToken })
+                            .then(response => {
+                                console.log(response.status, response.data)
+                                let newToken = response.data.token
+                                updateProfile(newToken)
+                                    .then(response => {
+                                        console.log("Profile Response: ", response.data)
+                                        setToken(newToken)
+                                        setProfile(response.data)
+                                        setLoading(false)
+                                    }).catch(error => {
+                                        setLoading(false)
+                                        console.log(error)
+                                    })
+                            })
+                            .catch(error => {
+                                console.log(error)
+                                console.log(error.response)
+                                setLoading(false)
+                            })
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        setLoading(false)
+                    });
+            }
+            else setLoading(false)
+        });
+    }
 
-  return(
-    <AuthContext.Provider value={{
-      firebaseUser, setFirebaseUser, token, setToken, loading
-    }}>
-      {children}
-    </AuthContext.Provider>
-  )
+    React.useEffect(() => {
+        checkAuth()
+    }, [])
+
+    return (
+        <AuthContext.Provider value={{
+            firebaseUser, setFirebaseUser, token, setToken, profile, setProfile, loading, handleSignIn, handleLogout
+        }}>
+            {children}
+        </AuthContext.Provider>
+    )
 }
 
 export const useAuth = () => React.useContext(AuthContext)
