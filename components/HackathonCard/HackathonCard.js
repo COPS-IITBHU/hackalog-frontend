@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Date from "../Date/Date";
 
 export default function HackathonCard({ hackathon }) {
-  return (
+    return (
         <>
             <Div bg="white" shadow="4" rounded="xl" m={{ b: "1rem" }}>
                 <Div
@@ -20,7 +20,7 @@ export default function HackathonCard({ hackathon }) {
                         {hackathon.title}
                     </Text>
                     <Text m={{ b: "1rem" }}>
-                        {hackathon.description}
+                        {hackathon.tagline}
                     </Text>
                     <Row>
                         <Col size="7">
@@ -44,5 +44,5 @@ export default function HackathonCard({ hackathon }) {
                 </Div>
             </Div>
         </>
-  );
+    );
 }
