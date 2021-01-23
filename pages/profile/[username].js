@@ -56,7 +56,7 @@ function Profile() {
 					}
 				})
 				.catch((err) => {
-					console.log(err)
+					console.error(err)
 					setUserRequest({
 						loading: false,
 						user: "NOT FOUND", //dev things, sorry for the changes
@@ -67,7 +67,7 @@ function Profile() {
 
 	useEffect(() => {
 		if (userRequest.user && token && profile) {
-			if (profile.username === username) setCurrentUser(true)
+			if (profile.username === userRequest.user.username) setCurrentUser(true)
 		}else {
 			setCurrentUser(false)
 		}
