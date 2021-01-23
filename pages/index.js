@@ -31,14 +31,14 @@ function useOnScreen(options) {
 
 
 export default function Home() {
-    const [hackathons, setHackathons] = React.useState()
+    const [hackathons, setHackathons] = React.useState([])
     const [ref, visible] = useOnScreen({
         rootMargin: '-100px'
     })
     React.useEffect(() => {
         axiosInstance.get('hackathons').then((response) => {
             console.log(response.data);
-            setHackathons(response.data.slice(0, 3))
+            setHackathons(response.data)
         }).catch(err => {
             console.log(err)
         })
@@ -75,7 +75,19 @@ export default function Home() {
     //         slug: "slug-3",
     //     },
     // ];
-    const previousHackathons = [];
+
+
+
+    var previousHackathons = false;
+    if (hackathons.length) {
+        previousHackathons = hackathons.filter((hackathon) => hackathon.status == "Completed").slice(0, 3);
+    }
+
+    var currentAndUpcomingHackathons = false;
+    if (hackathons.length) {
+        currentAndUpcomingHackathons = hackathons.filter(
+            (hackathon) => hackathon.status == "Upcoming" || hackathon.status == "Ongoing").slice(0, 3);
+    }
     return (
         <div>
             <div className={visible ? "" : "d-none"} ref={ref}>
@@ -144,7 +156,7 @@ export default function Home() {
                 <div className="row justify-content-between align-items-center">
                     <div className="pl-3">
                         <Text tag="h3" textSize="title" textColor="#003e54" fontFamily="madetommy-bold">
-                            Upcoming events and hackathons:
+                            Ongoing and Upcoming Hackathons:
                         </Text>
                     </div>
                     <div className="pr-3">
@@ -154,17 +166,13 @@ export default function Home() {
                     </div>
                 </div>
                 <div className="py-3 py-md-5">
-                    {hackathons ?
+                    {currentAndUpcomingHackathons ?
                         <>
-                            {hackathons.length ? (
+                            {currentAndUpcomingHackathons.length ? (
                                 <div className="row no-gutters align-items-stretch justify-content-start">
-                                    {hackathons.map((hackathon) => {
-                                        return (
-                                            <div key={hackathon.slug} className="col-12 col-md-4 p-3">
-                                                <HackathonCard hackathon={hackathon} />
-                                            </div>
-                                        );
-                                    })}
+                                    {currentAndUpcomingHackathons.map((hackathon) => <div key={hackathon.slug} className="col-12 col-md-4 p-3">
+                                        <HackathonCard hackathon={hackathon} />
+                                    </div>)}
                                 </div>
                             ) : (
                                     <div className="row align-items-stretch justify-content-center">
@@ -181,7 +189,7 @@ export default function Home() {
                 <div className="row justify-content-between align-items-center">
                     <div className="pl-3">
                         <Text tag="h3" textSize="title" textColor="#003e54" fontFamily="madetommy-bold">
-                            Hackathons and events archive:
+                            Hackathons and Events Archive:
                         </Text>
                     </div>
                     <div className="pr-3">
@@ -191,23 +199,22 @@ export default function Home() {
                     </div>
                 </div>
                 <div className="py-3 py-md-5">
-                    {previousHackathons.length ? (
-                        <div className="row no-gutters align-items-stretch justify-content-center">
-                            {previousHackathons.map((hackathon) => {
-                                return (
+                    {!previousHackathons ?
+                        <Spinner /> :
+                        previousHackathons.length ? (
+                            <div className="row no-gutters align-items-stretch justify-content-start">
+                                {previousHackathons.map((hackathon) =>
                                     <div key={hackathon.slug} className="col-12 col-md-4 p-3">
                                         <HackathonCard hackathon={hackathon} />
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    ) : (
-                            <div className="row align-items-stretch justify-content-center">
-                                <div className="col-12 col-md-4 p-3">
-                                    <Sorry />
-                                </div>
+                                    </div>)}
                             </div>
-                        )}
+                        ) : (
+                                <div className="row align-items-stretch justify-content-center">
+                                    <div className="col-12 col-md-4 p-3">
+                                        <Sorry />
+                                    </div>
+                                </div>
+                            )}
                 </div>
             </div>
             <div className="listhackathon-container py-4"></div>
