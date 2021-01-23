@@ -31,14 +31,14 @@ function useOnScreen(options) {
 
 
 export default function Home() {
-    const [ hackathons, setHackathons ] = React.useState()
+    const [hackathons, setHackathons] = React.useState()
     const [ref, visible] = useOnScreen({
         rootMargin: '-100px'
     })
     React.useEffect(() => {
         axiosInstance.get('hackathons').then((response) => {
             console.log(response.data);
-            setHackathons(response.data.slice(0,3))
+            setHackathons(response.data.slice(0, 3))
         }).catch(err => {
             console.log(err)
         })
@@ -82,9 +82,9 @@ export default function Home() {
                 {visible ? (<Header />) : ""}
             </div>
             <div style={{
-                    background: "url(/images/home-jumbo.jpg) no-repeat",
-                    backgroundSize: "cover",
-                    backgroundAttachment: "fixed"
+                background: "url(/images/home-jumbo.jpg) no-repeat",
+                backgroundSize: "cover",
+                backgroundAttachment: "fixed"
             }}>
                 <div className="container py-10 text-center">
                     <Text tag="h1" textSize="display2" m={{ b: "1rem" }} fontFamily="madetommy-bold">
@@ -154,28 +154,25 @@ export default function Home() {
                     </div>
                 </div>
                 <div className="py-3 py-md-5">
-                    {hackathons ? 
+                    {hackathons ?
                         <>
                             {hackathons.length ? (
                                 <div className="row no-gutters align-items-stretch justify-content-start">
                                     {hackathons.map((hackathon) => {
                                         return (
-                                            <div className="col-12 col-md-4 p-3">
-                                                <HackathonCard
-                                                    hackathon={hackathon}
-                                                    key={hackathon.slug}
-                                                ></HackathonCard>
+                                            <div key={hackathon.slug} className="col-12 col-md-4 p-3">
+                                                <HackathonCard hackathon={hackathon} />
                                             </div>
                                         );
                                     })}
                                 </div>
                             ) : (
-                                <div className="row align-items-stretch justify-content-center">
-                                    <div className="col-12 col-md-4 p-3">
-                                        <Sorry />
+                                    <div className="row align-items-stretch justify-content-center">
+                                        <div className="col-12 col-md-4 p-3">
+                                            <Sorry />
+                                        </div>
                                     </div>
-                                </div>
-                            )}
+                                )}
                         </>
                         :
                         <Spinner />
@@ -198,11 +195,8 @@ export default function Home() {
                         <div className="row no-gutters align-items-stretch justify-content-center">
                             {previousHackathons.map((hackathon) => {
                                 return (
-                                    <div className="col-12 col-md-4 p-3">
-                                        <HackathonCard
-                                            hackathon={hackathon}
-                                            key={hackathon.slug}
-                                        ></HackathonCard>
+                                    <div key={hackathon.slug} className="col-12 col-md-4 p-3">
+                                        <HackathonCard hackathon={hackathon} />
                                     </div>
                                 );
                             })}
