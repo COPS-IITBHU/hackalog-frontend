@@ -43,40 +43,6 @@ export default function Home() {
             console.log(err)
         })
     }, [])
-    // const hackathons = [
-    //     {
-    //         title: "Hackathon-1",
-    //         description:
-    //             "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliquI",
-    //         start: "2020-11-09",
-    //         end: "2020-11-10",
-    //         image: "https://miro.medium.com/max/1924/1*OengjbOmGldeir-D6k1sYA.png",
-    //         link: "#",
-    //         slug: "slug-1",
-    //     },
-    //     {
-    //         title: "Hackathon-2",
-    //         description:
-    //             "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliquI",
-    //         start: "2020-11-09",
-    //         end: "2020-11-10",
-    //         image: "https://miro.medium.com/max/1924/1*OengjbOmGldeir-D6k1sYA.png",
-    //         link: "#",
-    //         slug: "slug-2",
-    //     },
-    //     {
-    //         title: "Hackathon-3",
-    //         description:
-    //             "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliquI",
-    //         start: "2020-11-09",
-    //         end: "2020-11-10",
-    //         image: "https://miro.medium.com/max/1924/1*OengjbOmGldeir-D6k1sYA.png",
-    //         link: "#",
-    //         slug: "slug-3",
-    //     },
-    // ];
-
-
 
     var previousHackathons = false;
     if (hackathons.length) {
