@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import DefaultErrorPage from "next/error";
 import { Spinner, Row, Container, Table } from "react-bootstrap";
-import { Text, Button, Div } from "atomize";
+import { Text, Button, Div, Image } from "atomize";
 import axios from "../../util/axios";
 import { useAuth } from "../../context/auth";
 import { Jumbotron } from "react-bootstrap";
@@ -59,7 +59,14 @@ export default function SubmissionDetail() {
 	}, [submission]);
 
 	if (!Number(id) || status == 404)
-		return <DefaultErrorPage statusCode={404} />;
+		return (
+			<div className="text-center pt-3 mb-2">
+				<Image src={'/images/404.svg'} className="mb-3" maxH={{ xs: '40vw', sm: '25vh' }} />
+				<Text textSize="title" >
+					Error 404: Submission Not Found
+		   		</Text>
+			</div>
+		);
 	if (status == 190)
 		return (
 			<Container className="text-center">
