@@ -32,7 +32,7 @@ export default function HackathonCard({ hackathon }) {
                             </Text>
                         </Col>
                         <Col size="5">
-                            <Link href={`/hackathon/${hackathon.id}`}>
+                            <Link href={`/hackathon/${hackathon.slug}`}>
                                 <a>
                                     <Button m={{ l: "auto" }}>
                                         See more...
