@@ -7,6 +7,9 @@ import axios from "../../util/axios";
 import { useAuth } from "../../context/auth";
 import { Jumbotron } from "react-bootstrap";
 import Head from 'next/head';
+import { BiCodeAlt } from 'react-icons/bi';
+import { HiOutlineEmojiSad } from "react-icons/hi";
+
 
 
 export default function SubmissionDetail() {
@@ -31,9 +34,11 @@ export default function SubmissionDetail() {
 			axios
 				.get(`/submissions/${id}/`)
 				.then((response) => {
+
 					let sub = response.data;
 					if (!sub.hackathon.image)
 						sub.hackathon.image = "/images/home-jumbo.jpg";
+					console.log(sub)
 					setSubmission(sub);
 					setStatus(200);
 				})
@@ -106,12 +111,23 @@ export default function SubmissionDetail() {
 					{submission.hackathon.title} Submissions
         		</Text>
 				<Container>
-					<Text textSize="title">Team {submission.team.name}'s Submission</Text>
+					<Text textSize="title">{submission.title}&nbsp;</Text>
+					<Text textSize="subheader" className="pl-3">- by Team {submission.team.name}</Text>
 					<hr />
 					<Text textSize="subheader">
 						<u>Description</u>
 					</Text>
 					<Text textSize="paragraph">{submission.description}</Text>
+					<Text textSize="subheader"><u>Judge's Review</u></Text>
+					<Text textSize="paragraph">{submission.review}</Text>
+
+					<Text textSize="subheader">
+						<BiCodeAlt /> Source Code: {
+							submission.submission_url == "EMPTY"
+								? "No Link Provided"
+								: <a href={`${submission.submission_url}`}>Link</a>
+						}
+					</Text>
 					<Row className="justify-content-around mt-3">
 						<Div shadow="4" className="col-sm-5" rounded="md" m={{ b: "1rem" }}>
 							<Container>
@@ -125,7 +141,7 @@ export default function SubmissionDetail() {
                 				</Text>
 								{teamStat !== 190 ? (
 									<div className="text-center pt-3 mb-2">
-										<Text textSize="display1">😟</Text>
+										<Text textSize="display1"><HiOutlineEmojiSad /></Text>
 										<Text textWeight="600" textColor="red">
 											Unable to Fetch Team Details
                						    </Text>
