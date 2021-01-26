@@ -129,7 +129,7 @@ export default function SubmissionDetail() {
 						}
 					</Text>
 					<Row className="justify-content-around mt-3">
-						<Div shadow="4" className="col-sm-5" rounded="md" m={{ b: "1rem" }}>
+						<Div shadow="4" className="col-md-5" rounded="md" m={{ b: "1rem" }}>
 							<Container>
 								<Text
 									textWeight="600"
@@ -148,7 +148,7 @@ export default function SubmissionDetail() {
 									</div>
 								) : team ? (
 									<>
-										<Table hover size="sm" className="mb-3 pb-3">
+										<Table hover size="sm" className="mb-3 pb-3" responsive>
 											<tbody>
 												<tr>
 													<td>{team.leader.name}</td>
@@ -209,7 +209,7 @@ export default function SubmissionDetail() {
 							</Container>
 						</Div>
 
-						<Div shadow="4" className="col-sm-5" rounded="md" m={{ b: "1rem" }}>
+						<Div shadow="4" className="col-md-6" rounded="md" m={{ b: "1rem" }}>
 							<Container className="text-center">
 								<Text
 									textWeight="600"
@@ -219,7 +219,7 @@ export default function SubmissionDetail() {
 								>
 									Hackathon Details
             				    </Text>
-								<Table hover size="sm" className="mb-3 pb-3">
+								<Table hover size="sm" className="mb-3 pb-3" responsive>
 									<tbody>
 										<tr>
 											<td>Title</td>
@@ -231,11 +231,11 @@ export default function SubmissionDetail() {
 										</tr>
 										<tr>
 											<td>Start Date</td>
-											<td>{submission.hackathon.start}</td>
+											<td>{(Date(submission.hackathon.start)).toString()} </td>
 										</tr>
 										<tr>
 											<td>End Date</td>
-											<td>{submission.hackathon.end}</td>
+											<td>{(Date(submission.hackathon.end)).toString()} </td>
 										</tr>
 										<tr>
 											<td>Status</td>
