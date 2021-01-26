@@ -2,9 +2,10 @@ import HackathonCard from "../components/HackathonCard/HackathonCard"
 import Sorry from "../components/Sorry/Sorry";
 import Header from "../components/Header/Header";
 import { Text, Button, Div } from "atomize";
-import { Spinner } from "react-bootstrap";
+import { Spinner, Container } from "react-bootstrap";
 import axiosInstance from "../util/axios";
-
+import React from 'react'
+import Link from 'next/link'
 
 function useOnScreen(options) {
     const ref = React.useRef();
@@ -126,9 +127,11 @@ export default function Home() {
                         </Text>
                     </div>
                     <div className="pr-3">
-                        <Button shadow="3" hoverShadow="4" m={{ r: "1rem" }} p="1rem">
-                            See all
-                        </Button>
+                        <Link href="/hackathons">
+                            <Button shadow="3" hoverShadow="4" m={{ r: "1rem" }} p="1rem">
+                                View More
+                            </Button>
+                        </Link>
                     </div>
                 </div>
                 <div className="py-3 py-md-5">
@@ -159,9 +162,11 @@ export default function Home() {
                         </Text>
                     </div>
                     <div className="pr-3">
-                        <Button shadow="3" hoverShadow="4" m={{ r: "1rem" }} p="1rem">
-                            See all
-                        </Button>
+                        <Link href="/hackathons">
+                            <Button shadow="3" hoverShadow="4" m={{ r: "1rem" }} p="1rem">
+                                View More
+                            </Button>
+                        </Link>
                     </div>
                 </div>
                 <div className="py-3 py-md-5">
@@ -183,7 +188,7 @@ export default function Home() {
                             )}
                 </div>
             </div>
-            <div className="listhackathon-container py-4"></div>
+            {/*<div className="listhackathon-container py-4"></div>*/}
             <style jsx>{`
                 .icon-container {
                     text-align: left;
@@ -204,5 +209,6 @@ export default function Home() {
                 }
             `}</style>
         </div>
+
     );
 }
