@@ -10,32 +10,32 @@ import { Text } from 'atomize'
 
 export default function Hackathon() {
     const router = useRouter()
-    const hackathonId = router.query.slug
+    const slug = router.query.slug
 
     const { firebaseUser, token, loading } = useAuth()
-    const [ localLoading, setLocalLoading ] = useState(true)
-    const [ hackathon, setHackathon ] = useState([])
-    const [ id, setId ] = useState([])
-    const [ participants, setParticipants ] = useState([])
-    const [ activeTab, setActiveTab ] = useState([])
-    const [ allSubmissions, setAllSubmisssions ]  = useState([])
+    const [localLoading, setLocalLoading] = useState(true)
+    const [hackathon, setHackathon] = useState([])
+    const [id, setId] = useState([])
+    const [participants, setParticipants] = useState([])
+    const [activeTab, setActiveTab] = useState([])
+    const [allSubmissions, setAllSubmisssions] = useState([])
 
     useEffect(() => {
-        if(hackathonId){
-            console.log("hackathon id: ", hackathonId)
-            //axios.defaults.headers.common['Authorization'] = `Token ${token}`;
-            axios.get(`/hackathons/${hackathonId}/`)
+        if (slug) {
+            console.log("hackathon id: ", slug)
+            if (token) axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+            axios.get(`/hackathons/${slug}/`)
                 .then((response) => {
                     console.log("hackathon response: ", response.data)
                     let hackathon = response.data
-                    if(!hackathon.image) hackathon.image = "/images/home-jumbo.jpg"
+                    if (!hackathon.image) hackathon.image = "/images/home-jumbo.jpg"
                     setHackathon(hackathon)
                     setId(hackathon.id)
                     setLocalLoading(false)
                 }).catch((err) => {
                     console.log(err)
                 })
-            axios.get(`/hackathons/${hackathonId}/teams/`)
+            axios.get(`/hackathons/${slug}/teams/`)
                 .then((response) => {
                     console.log("teams response: ", response.data)
                     setParticipants(response.data)
@@ -43,18 +43,18 @@ export default function Hackathon() {
                     console.log(err)
                     console.log(err.response.data)
                 })
-            axios.get(`/hackathons/${hackathonId}/submissions/`)
+            axios.get(`/hackathons/${slug}/submissions/`)
                 .then((response) => {
                     console.log("submissions response: ", response.data)
-                    setAllSubmisssions(response.data.sort((a,b) => b.score >  a.score? 1: -1).slice (0,10))
+                    setAllSubmisssions(response.data.sort((a, b) => b.score > a.score ? 1 : -1).slice(0, 10))
                 }).catch((err) => {
                     console.log(err)
                     console.log(err.response.data)
                 })
         }
-    }, [hackathonId, token])
+    }, [slug, token])
 
-    return(
+    return (
         <>
             {loading || localLoading ?
                 <Container className="text-center">
@@ -70,11 +70,11 @@ export default function Hackathon() {
                         <span className="sr-only">Loading...</span>
                     </Spinner>
                 </Container>
-            :
-                <div style={{background: "#87a3bb17", minHeight: "100vh"}}>
-                    <div className="banner-section" style = {{backgroundImage:`url(${hackathon.image})`}}>
+                :
+                <div style={{ background: "#87a3bb17", minHeight: "100vh" }}>
+                    <div className="banner-section" style={{ backgroundImage: `url(${hackathon.image})` }}>
                         <div>
-                            
+
                         </div>
                     </div>
                     <div className="hackathon-nav">
@@ -95,8 +95,8 @@ export default function Hackathon() {
                                     </Nav.Item>
                                 </Nav>
                             </div>
-                            <div className="row no-gutters container-lg mx-auto align-items-start">
-                                <div className="col-9 p-2">
+                            <div className="row no-gutters container-xs container mx-auto align-items-start">
+                                <div className="col-md-9">
                                     <Tab.Content>
                                         <Tab.Pane eventKey="overview" title='Overview'>
                                             <Overview hackathon={hackathon} />
@@ -112,21 +112,76 @@ export default function Hackathon() {
                                         </Tab.Pane>
                                     </Tab.Content>
                                 </div>
-                                <div className="col-3 p-2">
-                                    <div className="">
-                                        <div className="pb-5 pb-lg-0">
-                                            <div className="bg-grey p-3 p-md-4 rounded" >
-                                                <div className="pb-3">Join to receive hackathon updates, find teammates, and submit a project.
+                                <div className="col-md-3 p-3">
+                                    {
+                                        hackathon.status == "Ongoing"
+                                            ? (
+                                                <div className="pb-5 pb-lg-0">
+                                                    <div className="bg-grey p-3 p-md-4 rounded" >
+                                                        {hackathon.userStatus == "registered"
+                                                            ? (
+                                                                <>
+                                                                    <div className="pb-3">
+                                                                        {
+                                                                            hackathon.status == "ongoing"
+                                                                                ? "You have already registered for the hackathon. Submit you project below!"
+                                                                                : hackathon.status == "upcoming"
+                                                                                    ? "You have already registered for the hackathon. Waiting for the hackathon to start..."
+                                                                                    : "The hackathon has ended. Hope you had a nice experience!"
+                                                                        }
+                                                                    </div>
+                                                                    <div>
+                                                                        <Link href={`/hackathon/${slug}/register`}>
+                                                                            <a className="btn btn-success w-100">Login to Your Team</a>
+                                                                        </Link>
+                                                                    </div>
+                                                                </>
+                                                            )
+                                                            : hackathon.userStatus == "submitted"
+                                                                ? (
+                                                                    <>
+                                                                        <div className="pb-3">
+                                                                            We have already received your submission for this hackathon.
+                                                                                <p>You can still login to see your team.</p>
+                                                                        </div>
+                                                                        <div>
+                                                                            <Link href={`/hackathon/${slug}/register`}>
+                                                                                <a className="btn btn-success w-100">Login to Your Team</a>
+                                                                            </Link>
+                                                                        </div>
+                                                                    </>
+                                                                ) :
+                                                                (
+                                                                    <>
+                                                                        <div className="pb-3">
+                                                                            Join to receive hackathon updates, find teammates, and submit a project.
+                                                                           </div>
+                                                                        <div>
+                                                                            <Link href={`/hackathon/${slug}/register`}>
+                                                                                <a className="btn btn-success w-100">Join Hackathon</a>
+                                                                            </Link>
+                                                                        </div>
+                                                                    </>
+                                                                )
+                                                        }
+
+                                                    </div>
                                                 </div>
-                                                <div>
-                                                    <Link href={`/hackathon/${hackathonId}/register`}>
-                                                        <a className="btn btn-success w-100">Join Hackathon</a>
-                                                    </Link>
+                                            )
+                                            : <div className="pb-5 pb-lg-0 mt-3">
+                                                <div className="bg-grey p-3 p-md-4 rounded" >
+                                                    <div className="pb-3">
+                                                        The hackathon has concluded. The results&nbsp;
+                                                        {
+                                                            hackathon.results_declared
+                                                                ? "have been declared. You can view it under the leaderboard section."
+                                                                : "will be declared shortly."
+                                                        }
+                                                    </div>
                                                 </div>
                                             </div>
+                                    }
 
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </Tab.Container>
@@ -148,9 +203,9 @@ export default function Hackathon() {
         </>
     )
 }
-function Overview( {hackathon} )  {
+function Overview({ hackathon }) {
     return (
-        <div className = "overview_body">
+        <div className="overview_body">
             <div className="p-3">
                 <Text tag="h1" textSize="display1" m={{ b: "1rem" }} fontFamily="madetommy-bold">
                     {hackathon.title}
@@ -168,7 +223,7 @@ function Overview( {hackathon} )  {
                     <Text tag="h6" textSize="subheader" fontFamily="madetommy-bold">
                         END DATE:
                     </Text>
-                    {(new Date(hackathon.end)).toString()} 
+                    {(new Date(hackathon.end)).toString()}
                 </div>
                 <div className="pb-3">
                     <Text tag="h6" textSize="subheader" fontFamily="madetommy-bold">
@@ -201,17 +256,18 @@ function Overview( {hackathon} )  {
                     padding-bottom : 30px;
                     padding-top: 30px;
                 }                        
-           `}</style>                
+           `}</style>
         </div>
     )
 }
 
-function Participants({participants}) {
-    if(participants){
+function Participants({ participants }) {
+    console.log("SSSSSSSSSSSSSSSSS", participants)
+    if (participants) {
         return (
             <div>
-               {participants.length ?
-                    participants.map((team, index) => 
+                {participants.length ?
+                    participants.map((team, index) =>
                         team.name.indexOf('Team Ongoing') == -1 ?
                             <div className="bg-grey d-flex align-items-center px-3 rounded" key={index}>
                                 <h6>{index}. {team.name}</h6>
@@ -223,36 +279,36 @@ function Participants({participants}) {
                                     }
                                 `}</style>
                             </div>
-                        :
-                        <div></div>
+                            :
+                            <div></div>
                     )
-                :
-                <div>Empty</div>
-            }
+                    :
+                    <div>Empty</div>
+                }
             </div>
         )
-    }else{
+    } else {
         return null
     }
 }
 
-function Leaderboard({submissions}) {
-        return (
+function Leaderboard({ submissions }) {
+    return (
         <div>
-            <div className="bg-grey heading row no-gutters px-3 px-md-5 align-items-center rounded-top"> 
+            <div className="bg-grey heading row no-gutters px-3 px-md-5 align-items-center rounded-top">
                 <div className="col-2"> <h6>RANK</h6> </div>
                 <div className="col-7"> <h6>TEAM NAME</h6> </div>
                 <div className="col-3"> <h6>SCORE</h6> </div>
             </div>
-        
-            {submissions && submissions.map((submission, index) => 
-                <div className={`bg-grey row no-gutters px-3 px-md-5 align-items-center ${index === submissions.length-1 && "rounded-bottom"}`} key={index}>
+
+            {submissions && submissions.map((submission, index) =>
+                <div className={`bg-grey row no-gutters px-3 px-md-5 align-items-center ${index === submissions.length - 1 && "rounded-bottom"}`} key={index}>
                     <div className="col-2"> {index + 1}.</div>
                     <div className="col-7"> {submission.team} </div>
                     <div className="col-3"> {submission.score} </div>
                 </div>
             )}
-           <style jsx>{`
+            <style jsx>{`
                 .bg-grey {
                     background-color: rgba(0.9,0,0,0.04);
                     display : flex;
@@ -266,6 +322,6 @@ function Leaderboard({submissions}) {
                 }
             `}</style>
         </div>
-        )
+    )
 }
 
