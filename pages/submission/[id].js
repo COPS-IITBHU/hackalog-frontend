@@ -254,7 +254,7 @@ export default function SubmissionDetail() {
 							</Container>
 						</Div>
 					</Row>
-					<a href={`/hackathon/${submission.hackathon.id}`}>
+					<a href={`/hackathon/${submission.hackathon.slug}`}>
 						<Button className="mb-3" bg="purple">
 							View Other Submissions
             			</Button>
