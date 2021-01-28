@@ -72,11 +72,7 @@ export default function Hackathon() {
                 </Container>
                 :
                 <div style={{ background: "#87a3bb17", minHeight: "100vh" }}>
-                    <div className="banner-section" style={{ backgroundImage: `url(${hackathon.image})` }}>
-                        <div>
-
-                        </div>
-                    </div>
+                    <div className="banner-section" style={{ backgroundImage: `url(${hackathon.image})` }}></div>
                     <div className="hackathon-nav">
                         <Tab.Container defaultActiveKey="overview">
                             <div className="text-center">
@@ -87,9 +83,14 @@ export default function Hackathon() {
                                     <Nav.Item>
                                         <Nav.Link eventKey="participants">Participants</Nav.Link>
                                     </Nav.Item>
-                                    <Nav.Item>
-                                        <Nav.Link eventKey="updates">Updates</Nav.Link>
-                                    </Nav.Item>
+                                    {
+                                        /*
+                                        Not Implemented on Backend Yet
+                                        <Nav.Item>
+                                            <Nav.Link eventKey="updates">Updates</Nav.Link>
+                                        </Nav.Item>
+                                        */
+                                    }
                                     <Nav.Item>
                                         <Nav.Link eventKey="leaderboard">Leaderboard</Nav.Link>
                                     </Nav.Item>
@@ -122,13 +123,7 @@ export default function Hackathon() {
                                                             ? (
                                                                 <>
                                                                     <div className="pb-3">
-                                                                        {
-                                                                            hackathon.status == "ongoing"
-                                                                                ? "You have already registered for the hackathon. Submit you project below!"
-                                                                                : hackathon.status == "upcoming"
-                                                                                    ? "You have already registered for the hackathon. Waiting for the hackathon to start..."
-                                                                                    : "The hackathon has ended. Hope you had a nice experience!"
-                                                                        }
+                                                                        You have already registered for the hackathon. Submit you project below!
                                                                     </div>
                                                                     <div>
                                                                         <Link href={`/hackathon/${slug}/register`}>
@@ -168,20 +163,47 @@ export default function Hackathon() {
                                                     </div>
                                                 </div>
                                             )
-                                            : <div className="pb-5 pb-lg-0 mt-3">
-                                                <div className="bg-grey p-3 p-md-4 rounded" >
-                                                    <div className="pb-3">
-                                                        The hackathon has concluded. The results&nbsp;
-                                                        {
-                                                            hackathon.results_declared
-                                                                ? "have been declared. You can view it under the leaderboard section."
-                                                                : "will be declared shortly."
-                                                        }
+                                            : hackathon.status == "Upcoming"
+                                                ? <div className="pb-5 pb-lg-0 mt-3">
+                                                    <div className="bg-grey p-3 p-md-4 rounded" >
+                                                        <div className="pb-3">
+                                                            The hackathon has not stated yet.&nbsp;
+                                                            {
+                                                                hackathon.userstatus == "registered"
+                                                                    ? "You have already registered for the hackathon. Wait for the hackathon to begin!"
+                                                                    : "Join to receive hackathon updates, find teammates, and submit a project!"
+                                                            }
+                                                        </div>
+                                                        <div className="pb-3">
+
+                                                        </div>
+                                                        <div>
+                                                            <Link href={`/hackathon/${slug}/register`}>
+                                                                {
+                                                                    hackathon.userstatus == "registered"
+                                                                        ? <a className="btn btn-success w-100">Login/Create a Team</a>
+                                                                        : <a className="btn btn-success w-100">Join Hackathon</a>
+                                                                }
+                                                            </Link>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                                : <div className="pb-5 pb-lg-0 mt-3">
+                                                    <div className="bg-grey p-3 p-md-4 rounded" >
+                                                        <div className="pb-3">
+                                                            The hackathon has concluded. Hope you had a nice experience!
+                                                            <p>
+                                                                The results&nbsp;
+                                                                {
+                                                                    hackathon.results_declared
+                                                                        ? "have been declared. You can view it under the leaderboard section."
+                                                                        : "will be declared shortly."
+                                                                }
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                     }
-
                                 </div>
                             </div>
                         </Tab.Container>
