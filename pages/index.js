@@ -38,10 +38,9 @@ export default function Home() {
     })
     React.useEffect(() => {
         axiosInstance.get('hackathons').then((response) => {
-            console.log(response.data);
             setHackathons(response.data)
         }).catch(err => {
-            console.log(err)
+            console.error(err)
         })
     }, [])
 
@@ -152,7 +151,16 @@ export default function Home() {
                                 )}
                         </>
                         :
-                        <Spinner />
+                        <Spinner
+                            style={{
+                                position: "absolute",
+                                left: "50%",
+                            }}
+                            animation="border"
+                            role="status"
+                        >
+                            <span className="sr-only">Loading...</span>
+                        </Spinner>
                     }
                 </div>
                 <div className="row justify-content-between align-items-center">
@@ -171,7 +179,16 @@ export default function Home() {
                 </div>
                 <div className="py-3 py-md-5">
                     {!previousHackathons ?
-                        <Spinner /> :
+                        <Spinner
+                            style={{
+                                position: "absolute",
+                                left: "50%",
+                            }}
+                            animation="border"
+                            role="status"
+                        >
+                            <span className="sr-only">Loading...</span>
+                        </Spinner> :
                         previousHackathons.length ? (
                             <div className="row no-gutters align-items-stretch justify-content-start">
                                 {previousHackathons.map((hackathon) =>
