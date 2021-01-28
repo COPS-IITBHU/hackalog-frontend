@@ -14,9 +14,11 @@ export default function Hackathon() {
 	const [localLoading, setLocalLoading] = useState(true);
 	const [hackathon, setHackathon] = useState([]);
 	const [participants, setParticipants] = useState([]);
+	const [error, setError] = useState(0);
 
 	useEffect(() => {
 		if (slug) {
+			setLocalLoading(true);
 			axios
 				.get(`/hackathons/${slug}/`)
 				.then((response) => {
@@ -26,6 +28,7 @@ export default function Hackathon() {
 					setLocalLoading(false);
 				})
 				.catch((err) => {
+					setError(err.response.status);
 					console.error(err);
 				});
 			axios
@@ -37,9 +40,35 @@ export default function Hackathon() {
 				.catch((err) => {
 					console.error(err);
 				});
+			setLocalLoading(false);
 		}
 	}, [slug]);
 
+	if (error != 0) {
+		return (
+			<>
+				{error == 404 ? (
+					<div className="text-center pt-3 mb-2">
+						<Image
+							src={"/images/404.svg"}
+							className="mb-3 mt-3"
+							style={{ maxHeight: "30vh" }}
+						/>
+						<Text textSize="title">Error 404: Hackathon Not Found</Text>
+					</div>
+				) : (
+						<div className="col-12 text-center py-3">
+							<Text textSize="display3">😔</Text>
+							<Text textSize="heading">Error {error} Occured</Text>
+							<Text textSize="caption">
+								We are trying hard to fix this. Report this problem&nbsp;
+              					<a href="https://github.com/COPS-IITBHU/hackalog-frontend/issues/new">here</a>
+							</Text>
+						</div>
+					)}
+			</>
+		);
+	}
 	return (
 		<>
 			{loading || localLoading ? (
@@ -113,12 +142,12 @@ export default function Hackathon() {
 															<div className="pb-3">
 																You have already registered for the hackathon.
 																Submit you project below!
-                            </div>
+                            								</div>
 															<div>
 																<Link href={`/hackathon/${slug}/register`}>
 																	<a className="btn btn-success w-100">
 																		Login to Your Team
-                                </a>
+                                									</a>
 																</Link>
 															</div>
 														</>
@@ -127,13 +156,13 @@ export default function Hackathon() {
 															<div className="pb-3">
 																We have already received your submission for this
 																hackathon.
-                              <p>You can still login to see your team.</p>
+                              									<p>You can still login to see your team.</p>
 															</div>
 															<div>
 																<Link href={`/hackathon/${slug}/register`}>
 																	<a className="btn btn-success w-100">
 																		Login to Your Team
-                                </a>
+                               										</a>
 																</Link>
 															</div>
 														</>
@@ -142,12 +171,12 @@ export default function Hackathon() {
 																	<div className="pb-3">
 																		Join to receive hackathon updates, find teammates,
 																		and submit a project.
-                            </div>
+										                            </div>
 																	<div>
 																		<Link href={`/hackathon/${slug}/register`}>
 																			<a className="btn btn-success w-100">
 																				Join Hackathon
-                                </a>
+                                											</a>
 																		</Link>
 																	</div>
 																</>
@@ -159,7 +188,7 @@ export default function Hackathon() {
 												<div className="bg-grey p-3 p-md-4 rounded">
 													<div className="pb-3">
 														The hackathon has not stated yet.&nbsp;
-                          {hackathon.userstatus == "registered"
+                          								{hackathon.userstatus == "registered"
 															? "You have already registered for the hackathon. Wait for the hackathon to begin!"
 															: "Join to receive hackathon updates, find teammates, and submit a project!"}
 													</div>
@@ -185,9 +214,9 @@ export default function Hackathon() {
 															<div className="pb-3">
 																The hackathon has concluded. Hope you had a nice
 																experience!
-                          <p>
+                          										<p>
 																	The results&nbsp;
-                            {hackathon.results_declared
+                            										{hackathon.results_declared
 																		? "have been declared. You can view it under the leaderboard section."
 																		: "will be declared shortly."}
 																</p>
@@ -238,31 +267,31 @@ function Overview({ hackathon }) {
 				<div className="pb-3">
 					<Text tag="h6" textSize="subheader" fontFamily="madetommy-bold">
 						START DATE:
-          </Text>
+          			</Text>
 					{new Date(hackathon.start).toString()}
 				</div>
 				<div className="pb-3">
 					<Text tag="h6" textSize="subheader" fontFamily="madetommy-bold">
 						END DATE:
-          </Text>
+          			</Text>
 					{new Date(hackathon.end).toString()}
 				</div>
 				<div className="pb-3">
 					<Text tag="h6" textSize="subheader" fontFamily="madetommy-bold">
 						STATUS:
-          </Text>
+          			</Text>
 					{hackathon.status}
 				</div>
 				<div className="pb-3">
 					<Text tag="h6" textSize="subheader" fontFamily="madetommy-bold">
 						RESULTS DECLARED:
-          </Text>
+          			</Text>
 					{hackathon.results_declared ? "Yes" : "No"}
 				</div>
 				<div className="pb-3">
 					<Text tag="h6" textSize="subheader" fontFamily="madetommy-bold">
 						MAX TEAM SIZE:
-          </Text>
+          			</Text>
 					{hackathon.max_team_size}
 				</div>
 			</div>
@@ -337,7 +366,7 @@ function Leaderboard({ slug, status, token }) {
 							<td>{submission.teamName} </td>
 							<td> {submission.score}</td>
 							<td>
-								<a href={`/submission/${submission.id}`}>Here</a>
+								<a href={`/submission/${submission.id}`}>{submission.title}</a>
 							</td>
 						</tr>
 					))
@@ -367,7 +396,7 @@ function Leaderboard({ slug, status, token }) {
 				<tbody>
 					{status == "Upcoming" ? (
 						<tr>
-							<td colspan={4} className="px-3">
+							<td colSpan={4} className="px-3">
 								<div
 									className="row rounded-bottom"
 									style={{
@@ -388,7 +417,7 @@ function Leaderboard({ slug, status, token }) {
 							<>
 								{loading ? (
 									<tr>
-										<td colspan={4}>
+										<td colSpan={4}>
 											<Spinner
 												style={{
 													position: "absolute",
@@ -407,7 +436,7 @@ function Leaderboard({ slug, status, token }) {
 												<>{submissions}</>
 											) : (
 													<tr>
-														<td colspan={4} className="px-3">
+														<td colSpan={4} className="px-3">
 															<div
 																className="row rounded-bottom"
 																style={{
