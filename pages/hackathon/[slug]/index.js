@@ -3,44 +3,38 @@ import { useRouter } from "next/router"
 import { useEffect, useState } from 'react';
 import axios from "../../../util/axios";
 import { useAuth } from "../../../context/auth";
-// import Tab from 'react-bootstrap/Tab';
-// import Tabs from 'react-bootstrap/Tabs';
-import { Nav, Tab, Container, Spinner } from 'react-bootstrap'
+import { Nav, Table, Tab, Container, Spinner, Image } from 'react-bootstrap'
 import { Text } from 'atomize'
 
 export default function Hackathon() {
     const router = useRouter()
     const slug = router.query.slug
 
-    const { firebaseUser, token, loading } = useAuth()
+    const { token, loading } = useAuth()
     const [localLoading, setLocalLoading] = useState(true)
     const [hackathon, setHackathon] = useState([])
-    const [id, setId] = useState([])
     const [participants, setParticipants] = useState([])
-    const [activeTab, setActiveTab] = useState([])
-    const [allSubmissions, setAllSubmisssions] = useState([])
 
     useEffect(() => {
         if (slug) {
             console.log("hackathon id: ", slug)
-            if (token) axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+
             axios.get(`/hackathons/${slug}/`)
                 .then((response) => {
                     console.log("hackathon response: ", response.data)
                     let hackathon = response.data
                     if (!hackathon.image) hackathon.image = "/images/home-jumbo.jpg"
                     setHackathon(hackathon)
-                    setId(hackathon.id)
                     setLocalLoading(false)
                 }).catch((err) => {
-                    console.log(err)
+                    console.error(err)
                 })
             axios.get(`/hackathons/${slug}/teams/`)
                 .then((response) => {
                     console.log("teams response: ", response.data)
                     setParticipants(response.data)
                 }).catch((err) => {
-                    console.log(err)
+                    console.error(err)
                     console.log(err.response.data)
                 })
             axios.get(`/hackathons/${slug}/submissions/`)
@@ -48,7 +42,7 @@ export default function Hackathon() {
                     console.log("submissions response: ", response.data)
                     setAllSubmisssions(response.data.sort((a, b) => b.score > a.score ? 1 : -1).slice(0, 10))
                 }).catch((err) => {
-                    console.log(err)
+                    console.error(err)
                     console.log(err.response.data)
                 })
         }
@@ -97,7 +91,7 @@ export default function Hackathon() {
                                 </Nav>
                             </div>
                             <div className="row no-gutters container-xs container mx-auto align-items-start">
-                                <div className="col-md-9">
+                                <div className="col-lg-9">
                                     <Tab.Content>
                                         <Tab.Pane eventKey="overview" title='Overview'>
                                             <Overview hackathon={hackathon} />
@@ -109,11 +103,11 @@ export default function Hackathon() {
                                             <Overview hackathon={hackathon} />
                                         </Tab.Pane>
                                         <Tab.Pane eventKey="leaderboard" title="Leaderboard">
-                                            <Leaderboard submissions={allSubmissions} />
+                                            <Leaderboard slug={hackathon.slug} status={hackathon.status} token={token} />
                                         </Tab.Pane>
                                     </Tab.Content>
                                 </div>
-                                <div className="col-md-3 p-3">
+                                <div className="col-lg-3 p-3">
                                     {
                                         hackathon.status == "Ongoing"
                                             ? (
@@ -284,7 +278,6 @@ function Overview({ hackathon }) {
 }
 
 function Participants({ participants }) {
-    console.log("SSSSSSSSSSSSSSSSS", participants)
     if (participants) {
         return (
             <div>
@@ -314,22 +307,104 @@ function Participants({ participants }) {
     }
 }
 
-function Leaderboard({ submissions }) {
+function Leaderboard({ slug, status, token }) {
+    const [submissions, setSubmisssions] = useState([])
+    const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        setLoading(true);
+        if (token) axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+        axios.get(`/hackathons/${slug}/submissions/`)
+            .then((response) => {
+                console.log("fdjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj: ", response.data)
+                setSubmisssions(response.data.map((submission, index) =>
+                    <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>{submission.teamName} </td>
+                        <td> {submission.score}</td>
+                        <td><a href={`/submission/${submission.id}`}>Here</a></td>
+                    </tr>
+                ))
+            }).catch((err) => {
+
+                console.error(err)
+                console.log(err.response.data)
+            });
+        setLoading(false);
+    }, [token])
+
     return (
         <div>
-            <div className="bg-grey heading row no-gutters px-3 px-md-5 align-items-center rounded-top">
-                <div className="col-2"> <h6>RANK</h6> </div>
-                <div className="col-7"> <h6>TEAM NAME</h6> </div>
-                <div className="col-3"> <h6>SCORE</h6> </div>
-            </div>
+            <Table responsive>
+                <thead style={{
+                    backgroundColor: "rgba(0.9,0,0,0.04)"
+                }}>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Team Name</th>
+                        <th>Score</th>
+                        <th>Submission Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        status == "Upcoming" ? (
+                            <tr>
+                                <td colspan={4} className="px-3">
+                                    <div className="row rounded-bottom" style={{
+                                        backgroundColor: "rgba(0.9,0,0,0.04)"
+                                    }}>
+                                        <div className="col-12 text-center py-3">
+                                            <Image src={'/images/rocket.svg'} style={{ height: "80px" }} />
+                                            <p>Let the Hackathon Begin</p>
+                                        </div>
+                                    </div>
 
-            {submissions && submissions.map((submission, index) =>
-                <div className={`bg-grey row no-gutters px-3 px-md-5 align-items-center ${index === submissions.length - 1 && "rounded-bottom"}`} key={index}>
-                    <div className="col-2"> {index + 1}.</div>
-                    <div className="col-7"> {submission.team} </div>
-                    <div className="col-3"> {submission.score} </div>
-                </div>
-            )}
+                                </td>
+                            </tr>
+                        )
+                            : (
+                                <>
+                                    {
+                                        loading
+                                            ? (
+                                                <tr>
+                                                    <td colspan={4}>
+                                                        <Spinner
+                                                            style={{
+                                                                position: "absolute",
+                                                                left: "50%",
+                                                            }}
+                                                            animation="border"
+                                                            role="status"
+                                                        >
+                                                            <span className="sr-only">Loading...</span>
+                                                        </Spinner>
+                                                    </td>
+                                                </tr>
+                                            ) : <>{
+                                                submissions.length
+                                                    ? <>{submissions}</>
+                                                    : <tr>
+                                                        <td colspan={4} className="px-3">
+                                                            <div className="row rounded-bottom" style={{
+                                                                backgroundColor: "rgba(0.9,0,0,0.04)"
+                                                            }}>
+                                                                <div className="col-12 text-center py-3">
+                                                                    <Text textSize="display1">😔</Text>
+                                                                    <Text >No Submissions Found</Text>
+                                                                </div>
+                                                            </div>
+
+                                                        </td>
+                                                    </tr>
+                                            }</>
+                                    }
+                                </>
+                            )
+                    }
+                </tbody>
+            </Table>
             <style jsx>{`
                 .bg-grey {
                     background-color: rgba(0.9,0,0,0.04);
