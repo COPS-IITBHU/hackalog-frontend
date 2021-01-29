@@ -4,7 +4,7 @@ import { Tab, Col, Row, Nav, Container } from "react-bootstrap";
 import { Text } from "atomize";
 import { useEffect, useState } from "react";
 
-export default function hackathons() {
+export default function Hackathons() {
     const [ongoing, setOngoing] = useState([]);
     const [upcoming, setUpcoming] = useState([]);
     const [completed, setCompleted] = useState([]);
@@ -20,7 +20,7 @@ export default function hackathons() {
                 arr[0] = true;
                 setError(arr);
             });
-    }, []);
+    }, [error]);
 
     useEffect(() => {
         axiosInstance
@@ -41,7 +41,7 @@ export default function hackathons() {
                 arr[2] = true;
                 setError(arr);
             });
-    }, []);
+    }, [error]);
 
     return (
         <div style={{ background: "#87a3bb17", minHeight: "100vh" }}>
@@ -94,7 +94,7 @@ export default function hackathons() {
                                 <Tab.Pane eventKey="ongoing">
                                     {error[0] ? (
                                         <Container>
-                                            Couldn't Fetch the List from Backend
+                                            Couldn&apos;t Fetch the List from Backend
                                         </Container>
                                     ) : ongoing.length ? (
                                         <HackathonList hackathons={ongoing} />
@@ -107,7 +107,7 @@ export default function hackathons() {
                                 <Tab.Pane eventKey="upcoming">
                                     {error[1] ? (
                                         <Container>
-                                            Couldn't Fetch the List from Backend
+                                            Couldn&apos;t Fetch the List from Backend
                                         </Container>
                                     ) : upcoming.length ? (
                                         <HackathonList hackathons={upcoming} />
@@ -120,7 +120,7 @@ export default function hackathons() {
                                 <Tab.Pane eventKey="completed">
                                     {error[2] ? (
                                         <Container>
-                                            Couldn't Fetch the List from Backend
+                                            Couldn&apos;t Fetch the List from Backend
                                         </Container>
                                     ) : completed.length ? (
                                         <HackathonList hackathons={completed} />

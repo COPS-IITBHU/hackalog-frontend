@@ -347,7 +347,7 @@ function Leaderboard({ slug, status, token }) {
 				console.error(err);
 			});
 		setLoading(false);
-	}, [token]);
+	}, [token, slug]);
 
 	return (
 		<div>
@@ -367,7 +367,7 @@ function Leaderboard({ slug, status, token }) {
 				<tbody>
 					{status == "Upcoming" ? (
 						<tr>
-							<td colspan={4} className="px-3">
+							<td colSpan={4} className="px-3">
 								<div
 									className="row rounded-bottom"
 									style={{
@@ -376,7 +376,7 @@ function Leaderboard({ slug, status, token }) {
 								>
 									<div className="col-12 text-center py-3">
 										<Image
-											src={"/images/rocket.svg"}
+											src="/images/rocket.svg"
 											style={{ height: "80px" }}
 										/>
 										<p>Let the Hackathon Begin</p>
@@ -388,7 +388,7 @@ function Leaderboard({ slug, status, token }) {
 							<>
 								{loading ? (
 									<tr>
-										<td colspan={4}>
+										<td colSpan={4}>
 											<Spinner
 												style={{
 													position: "absolute",
@@ -407,7 +407,7 @@ function Leaderboard({ slug, status, token }) {
 												<>{submissions}</>
 											) : (
 													<tr>
-														<td colspan={4} className="px-3">
+														<td colSpan={4} className="px-3">
 															<div
 																className="row rounded-bottom"
 																style={{

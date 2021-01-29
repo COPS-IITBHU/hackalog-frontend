@@ -4,7 +4,7 @@ import DefaultErrorPage from "next/error"
 import {
 	Spinner, Row, Col, Container, Tab, Nav
 } from "react-bootstrap";
-import { Text, Image, Button, Div } from 'atomize' 
+import { Text, Image, Button, Div } from 'atomize'
 import { FaGithub } from "react-icons/fa"
 import { MdLocationOn } from 'react-icons/md'
 
@@ -68,10 +68,10 @@ function Profile() {
 	useEffect(() => {
 		if (userRequest.user && token && profile) {
 			if (profile.username === userRequest.user.username) setCurrentUser(true)
-		}else {
+		} else {
 			setCurrentUser(false)
 		}
-	}, [profile]);
+	}, [profile,token,userRequest.user]);
 
 	const url = userRequest.user
 		? userRequest.user.photoURL
@@ -97,7 +97,7 @@ function Profile() {
 	else if (userRequest.user === "NOT FOUND")
 		return <DefaultErrorPage statusCode={404} />;
 	return (
-		<div style={{background: "#87a3bb17"}}>
+		<div style={{ background: "#87a3bb17" }}>
 			{currentUser && editDialog.show && (
 				<Suspense fallback={<h1>Loading...</h1>}>
 					<EditProfile
@@ -114,9 +114,9 @@ function Profile() {
 				</Suspense>
 			)}
 			<Div shadow="2" p={{ t: "15rem" }} className="cover-image-container"></Div>
-			{userRequest && userRequest.user && 
+			{userRequest && userRequest.user &&
 				<div className="container-md">
-					<Tab.Container id="left-tabs-example" defaultActiveKey="profile">			
+					<Tab.Container id="left-tabs-example" defaultActiveKey="profile">
 						<div className="row no-gutters py-5">
 							<div className="col-12 col-md-4 sidebar">
 								<div className="text-center">
@@ -170,7 +170,7 @@ function Profile() {
 									<Tab.Pane eventKey="projects">
 										<div>
 											<Row>
-												{ userRequest.user.teams && userRequest.user.teams.length
+												{userRequest.user.teams && userRequest.user.teams.length
 													? userRequest.user.teams.map(team =>
 														<Col className="pb-3" sm={6} key={team.id}>
 															<TeamCard team={team} />
@@ -183,9 +183,9 @@ function Profile() {
 									<Tab.Pane eventKey="hackathons">
 										<div>
 											<Row>
-												{ userRequest.user.teams && userRequest.user.teams.length
+												{userRequest.user.teams && userRequest.user.teams.length
 													? userRequest.user.teams.map(({ hackathon, id }) => (
-														<Col sm={6} className="pb-3" key={hackathon.slug} key={id}>
+														<Col sm={6} className="pb-3" key={hackathon.slug + "-" + id}>
 															<HackathonCard
 																hackathon={hackathon}
 															></HackathonCard>

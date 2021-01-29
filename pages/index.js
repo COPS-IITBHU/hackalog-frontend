@@ -1,8 +1,8 @@
 import HackathonCard from "../components/HackathonCard/HackathonCard"
 import Sorry from "../components/Sorry/Sorry";
 import Header from "../components/Header/Header";
-import { Text, Button, Div } from "atomize";
-import { Spinner, Container } from "react-bootstrap";
+import { Text, Button } from "atomize";
+import { Spinner } from "react-bootstrap";
 import axiosInstance from "../util/axios";
 import React from 'react'
 import Link from 'next/link'
@@ -19,13 +19,14 @@ function useOnScreen(options) {
         if (ref.current) {
             observer.observe(ref.current);
         }
+        const current = ref.current
 
         return () => {
-            if (ref.current) {
-                observer.unobserve(ref.current);
+            if (current) {
+                observer.unobserve(current);
             }
         };
-    }, [ref.options]);
+    }, [ref.options,options]);
     return [ref, visible]
 }
 
@@ -84,11 +85,11 @@ export default function Home() {
                         <div className="col-12 col-md-4 p-3">
                             <div className="p-4 bs-light h-100">
                                 <div className="icon-container">
-                                    <img src="/images/icon1.png" />
+                                    <img src="/images/icon1.png" loading="lazy" />
                                 </div>
                                 <h5 className="card-title">Collaborate</h5>
                                 <div className="regular-text">
-                                    To cooperate with or willingly assist an enemy of one's
+                                    To cooperate with or willingly assist an enemy of one&apos;s
                                     country and especially an occupying force
                                 </div>
                             </div>
@@ -96,11 +97,11 @@ export default function Home() {
                         <div className="col-12 col-md-4 p-3">
                             <div className="p-4 bs-light h-100">
                                 <div className="icon-container">
-                                    <img src="/images/icon2.jpg" />
+                                    <img src="/images/icon2.jpg" loading="lazy" />
                                 </div>
                                 <h5 className="card-title">Learn</h5>
                                 <div className="regular-text">
-                                    To cooperate with or willingly assist an enemy of one's
+                                    To cooperate with or willingly assist an enemy of one&apos;s
                                     country and especially an occupying force
                                 </div>
                             </div>
@@ -108,7 +109,7 @@ export default function Home() {
                         <div className="col-12 col-md-4 p-3">
                             <div className="p-4 bs-light h-100">
                                 <div className="icon-container">
-                                    <img src="/images/icon3.png" />
+                                    <img src="/images/icon3.png" loading="lazy" />
                                 </div>
                                 <h5 className="card-title">Share</h5>
                                 <div className="regular-text">
