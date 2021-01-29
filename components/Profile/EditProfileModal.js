@@ -12,6 +12,7 @@ const EditProfile = ({
     handle, bio, interest, name, url,
     username, handleClose, show, closable,
 }) => {
+
     const [err, seterr] = useState('');
     const [wait, setwait] = useState(false);
     const handleChange = (newValue) => setSelectedSkills(newValue);
@@ -50,8 +51,7 @@ const EditProfile = ({
                 .then(setwait(false))
                 .then(
                     () => {
-                        handleClose();
-                        location.reload();
+                        location.replace(`/profile/${username}`);
                     },
                     (err) => {
                         console.log(err.response.data)
@@ -80,7 +80,7 @@ const EditProfile = ({
                             Edit Profile
                         </Text>
                     </div>
-                    <Form style={{maxWidth: "400px"}} className="mx-auto">
+                    <Form style={{ maxWidth: "400px" }} className="mx-auto">
                         {/* <Form.Text className="text-right">
                             *Required Fields
 						</Form.Text> */}
