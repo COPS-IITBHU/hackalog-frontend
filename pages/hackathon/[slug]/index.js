@@ -376,7 +376,7 @@ function Leaderboard({ slug, status, token }) {
 				console.error(err);
 			});
 		setLoading(false);
-	}, [token]);
+	}, [token, slug]);
 
 	return (
 		<div>
@@ -405,7 +405,7 @@ function Leaderboard({ slug, status, token }) {
 								>
 									<div className="col-12 text-center py-3">
 										<Image
-											src={"/images/rocket.svg"}
+											src="/images/rocket.svg"
 											style={{ height: "80px" }}
 										/>
 										<p>Let the Hackathon Begin</p>

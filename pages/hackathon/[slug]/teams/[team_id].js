@@ -19,7 +19,7 @@ import Clipboard from "../../../../components/Clipboard/Clipboard"
 import { ListGroup } from "react-bootstrap"
 
 // team management
-export default function manageTeam() {
+export default function ManageTeam() {
     const { token } = useAuth()
     const [teamData, setTeamData] = useState({})
     const router = useRouter()
@@ -70,7 +70,7 @@ export default function manageTeam() {
             }
         }
         getData()
-    }, [token])
+    }, [token, router.query.team_id])
 
     const notifHandler = (message, show, bg) => {
         editNotif({ message, show, bg })
@@ -259,21 +259,21 @@ export default function manageTeam() {
                             ? leaderTag
                             : null}
                         {el.username === teamData.leader.username &&
-                        clientUser.username === teamData.leader.username ? (
-                            <Tag
-                                bg={`info500`}
-                                hoverBg="info600"
-                                textColor="white"
-                                p={{ x: "0.75rem", y: "0.25rem" }}
-                                m={{ r: "0.5rem", b: "0.5rem" }}
-                                onClick={() => {
-                                    console.log("Handle team deletion")
-                                    deleteTeam()
-                                }}
-                            >
-                                Delete Team
-                            </Tag>
-                        ) : null}
+                            clientUser.username === teamData.leader.username ? (
+                                <Tag
+                                    bg={`info500`}
+                                    hoverBg="info600"
+                                    textColor="white"
+                                    p={{ x: "0.75rem", y: "0.25rem" }}
+                                    m={{ r: "0.5rem", b: "0.5rem" }}
+                                    onClick={() => {
+                                        console.log("Handle team deletion")
+                                        deleteTeam()
+                                    }}
+                                >
+                                    Delete Team
+                                </Tag>
+                            ) : null}
                         {handleMemberExitUI(el.username)}
                     </Row>
                 </ListGroup.Item>
@@ -448,63 +448,63 @@ export default function manageTeam() {
                                     </Row>
                                 </Col>
                             ) : (
-                                <Col
-                                    size={{ xs: "12", md: "6" }}
-                                    m={{ y: "0.5rem" }}
-                                >
-                                    <Row>
-                                        <Text
-                                            tag="h4"
-                                            textSize="title"
-                                            textColor="#003e54"
-                                            fontFamily="madetommy-regular"
-                                            m={{ r: "1rem" }}
-                                        >
-                                            Team Name:
+                                    <Col
+                                        size={{ xs: "12", md: "6" }}
+                                        m={{ y: "0.5rem" }}
+                                    >
+                                        <Row>
+                                            <Text
+                                                tag="h4"
+                                                textSize="title"
+                                                textColor="#003e54"
+                                                fontFamily="madetommy-regular"
+                                                m={{ r: "1rem" }}
+                                            >
+                                                Team Name:
                                         </Text>
-                                        <Input
-                                            placeholder={teamData.name}
-                                            onChange={(e) => {
-                                                setBufferTeamName(
-                                                    e.target.value
-                                                )
-                                            }}
-                                        ></Input>
-                                        <Button
-                                            onClick={() => {
-                                                setSpinner(true)
-                                                changeName()
-                                            }}
-                                            w="3rem"
-                                            bg="#178a80"
-                                            hoverBg="success600"
-                                            m={{ x: "0.5rem" }}
-                                        >
-                                            {showSpinner ? (
-                                                <Icon
-                                                    name="Loading2"
-                                                    size="20px"
-                                                    color="white"
-                                                />
-                                            ) : (
-                                                "Done"
-                                            )}
+                                            <Input
+                                                placeholder={teamData.name}
+                                                onChange={(e) => {
+                                                    setBufferTeamName(
+                                                        e.target.value
+                                                    )
+                                                }}
+                                            ></Input>
+                                            <Button
+                                                onClick={() => {
+                                                    setSpinner(true)
+                                                    changeName()
+                                                }}
+                                                w="3rem"
+                                                bg="#178a80"
+                                                hoverBg="success600"
+                                                m={{ x: "0.5rem" }}
+                                            >
+                                                {showSpinner ? (
+                                                    <Icon
+                                                        name="Loading2"
+                                                        size="20px"
+                                                        color="white"
+                                                    />
+                                                ) : (
+                                                        "Done"
+                                                    )}
+                                            </Button>
+                                            <Button
+                                                disabled={showSpinner}
+                                                onClick={() => {
+                                                    setNameEdit(false)
+                                                    setBufferTeamName("")
+                                                }}
+                                                w="3rem"
+                                                bg="#178a80"
+                                                hoverBg="success600"
+                                            >
+                                                Back
                                         </Button>
-                                        <Button
-                                            disabled={showSpinner}
-                                            onClick={() => {
-                                                setNameEdit(false)
-                                                setBufferTeamName("")
-                                            }}
-                                            w="3rem"
-                                            bg="#178a80"
-                                            hoverBg="success600"
-                                        >
-                                            Back
-                                        </Button>
-                                    </Row>
-                                </Col>
-                            )}
+                                        </Row>
+                                    </Col>
+                                )}
                         </Row>
                         <Row m={{ y: "1rem" }}>
                             <Col size={{ xs: "12" }}>

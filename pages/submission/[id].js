@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import DefaultErrorPage from "next/error";
 import { Spinner, Row, Container, Table } from "react-bootstrap";
 import { Text, Button, Div, Image } from "atomize";
 import axios from "../../util/axios";
@@ -14,9 +13,9 @@ import { HiOutlineEmojiSad } from "react-icons/hi";
 
 export default function SubmissionDetail() {
 	/*
-	  Initially status = 190 => loading
-	  if status = 200, show page
-	  else some error occurred
+		Initially status = 190 => loading
+		if status = 200, show page
+		else some error occurred
 	*/
 
 	const router = useRouter();
@@ -66,10 +65,10 @@ export default function SubmissionDetail() {
 	if (!Number(id) || status == 404)
 		return (
 			<div className="text-center pt-3 mb-2">
-				<Image src={'/images/404.svg'} className="mb-3" maxH={{ xs: '40vw', sm: '25vh' }} />
+				<Image src='/images/404.svg' className="mb-3" maxH={{ xs: '40vw', sm: '25vh' }} />
 				<Text textSize="title" >
 					Error 404: Submission Not Found
-		   		</Text>
+				</Text>
 			</div>
 		);
 	if (status == 190)
@@ -96,7 +95,7 @@ export default function SubmissionDetail() {
 			<div style={{ background: "#87a3bb17", minHeight: "100vh" }}>
 				<Head>
 					{team
-						? <title>Team {team.name}'s Submission</title>
+						? <title>Team {team.name}&apos;s Submission</title>
 						: <title>Submission Details</title>
 					}
 				</Head>
@@ -109,7 +108,7 @@ export default function SubmissionDetail() {
 				/>
 				<Text className="text-center mb-3" tag="h1" textSize="display1">
 					{submission.hackathon.title} Submissions
-        		</Text>
+				</Text>
 				<Container>
 					<Text textSize="title">{submission.title}&nbsp;</Text>
 					<Text textSize="subheader" className="pl-3">- by Team {submission.team.name}</Text>
@@ -118,7 +117,7 @@ export default function SubmissionDetail() {
 						<u>Description</u>
 					</Text>
 					<Text textSize="paragraph">{submission.description}</Text>
-					<Text textSize="subheader"><u>Judge's Review</u></Text>
+					<Text textSize="subheader"><u>Judge&apos;s Review</u></Text>
 					<Text textSize="paragraph">{submission.review}</Text>
 
 					<Text textSize="subheader">
@@ -138,13 +137,13 @@ export default function SubmissionDetail() {
 									textDecor="underline"
 								>
 									Team Members
-                				</Text>
+								</Text>
 								{teamStat !== 190 ? (
 									<div className="text-center pt-3 mb-2">
 										<Text textSize="display1"><HiOutlineEmojiSad /></Text>
 										<Text textWeight="600" textColor="red">
 											Unable to Fetch Team Details
-               						    </Text>
+										</Text>
 									</div>
 								) : team ? (
 									<>
@@ -218,7 +217,7 @@ export default function SubmissionDetail() {
 									textDecor="underline"
 								>
 									Hackathon Details
-            				    </Text>
+								</Text>
 								<Table hover size="sm" className="mb-3 pb-3" responsive>
 									<tbody>
 										<tr>
@@ -257,7 +256,7 @@ export default function SubmissionDetail() {
 					<a href={`/hackathon/${submission.hackathon.slug}`}>
 						<Button className="mb-3" bg="purple">
 							View Other Submissions
-            			</Button>
+						</Button>
 					</a>
 				</Container>
 			</div>
