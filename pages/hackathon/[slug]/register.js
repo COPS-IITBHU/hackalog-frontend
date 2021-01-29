@@ -7,7 +7,7 @@ import { useState } from "react"
 import { API_URL } from "../../../util/constants"
 import Clipboard from "../../../components/Clipboard/Clipboard"
 
-export default function register() {
+export default function Register() {
     const { token } = useAuth()
     const [teamName, editTeamName] = useState("")
     const [notif, editNotif] = useState({
