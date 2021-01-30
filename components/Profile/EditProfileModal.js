@@ -7,11 +7,13 @@ import { Button, Text } from 'atomize'
 import CreatableSelect from "react-select/creatable";
 import axios from "../../util/axios";
 import { options } from "./SkillOptions";
+import { useAuth } from "../../context/auth"
 
 const EditProfile = ({
     handle, bio, interest, name, url,
     username, handleClose, show, closable,
 }) => {
+    const { firebaseUser } = useAuth();
     const [err, seterr] = useState('');
     const [wait, setwait] = useState(false);
     const handleChange = (newValue) => setSelectedSkills(newValue);
@@ -42,7 +44,7 @@ const EditProfile = ({
                 interests: interests ?? '',
                 username: username,
                 github_handle: handle,
-                photoURL: url
+                photoURL: firebaseUser.photoURL
             };
             console.log(url)
             axios
@@ -50,8 +52,7 @@ const EditProfile = ({
                 .then(setwait(false))
                 .then(
                     () => {
-                        handleClose();
-                        location.reload();
+                        location.replace(`/profile/${username}`);
                     },
                     (err) => {
                         console.log(err.response.data)
@@ -80,7 +81,7 @@ const EditProfile = ({
                             Edit Profile
                         </Text>
                     </div>
-                    <Form style={{maxWidth: "400px"}} className="mx-auto">
+                    <Form style={{ maxWidth: "400px" }} className="mx-auto">
                         {/* <Form.Text className="text-right">
                             *Required Fields
 						</Form.Text> */}

@@ -34,7 +34,7 @@ function Profile() {
 		if (username) {
 			setUserRequest({ loading: true });
 			axios
-				.get(`profile/${username.toLowerCase()}/`)
+				.get(`profile/${username}/`)
 				.then((res) => {
 					setUserRequest({
 						loading: false,
@@ -71,7 +71,7 @@ function Profile() {
 		} else {
 			setCurrentUser(false)
 		}
-	}, [profile,token,userRequest.user]);
+	}, [profile, token, userRequest.user]);
 
 	const url = userRequest.user
 		? userRequest.user.photoURL
