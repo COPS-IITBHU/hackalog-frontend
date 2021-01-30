@@ -4,14 +4,12 @@ import { Spinner } from "react-bootstrap"
 import { useAuth } from "../../context/auth";
 import Link from 'next/link'
 import { HamburgerSpin } from 'react-animated-burgers'
-import { useEffect } from 'react'
-
 
 export default function Header() {
     const { handleSignIn, handleLogout, token, profile, loading } = useAuth() 
     const [ menu, setMenu ] = React.useState(false)
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (profile && location.pathname != `/profile/${profile.username}`) {
             const arr = [
                 profile.name,
