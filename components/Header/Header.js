@@ -2,10 +2,29 @@ import { Button } from "atomize";
 import { Spinner } from "react-bootstrap"
 import { useAuth } from "../../context/auth";
 import Link from 'next/link'
+import { useEffect } from 'react'
 
 
 export default function Header() {
-    const { handleSignIn, handleLogout, token, profile, loading } = useAuth() 
+    const { handleSignIn, handleLogout, token, profile, loading } = useAuth()
+
+    useEffect(() => {
+        if (profile && location.pathname != `/profile/${profile.username}`) {
+            const arr = [
+                profile.name,
+                profile.username,
+                profile.interests,
+                profile.bio,
+                profile.github_handle,
+            ];
+            // Check for null fields
+            if (!arr.every((elm) => elm !== "" && elm !== null)) {
+                window.alert('Complete Your Profile First!')
+                window.location.replace(`/profile/${profile.username}`)
+            }
+        }
+    }, [profile])
+
     return (
         <div className="position-fixed w-100 bg-white" style={{ zIndex: "10" }}>
             <div className="d-flex align-items-center justify-content-between w-100 p-3">
