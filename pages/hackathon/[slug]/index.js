@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "../../../util/axios";
 import { useAuth } from "../../../context/auth";
-import { Nav, Table, Tab, Container, Spinner, Image } from "react-bootstrap";
+import { Nav, Table, Tab, Container, Spinner, Image, Badge } from "react-bootstrap";
 import { Text } from "atomize";
 
 export default function Hackathon() {
@@ -13,7 +13,6 @@ export default function Hackathon() {
 	const { token, loading } = useAuth();
 	const [localLoading, setLocalLoading] = useState(true);
 	const [hackathon, setHackathon] = useState([]);
-	const [participants, setParticipants] = useState([]);
 	const [error, setError] = useState(0);
 
 	useEffect(() => {
@@ -29,15 +28,6 @@ export default function Hackathon() {
 				})
 				.catch((err) => {
 					setError(err.response.status);
-					console.error(err);
-				});
-			axios
-				.get(`/hackathons/${slug}/teams/`)
-				.then((response) => {
-					console.log("teams response: ", response.data);
-					setParticipants(response.data);
-				})
-				.catch((err) => {
 					console.error(err);
 				});
 			setLocalLoading(false);
@@ -119,7 +109,7 @@ export default function Hackathon() {
 												<Overview hackathon={hackathon} />
 											</Tab.Pane>
 											<Tab.Pane eventKey="participants" title="Participants">
-												<Participants participants={participants} />
+												<Participants slug={hackathon.slug} />
 											</Tab.Pane>
 											<Tab.Pane eventKey="updates" title="Updates">
 												<Overview hackathon={hackathon} />
@@ -312,41 +302,132 @@ function Overview({ hackathon }) {
 	);
 }
 
-function Participants({ participants }) {
-	if (participants) {
-		return (
-			<div>
-				{participants.length ? (
-					participants.map((team, index) =>
-						team.name.indexOf("Team Ongoing") == -1 ? (
-							<div
-								className="bg-grey d-flex align-items-center px-3 rounded"
-								key={index}
+function Participants({ slug }) {
+	const [teams, setTeams] = useState([]);
+	const [loading, setLoading] = useState(false);
+
+	useEffect(() => {
+		setLoading(true);
+		axios
+			.get(`/hackathons/${slug}/teams/`)
+			.then((response) => {
+				setTeams(response.data);
+			})
+			.catch((err) => {
+				console.error(err);
+			});
+		setLoading(false);
+	}, [slug]);
+
+	return (
+		<div>
+			{loading ? (
+				<div className="text-center">
+					<Table
+						responsive
+						style={{
+							borderCollapse: "separate",
+							borderSpacing: "0px 5px",
+						}}
+					>
+						<thead
+							style={{
+								backgroundColor: "rgba(0.9,0,0,0.04)",
+							}}
+						>
+							<tr>
+								<th>Name</th>
+								<th>Team Name</th>
+								<th>Username</th>
+							</tr>
+						</thead>
+					</Table>
+					<Spinner animation="border" role="status">
+						<span className="sr-only">Loading...</span>
+					</Spinner>
+				</div>
+			) : (
+					<div>
+						<Table
+							responsive
+							style={{
+								borderCollapse: "separate",
+								borderSpacing: "0px 5px",
+							}}
+						>
+							<thead
+								style={{
+									backgroundColor: "rgba(0.9,0,0,0.04)",
+								}}
 							>
-								<h6>
-									{index}. {team.name}
-								</h6>
-								<style jsx>{`
-                  .bg-grey {
-                    background-color: rgba(0.9, 0, 0, 0.04);
-                    height: 7vh;
-                    margin-bottom: 4px;
-                  }
-                `}</style>
-							</div>
-						) : (
-								<div></div>
-							)
-					)
-				) : (
-						<div>Empty</div>
-					)}
-			</div>
-		);
-	} else {
-		return null;
-	}
+								<tr>
+									<th>Name</th>
+									<th>Team Name</th>
+									<th>Username</th>
+								</tr>
+							</thead>
+							<tbody>
+
+								{teams.map((team) => {
+									var members = [];
+									members.push(
+										<tr
+											key={team.name + "_" + team.leader.name}
+											className="bg-grey rounded"
+										>
+											<td>{team.leader.name}{" "}<Badge variant="info">Leader</Badge></td>
+											<td>{team.name}</td>
+											<td>
+												<a href={`/profile/${team.leader.username}`}>
+													{team.leader.username}
+												</a>
+											</td>
+										</tr>
+									);
+									for (var i = 0; i < team.members.length; i++) {
+										if (team.members[i].username != team.leader.username) {
+											members.push(
+												<tr
+													key={team.name + "_" + team.members[i].username}
+													className="bg-grey rounded"
+												>
+													<td>{team.members[i].name}</td>
+													<td>{team.name}</td>
+													<td>
+														<a href={`/profile/${team.members[i].username}`}>
+															{team.members[i].username}
+														</a>
+													</td>
+												</tr>
+											);
+										}
+									}
+									return members;
+								})}
+							</tbody>
+						</Table>
+						{
+							!teams.length ? (
+								<div className="bg-grey text-center py-3 rounded">
+									No Participants Found
+								</div>
+							) : null
+						}
+						<style jsx>{`
+			  .bg-grey {
+				margin-top: 2px;
+				background-color: rgba(0.9, 0, 0, 0.04);
+				height: 7vh;
+				margin-bottom: 4px;
+			  }
+			`}</style>
+					</div>
+				)
+			}
+		</div >
+	);
 }
+
 
 function Leaderboard({ slug, status, token }) {
 	const [submissions, setSubmisssions] = useState([]);
