@@ -29,7 +29,7 @@ export default function Register() {
         try {
             axios.defaults.headers.common["Authorization"] = `Token ${token}`
             const response = await axios.post(
-                `${API_URL}hackathons/${Number.parseInt(hackathonId)}/teams/`,
+                `${API_URL}hackathons/${hackathonId}/teams/`,
                 { name: name }
             )
             // const response = await axios.post(
@@ -90,9 +90,7 @@ export default function Register() {
         try {
             axios.defaults.headers.common["Authorization"] = `Token ${token}`
             const response = await axios.patch(
-                `${API_URL}hackathons/${Number.parseInt(
-                    hackathonId
-                )}/teams/join/${code}/`,
+                `${API_URL}hackathons/${hackathonId}/teams/join/${code}/`,
                 {}
             )
             // const response = await axios.patch(
