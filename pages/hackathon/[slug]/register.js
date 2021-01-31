@@ -29,7 +29,7 @@ export default function Register() {
         try {
             axios.defaults.headers.common["Authorization"] = `Token ${token}`
             const response = await axios.post(
-                `${API_URL}hackathons/${Number.parseInt(hackathonId)}/teams/`,
+                `${API_URL}hackathons/${hackathonId}/teams/`,
                 { name: name }
             )
             // const response = await axios.post(
@@ -90,9 +90,7 @@ export default function Register() {
         try {
             axios.defaults.headers.common["Authorization"] = `Token ${token}`
             const response = await axios.patch(
-                `${API_URL}hackathons/${Number.parseInt(
-                    hackathonId
-                )}/teams/join/${code}/`,
+                `${API_URL}hackathons/${hackathonId}/teams/join/${code}/`,
                 {}
             )
             // const response = await axios.patch(
@@ -124,6 +122,12 @@ export default function Register() {
                     "Either team or hackathon not found!",
                     true,
                     "info600"
+                )
+            } else if (exc.response.status === 403) {
+                notifHandler(
+                    "Incomplete profile!",
+                    true,
+                    "danger700"
                 )
             } else {
                 notifHandler(
