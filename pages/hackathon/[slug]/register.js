@@ -123,6 +123,12 @@ export default function Register() {
                     true,
                     "info600"
                 )
+            } else if (exc.response.status === 403) {
+                notifHandler(
+                    "Incomplete profile!",
+                    true,
+                    "danger700"
+                )
             } else {
                 notifHandler(
                     "Some error occured, try again or contact admin!",
