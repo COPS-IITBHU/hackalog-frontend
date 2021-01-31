@@ -99,10 +99,10 @@ export default function ManageTeam() {
                     notifHandler("Deleted Successfully!", true, "success700")
                     setTimeout(() => {
                         // router.push(
-                        //     `http://localhost:3000/hackathon/${teamData.hackathon.id}`
+                        //     `http://localhost:3000/hackathon/${teamData.hackathon.slug}`
                         // )
                         router.push(
-                            `https://cops-hackalog.netlify.app/hackathon/${teamData.hackathon.id}`
+                            `https://cops-hackalog.netlify.app/hackathon/${teamData.hackathon.slug}`
                         )
                     }, 1000)
                 } else {
@@ -148,10 +148,10 @@ export default function ManageTeam() {
                     notifHandler("Left Successfully!", true, "success700")
                     setTimeout(() => {
                         // router.push(
-                        //     `http://localhost:3000/hackathon/${teamData.hackathon.id}`
+                        //     `http://localhost:3000/hackathon/${teamData.hackathon.slug}`
                         // )
                         router.push(
-                            `https://cops-hackalog.netlify.app/hackathon/${teamData.hackathon.id}`
+                            `https://cops-hackalog.netlify.app/hackathon/${teamData.hackathon.slug}`
                         )
                     }, 1000)
                 }
