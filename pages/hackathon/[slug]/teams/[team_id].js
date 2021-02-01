@@ -16,15 +16,15 @@ import { useEffect, useState } from "react"
 import { useAuth } from "../../../../context/auth"
 import { API_URL } from "../../../../util/constants"
 import Clipboard from "../../../../components/Clipboard/Clipboard"
-import { ListGroup } from "react-bootstrap"
+import { ListGroup, Container, Spinner } from "react-bootstrap"
 
 // team management
 export default function ManageTeam() {
     const { token } = useAuth()
     const [teamData, setTeamData] = useState({})
     const router = useRouter()
+    const [localLoading, setLocalLoading] = useState(true) //During initial fetch on page loading.
     const [showSpinner, setSpinner] = useState(true) // while data is loading
-    const [error, setError] = useState(false) // if data could not be loaded
     const [nameEdit, setNameEdit] = useState(false) // if name editing is in progress
     const [bufferTeamName, setBufferTeamName] = useState("") // buffer team name to handle editing of team name.
     const [members, editMembers] = useState([]) // for team members
@@ -59,17 +59,16 @@ export default function ManageTeam() {
                     editMembers(responseTeam.data.members)
                     editClientUser(responseUser.data)
                     console.log("responseTeam =", responseTeam)
-                } else {
-                    setError(true)
                 }
             } catch (exc) {
                 setSpinner(false)
-                setError(true)
                 console.log("Exception occcured!")
                 console.log("exception responseTeam =", exc.response)
             }
         }
+        setLocalLoading(true)
         getData()
+        setLocalLoading(false)
     }, [token, router.query.team_id])
 
     const notifHandler = (message, show, bg) => {
@@ -259,21 +258,21 @@ export default function ManageTeam() {
                             ? leaderTag
                             : null}
                         {el.username === teamData.leader.username &&
-                            clientUser.username === teamData.leader.username ? (
-                                <Tag
-                                    bg={`info500`}
-                                    hoverBg="info600"
-                                    textColor="white"
-                                    p={{ x: "0.75rem", y: "0.25rem" }}
-                                    m={{ r: "0.5rem", b: "0.5rem" }}
-                                    onClick={() => {
-                                        console.log("Handle team deletion")
-                                        deleteTeam()
-                                    }}
-                                >
-                                    Delete Team
-                                </Tag>
-                            ) : null}
+                        clientUser.username === teamData.leader.username ? (
+                            <Tag
+                                bg={`info500`}
+                                hoverBg="info600"
+                                textColor="white"
+                                p={{ x: "0.75rem", y: "0.25rem" }}
+                                m={{ r: "0.5rem", b: "0.5rem" }}
+                                onClick={() => {
+                                    console.log("Handle team deletion")
+                                    deleteTeam()
+                                }}
+                            >
+                                Delete Team
+                            </Tag>
+                        ) : null}
                         {handleMemberExitUI(el.username)}
                     </Row>
                 </ListGroup.Item>
@@ -325,7 +324,21 @@ export default function ManageTeam() {
         }
     }
 
-    return (
+    return localLoading ? (
+        <Container className="text-center">
+            <Spinner
+                style={{
+                    position: "absolute",
+                    top: "50%",
+                }}
+                className="mt-auto mb-auto"
+                animation="border"
+                role="status"
+            >
+                <span className="sr-only">Loading...</span>
+            </Spinner>
+        </Container>
+    ) : (
         <>
             <Notification
                 bg={notif.bg}
@@ -448,63 +461,63 @@ export default function ManageTeam() {
                                     </Row>
                                 </Col>
                             ) : (
-                                    <Col
-                                        size={{ xs: "12", md: "6" }}
-                                        m={{ y: "0.5rem" }}
-                                    >
-                                        <Row>
-                                            <Text
-                                                tag="h4"
-                                                textSize="title"
-                                                textColor="#003e54"
-                                                fontFamily="madetommy-regular"
-                                                m={{ r: "1rem" }}
-                                            >
-                                                Team Name:
+                                <Col
+                                    size={{ xs: "12", md: "6" }}
+                                    m={{ y: "0.5rem" }}
+                                >
+                                    <Row>
+                                        <Text
+                                            tag="h4"
+                                            textSize="title"
+                                            textColor="#003e54"
+                                            fontFamily="madetommy-regular"
+                                            m={{ r: "1rem" }}
+                                        >
+                                            Team Name:
                                         </Text>
-                                            <Input
-                                                placeholder={teamData.name}
-                                                onChange={(e) => {
-                                                    setBufferTeamName(
-                                                        e.target.value
-                                                    )
-                                                }}
-                                            ></Input>
-                                            <Button
-                                                onClick={() => {
-                                                    setSpinner(true)
-                                                    changeName()
-                                                }}
-                                                w="3rem"
-                                                bg="#178a80"
-                                                hoverBg="success600"
-                                                m={{ x: "0.5rem" }}
-                                            >
-                                                {showSpinner ? (
-                                                    <Icon
-                                                        name="Loading2"
-                                                        size="20px"
-                                                        color="white"
-                                                    />
-                                                ) : (
-                                                        "Done"
-                                                    )}
-                                            </Button>
-                                            <Button
-                                                disabled={showSpinner}
-                                                onClick={() => {
-                                                    setNameEdit(false)
-                                                    setBufferTeamName("")
-                                                }}
-                                                w="3rem"
-                                                bg="#178a80"
-                                                hoverBg="success600"
-                                            >
-                                                Back
+                                        <Input
+                                            placeholder={teamData.name}
+                                            onChange={(e) => {
+                                                setBufferTeamName(
+                                                    e.target.value
+                                                )
+                                            }}
+                                        ></Input>
+                                        <Button
+                                            onClick={() => {
+                                                setSpinner(true)
+                                                changeName()
+                                            }}
+                                            w="3rem"
+                                            bg="#178a80"
+                                            hoverBg="success600"
+                                            m={{ x: "0.5rem" }}
+                                        >
+                                            {showSpinner ? (
+                                                <Icon
+                                                    name="Loading2"
+                                                    size="20px"
+                                                    color="white"
+                                                />
+                                            ) : (
+                                                "Done"
+                                            )}
                                         </Button>
-                                        </Row>
-                                    </Col>
-                                )}
+                                        <Button
+                                            disabled={showSpinner}
+                                            onClick={() => {
+                                                setNameEdit(false)
+                                                setBufferTeamName("")
+                                            }}
+                                            w="3rem"
+                                            bg="#178a80"
+                                            hoverBg="success600"
+                                        >
+                                            Back
+                                        </Button>
+                                    </Row>
+                                </Col>
+                            )}
                         </Row>
                         <Row m={{ y: "1rem" }}>
                             <Col size={{ xs: "12" }}>
