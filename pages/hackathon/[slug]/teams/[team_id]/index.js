@@ -20,7 +20,7 @@ import Clipboard from "../../../../../components/Clipboard/Clipboard"
 
 // team management
 export default function ManageTeam() {
-    const { token } = useAuth()
+    const { token, loading } = useAuth()
     const [teamData, setTeamData] = useState({})
     const router = useRouter()
     const [localLoading, setLocalLoading] = useState(true) //During initial fetch on page loading.
@@ -66,10 +66,18 @@ export default function ManageTeam() {
                 console.log("exception responseTeam =", exc.response)
             }
         }
-        setLocalLoading(true)
-        getData()
-        setLocalLoading(false)
-    }, [token, router.query.team_id])
+        if(token === null && !loading) {
+            // router.push(`http://localhost:3000/hackathon/${router.query.slug}`)
+            router.push(
+                `https://cops-hackalog.netlify.app/hackathon/${router.query.slug}`
+            )
+        }
+        if(token && !loading) {
+            setLocalLoading(true)
+            getData()
+            setLocalLoading(false)
+        }
+    }, [token, router.query.team_id, loading, router])
 
     const notifHandler = (message, show, bg) => {
         editNotif({ message, show, bg })
