@@ -15,6 +15,17 @@ import { Interests } from "../../components/Profile"
 import TeamCard from '../../components/Profile/TeamCard'
 import HackathonCard from '../../components/HackathonCard/HackathonCard'
 
+import Lottie from 'react-lottie';
+import animationData from '../../lottie/sad.json'
+const defaultOptions = {
+	loop: true,
+	autoplay: true,
+	animationData: animationData,
+	// rendererSettings: {
+	// 	preserveAspectRatio: 'xMidYMid slice'
+	// }
+};
+
 
 const EditProfile = lazy(() => import('../../components/Profile/EditProfileModal'))
 
@@ -132,7 +143,7 @@ function Profile() {
 											<FaGithub className="mr-1" /> {userRequest.user.github_handle}
 										</a>
 									)}
-									<p className="text-muted"><MdLocationOn /> IIT BHU Varanasi</p>
+									{/* <p className="text-muted"><MdLocationOn /> IIT BHU Varanasi</p> */}
 									<Nav variant="pills" className="flex-column pt-4">
 										<Nav.Item>
 											<Nav.Link eventKey="profile">Profile</Nav.Link>
@@ -175,7 +186,14 @@ function Profile() {
 														<Col className="pb-3" sm={6} key={team.id}>
 															<TeamCard team={team} />
 														</Col>
-													) : <p>No Teams to Show</p>
+													) : <div className="col-12 text-center text-muted">
+															<Lottie options={defaultOptions}
+																height={300}
+															/>
+															<Text tag="h6" textSize="subheader" textColor="003e54bd" fontFamily="madetommy-bold">
+																No Projects to Show
+															</Text>
+														</div>
 												}
 											</Row>
 										</div>
@@ -191,7 +209,14 @@ function Profile() {
 															></HackathonCard>
 														</Col>
 													))
-													: <p>No Participation in Hackathons to Show</p>
+													: 	<div className="col-12 text-center text-muted">
+															<Lottie options={defaultOptions}
+																height={300}
+															/>
+															<Text tag="h6" textSize="subheader" textColor="#003e54bd" fontFamily="madetommy-bold">
+																No Participation in Hackathons to Show
+															</Text>
+														</div>
 												}
 											</Row>
 										</div>
