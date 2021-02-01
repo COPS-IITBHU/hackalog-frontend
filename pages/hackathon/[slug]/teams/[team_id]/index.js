@@ -12,19 +12,19 @@ import {
 } from "atomize"
 import axios from "axios"
 import { useRouter } from "next/router"
+import { ListGroup, Container, Spinner } from "react-bootstrap"
 import { useEffect, useState } from "react"
 import { useAuth } from "../../../../../context/auth"
 import { API_URL } from "../../../../../util/constants"
 import Clipboard from "../../../../../components/Clipboard/Clipboard"
-import { ListGroup } from "react-bootstrap"
 
 // team management
 export default function ManageTeam() {
     const { token } = useAuth()
     const [teamData, setTeamData] = useState({})
     const router = useRouter()
+    const [localLoading, setLocalLoading] = useState(true) //During initial fetch on page loading.
     const [showSpinner, setSpinner] = useState(true) // while data is loading
-    const [error, setError] = useState(false) // if data could not be loaded
     const [nameEdit, setNameEdit] = useState(false) // if name editing is in progress
     const [bufferTeamName, setBufferTeamName] = useState("") // buffer team name to handle editing of team name.
     const [members, editMembers] = useState([]) // for team members
@@ -59,17 +59,16 @@ export default function ManageTeam() {
                     editMembers(responseTeam.data.members)
                     editClientUser(responseUser.data)
                     console.log("responseTeam =", responseTeam)
-                } else {
-                    setError(true)
                 }
             } catch (exc) {
                 setSpinner(false)
-                setError(true)
                 console.log("Exception occcured!")
                 console.log("exception responseTeam =", exc.response)
             }
         }
+        setLocalLoading(true)
         getData()
+        setLocalLoading(false)
     }, [token, router.query.team_id])
 
     const notifHandler = (message, show, bg) => {
@@ -99,10 +98,10 @@ export default function ManageTeam() {
                     notifHandler("Deleted Successfully!", true, "success700")
                     setTimeout(() => {
                         // router.push(
-                        //     `http://localhost:3000/hackathon/${teamData.hackathon.id}`
+                        //     `http://localhost:3000/hackathon/${teamData.hackathon.slug}`
                         // )
                         router.push(
-                            `https://cops-hackalog.netlify.app/hackathon/${teamData.hackathon.id}`
+                            `https://cops-hackalog.netlify.app/hackathon/${teamData.hackathon.slug}`
                         )
                     }, 1000)
                 } else {
@@ -148,10 +147,10 @@ export default function ManageTeam() {
                     notifHandler("Left Successfully!", true, "success700")
                     setTimeout(() => {
                         // router.push(
-                        //     `http://localhost:3000/hackathon/${teamData.hackathon.id}`
+                        //     `http://localhost:3000/hackathon/${teamData.hackathon.slug}`
                         // )
                         router.push(
-                            `https://cops-hackalog.netlify.app/hackathon/${teamData.hackathon.id}`
+                            `https://cops-hackalog.netlify.app/hackathon/${teamData.hackathon.slug}`
                         )
                     }, 1000)
                 }
@@ -325,129 +324,98 @@ export default function ManageTeam() {
         }
     }
 
-    return (
-        <>
-            <Notification
-                bg={notif.bg}
-                isOpen={notif.show}
-                onClose={() => {
-                    editNotif({ message: "", show: false, bg: "info700" })
+    return localLoading ? (
+        <Container className="text-center">
+            <Spinner
+                style={{
+                    position: "absolute",
+                    top: "50%",
                 }}
-                prefix={
-                    <Icon
-                        name="Success"
-                        color="white"
-                        size="18px"
-                        m={{ r: "0.5rem" }}
-                    />
-                }
-                suffix={
-                    <Icon
-                        name="Cross"
-                        pos="absolute"
-                        top="1rem"
-                        right="0.5rem"
-                        color="white"
-                        size="18px"
-                        cursor="pointer"
-                        m={{ r: "0.5rem" }}
-                        onClick={() => {
-                            editNotif({
-                                message: "",
-                                show: false,
-                                bg: "info700",
-                            })
-                        }}
-                    />
-                }
+                className="mt-auto mb-auto"
+                animation="border"
+                role="status"
             >
-                {notif.message}
-            </Notification>
-            <Row justify="center" m={{ t: "3.5rem", b: "2.5rem", x: "0.5rem" }}>
-                <Text
-                    tag="h2"
-                    textSize="display2"
-                    textColor="#003e54"
-                    fontFamily="madetommy-regular"
-                    textDecor="underline"
-                    textAlign="center"
+                <span className="sr-only">Loading...</span>
+            </Spinner>
+        </Container>
+    ) : (
+            <>
+                <Notification
+                    bg={notif.bg}
+                    isOpen={notif.show}
+                    onClose={() => {
+                        editNotif({ message: "", show: false, bg: "info700" })
+                    }}
+                    prefix={
+                        <Icon
+                            name="Success"
+                            color="white"
+                            size="18px"
+                            m={{ r: "0.5rem" }}
+                        />
+                    }
+                    suffix={
+                        <Icon
+                            name="Cross"
+                            pos="absolute"
+                            top="1rem"
+                            right="0.5rem"
+                            color="white"
+                            size="18px"
+                            cursor="pointer"
+                            m={{ r: "0.5rem" }}
+                            onClick={() => {
+                                editNotif({
+                                    message: "",
+                                    show: false,
+                                    bg: "info700",
+                                })
+                            }}
+                        />
+                    }
                 >
-                    Team: {teamData.name}
-                </Text>
-            </Row>
-            <Row justify="center">
-                <Col size={{ xs: "12", md: "10" }}>
-                    <Div
-                        bg="white"
-                        shadow={{ md: "4" }}
-                        rounded="xl"
-                        m={{ b: "1rem" }}
+                    {notif.message}
+                </Notification>
+                <Row justify="center" m={{ t: "3.5rem", b: "2.5rem", x: "0.5rem" }}>
+                    <Text
+                        tag="h2"
+                        textSize="display2"
+                        textColor="#003e54"
+                        fontFamily="madetommy-regular"
+                        textDecor="underline"
+                        textAlign="center"
                     >
-                        <Row
-                            m={{ x: "0.5rem", y: "1rem" }}
-                            justify="space-between"
+                        Team: {teamData.name}
+                    </Text>
+                </Row>
+                <Row justify="center">
+                    <Col size={{ xs: "12", md: "10" }}>
+                        <Div
+                            bg="white"
+                            shadow={{ md: "4" }}
+                            rounded="xl"
+                            m={{ b: "1rem" }}
                         >
-                            <Col
-                                size={{ xs: "12", md: "6" }}
-                                m={{ y: "0.5rem" }}
+                            <Row
+                                m={{ x: "0.5rem", y: "1rem" }}
+                                justify="space-between"
                             >
-                                <Clipboard
-                                    code={teamData.team_id}
-                                    notify={() => {
-                                        notifHandler(
-                                            "Code copied!",
-                                            true,
-                                            "success700"
-                                        )
-                                    }}
-                                ></Clipboard>
-                            </Col>
-                            {!nameEdit ? (
                                 <Col
                                     size={{ xs: "12", md: "6" }}
                                     m={{ y: "0.5rem" }}
                                 >
-                                    <Row>
-                                        <Text
-                                            tag="h4"
-                                            textSize="title"
-                                            textColor="#003e54"
-                                            fontFamily="madetommy-regular"
-                                            m={{ r: "1rem" }}
-                                        >
-                                            Team Name:
-                                        </Text>
-                                        <Text
-                                            tag="h6"
-                                            textSize="title"
-                                            textColor="gray800"
-                                            fontFamily="madetommy-regular"
-                                            m={{ r: "1rem" }}
-                                        >
-                                            {teamData.name}
-                                        </Text>
-                                        <Button
-                                            h="2.5rem"
-                                            w="2.5rem"
-                                            rounded="circle"
-                                            m={{ r: "1rem" }}
-                                            onClick={() => {
-                                                setNameEdit(true)
-                                            }}
-                                            bg="#178a80"
-                                            hoverBg="success600"
-                                            hoverShadow="3"
-                                            title="Edit"
-                                        >
-                                            <Icon
-                                                name="Edit"
-                                                size="20px"
-                                                color="white"
-                                            />
-                                        </Button>
-                                    </Row>
+                                    <Clipboard
+                                        code={teamData.team_id}
+                                        notify={() => {
+                                            notifHandler(
+                                                "Code copied!",
+                                                true,
+                                                "success700"
+                                            )
+                                        }}
+                                    ></Clipboard>
                                 </Col>
-                            ) : (
+                                {!nameEdit ? (
                                     <Col
                                         size={{ xs: "12", md: "6" }}
                                         m={{ y: "0.5rem" }}
@@ -462,71 +430,116 @@ export default function ManageTeam() {
                                             >
                                                 Team Name:
                                         </Text>
-                                            <Input
-                                                placeholder={teamData.name}
-                                                onChange={(e) => {
-                                                    setBufferTeamName(
-                                                        e.target.value
-                                                    )
-                                                }}
-                                            ></Input>
+                                            <Text
+                                                tag="h6"
+                                                textSize="title"
+                                                textColor="gray800"
+                                                fontFamily="madetommy-regular"
+                                                m={{ r: "1rem" }}
+                                            >
+                                                {teamData.name}
+                                            </Text>
                                             <Button
+                                                h="2.5rem"
+                                                w="2.5rem"
+                                                rounded="circle"
+                                                m={{ r: "1rem" }}
                                                 onClick={() => {
-                                                    setSpinner(true)
-                                                    changeName()
+                                                    setNameEdit(true)
                                                 }}
-                                                w="3rem"
                                                 bg="#178a80"
                                                 hoverBg="success600"
-                                                m={{ x: "0.5rem" }}
+                                                hoverShadow="3"
+                                                title="Edit"
                                             >
-                                                {showSpinner ? (
-                                                    <Icon
-                                                        name="Loading2"
-                                                        size="20px"
-                                                        color="white"
-                                                    />
-                                                ) : (
-                                                        "Done"
-                                                    )}
+                                                <Icon
+                                                    name="Edit"
+                                                    size="20px"
+                                                    color="white"
+                                                />
                                             </Button>
-                                            <Button
-                                                disabled={showSpinner}
-                                                onClick={() => {
-                                                    setNameEdit(false)
-                                                    setBufferTeamName("")
-                                                }}
-                                                w="3rem"
-                                                bg="#178a80"
-                                                hoverBg="success600"
-                                            >
-                                                Back
-                                        </Button>
                                         </Row>
                                     </Col>
-                                )}
-                        </Row>
-                        <Row m={{ y: "1rem" }}>
-                            <Col size={{ xs: "12" }}>
-                                <Text
-                                    tag="h4"
-                                    textSize="title"
-                                    textColor="#003e54"
-                                    fontFamily="madetommy-regular"
-                                    m={{ r: "1rem" }}
-                                >
-                                    Members:
+                                ) : (
+                                        <Col
+                                            size={{ xs: "12", md: "6" }}
+                                            m={{ y: "0.5rem" }}
+                                        >
+                                            <Row>
+                                                <Text
+                                                    tag="h4"
+                                                    textSize="title"
+                                                    textColor="#003e54"
+                                                    fontFamily="madetommy-regular"
+                                                    m={{ r: "1rem" }}
+                                                >
+                                                    Team Name:
+                                        </Text>
+                                                <Input
+                                                    placeholder={teamData.name}
+                                                    onChange={(e) => {
+                                                        setBufferTeamName(
+                                                            e.target.value
+                                                        )
+                                                    }}
+                                                ></Input>
+                                                <Button
+                                                    onClick={() => {
+                                                        setSpinner(true)
+                                                        changeName()
+                                                    }}
+                                                    w="3rem"
+                                                    bg="#178a80"
+                                                    hoverBg="success600"
+                                                    m={{ x: "0.5rem" }}
+                                                >
+                                                    {showSpinner ? (
+                                                        <Icon
+                                                            name="Loading2"
+                                                            size="20px"
+                                                            color="white"
+                                                        />
+                                                    ) : (
+                                                            "Done"
+                                                        )}
+                                                </Button>
+                                                <Button
+                                                    disabled={showSpinner}
+                                                    onClick={() => {
+                                                        setNameEdit(false)
+                                                        setBufferTeamName("")
+                                                    }}
+                                                    w="3rem"
+                                                    bg="#178a80"
+                                                    hoverBg="success600"
+                                                >
+                                                    Back
+                                        </Button>
+                                            </Row>
+                                        </Col>
+                                    )}
+                            </Row>
+                            <Row m={{ y: "1rem" }}>
+                                <Col size={{ xs: "12" }}>
+                                    <Text
+                                        tag="h4"
+                                        textSize="title"
+                                        textColor="#003e54"
+                                        fontFamily="madetommy-regular"
+                                        m={{ r: "1rem" }}
+                                    >
+                                        Members:
                                 </Text>
-                                <Div
-                                    m={{ t: "0.5rem", b: "1.5rem", x: "1rem" }}
-                                >
-                                    <ListGroup>{membersUI}</ListGroup>
-                                </Div>
-                            </Col>
-                        </Row>
-                    </Div>
-                </Col>
-            </Row>
-        </>
-    )
+                                    <Div
+                                        m={{ t: "0.5rem", b: "1.5rem", x: "1rem" }}
+                                    >
+                                        <ListGroup>{membersUI}</ListGroup>
+                                    </Div>
+                                </Col>
+                            </Row>
+                        </Div>
+                    </Col>
+                </Row>
+            </>
+        )
 }
