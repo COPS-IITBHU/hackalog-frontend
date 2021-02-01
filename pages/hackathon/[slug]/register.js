@@ -112,10 +112,11 @@ export default function Register() {
             }
         } catch (exc) {
             if (exc.response.status === 400) {
+                // console.log('exc.response =', exc.response)
                 notifHandler(
-                    "You are already part of some team in this event!",
+                    exc.response.data[0],
                     true,
-                    "info600"
+                    "warning700"
                 )
             } else if (exc.response.status === 404) {
                 notifHandler(
