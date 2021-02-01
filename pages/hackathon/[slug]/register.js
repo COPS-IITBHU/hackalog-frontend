@@ -25,7 +25,6 @@ export default function Register() {
     }
 
     const doRegister = async (name) => {
-        console.log("hackathonId =", hackathonId)
         try {
             axios.defaults.headers.common["Authorization"] = `Token ${token}`
             const response = await axios.post(
@@ -41,6 +40,12 @@ export default function Register() {
             if (response.status === 201) {
                 notifHandler("Team creation successful", true, "success700")
                 editCode({ code: response.data.team_id, show: true })
+                setTimeout(() => {
+                    // router.push(`http://localhost:3000/hackathon/${hackathonId}/teams/${code}`)
+                    router.push(
+                        `https://cops-hackalog.netlify.app/hackathon/${hackathonId}/teams/${code}`
+                    )
+                }, 1000)
                 console.log("code updated successfully!")
             } else {
                 notifHandler(
@@ -103,6 +108,12 @@ export default function Register() {
                     true,
                     "success700"
                 )
+                setTimeout(() => {
+                    // router.push(`http://localhost:3000/hackathon/${hackathonId}/teams/${code}`)
+                    router.push(
+                        `https://cops-hackalog.netlify.app/hackathon/${hackathonId}/teams/${code}`
+                    )
+                }, 1000)
             } else {
                 notifHandler(
                     "Some unexpected error in client!",
@@ -113,11 +124,7 @@ export default function Register() {
         } catch (exc) {
             if (exc.response.status === 400) {
                 // console.log('exc.response =', exc.response)
-                notifHandler(
-                    exc.response.data[0],
-                    true,
-                    "warning700"
-                )
+                notifHandler(exc.response.data[0], true, "warning700")
             } else if (exc.response.status === 404) {
                 notifHandler(
                     "Either team or hackathon not found!",
@@ -125,11 +132,7 @@ export default function Register() {
                     "info600"
                 )
             } else if (exc.response.status === 403) {
-                notifHandler(
-                    "Incomplete profile!",
-                    true,
-                    "danger700"
-                )
+                notifHandler("Incomplete profile!", true, "danger700")
             } else {
                 notifHandler(
                     "Some error occured, try again or contact admin!",
