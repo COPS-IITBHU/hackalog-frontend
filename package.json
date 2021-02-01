@@ -21,8 +21,12 @@
     "react-bootstrap": "^1.4.0",
     "react-dom": "16.13.1",
     "react-icons": "^3.11.0",
+    "react-markdown": "^5.0.3",
     "react-select": "^3.1.1",
     "react-transition-group": "^4.4.1",
+    "remark-code-frontmatter": "^1.0.0",
+    "remark-gfm": "^1.0.0",
+    "remark-highlight.js": "^6.0.0",
     "styled-components": "^5.2.1",
     "styletron-engine-atomic": "^1.4.6",
     "styletron-react": "^5.2.7"

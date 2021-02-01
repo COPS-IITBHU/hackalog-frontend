@@ -13,6 +13,10 @@ import {
     Badge,
 } from "react-bootstrap"
 import { Text } from "atomize"
+import ReactMarkdown from "react-markdown"
+import gfm from "remark-gfm"
+import highlight from "remark-highlight.js"
+import codeformatter from "remark-code-frontmatter"
 
 export default function Hackathon() {
     const router = useRouter()
@@ -315,7 +319,12 @@ function Overview({ hackathon }) {
                 >
                     {hackathon.title}
                 </Text>
-                <div className="pb-3">{hackathon.description}</div>
+                <ReactMarkdown
+                    plugins={[gfm, codeformatter, highlight]}
+                    className="pb-3"
+                >
+                    {hackathon.description}
+                </ReactMarkdown>
                 <div className="pb-3">
                     <Text
                         tag="h6"
