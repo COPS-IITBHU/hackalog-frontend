@@ -5,22 +5,20 @@ import { Text, Button, Div, Image } from "atomize";
 import axios from "../../util/axios";
 import { useAuth } from "../../context/auth";
 import { Jumbotron } from "react-bootstrap";
-import Head from 'next/head';
-import { BiCodeAlt } from 'react-icons/bi';
+import Head from "next/head";
+import { BiCodeAlt } from "react-icons/bi";
 import { HiOutlineEmojiSad } from "react-icons/hi";
-
-
 
 export default function SubmissionDetail() {
 	/*
-		Initially status = 190 => loading
-		if status = 200, show page
-		else some error occurred
-	*/
+		  Initially status = 190 => loading
+		  if status = 200, show page
+		  else some error occurred
+	  */
 
 	const router = useRouter();
 	const { id } = router.query;
-	const { token } = useAuth();
+	const { token, loading } = useAuth();
 	const [submission, setSubmission] = useState({});
 	const [team, setteam] = useState();
 	const [status, setStatus] = useState(190);
@@ -33,11 +31,10 @@ export default function SubmissionDetail() {
 			axios
 				.get(`/submissions/${id}/`)
 				.then((response) => {
-
 					let sub = response.data;
 					if (!sub.hackathon.image)
 						sub.hackathon.image = "/images/home-jumbo.jpg";
-					console.log(sub)
+					console.log(sub);
 					setSubmission(sub);
 					setStatus(200);
 				})
@@ -65,13 +62,16 @@ export default function SubmissionDetail() {
 	if (!Number(id) || status == 404)
 		return (
 			<div className="text-center pt-3 mb-2">
-				<Image src='/images/404.svg' className="mb-3" maxH={{ xs: '40vw', sm: '25vh' }} />
-				<Text textSize="title" >
-					Error 404: Submission Not Found
-				</Text>
+				<Image
+					src="/images/404.svg"
+					className="mb-3"
+					maxH={{ xs: "40vw", sm: "25vh" }}
+				/>
+				<Text textSize="title">Error 404: Submission Not Found</Text>
 			</div>
 		);
-	if (status == 190)
+
+	if (status == 190 || (status == 403 && loading == true))
 		return (
 			<Container className="text-center">
 				<Head>
@@ -94,10 +94,11 @@ export default function SubmissionDetail() {
 		return (
 			<div style={{ background: "#87a3bb17", minHeight: "100vh" }}>
 				<Head>
-					{team
-						? <title>Team {team.name}&apos;s Submission</title>
-						: <title>Submission Details</title>
-					}
+					{team ? (
+						<title>Team {team.name}&apos;s Submission</title>
+					) : (
+							<title>Submission Details</title>
+						)}
 				</Head>
 				<Jumbotron
 					fluid
@@ -108,24 +109,29 @@ export default function SubmissionDetail() {
 				/>
 				<Text className="text-center mb-3" tag="h1" textSize="display1">
 					{submission.hackathon.title} Submissions
-				</Text>
+        		</Text>
 				<Container>
 					<Text textSize="title">{submission.title}&nbsp;</Text>
-					<Text textSize="subheader" className="pl-3">- by Team {submission.team.name}</Text>
+					<Text textSize="subheader" className="pl-3">
+						- by Team {submission.team.name}
+					</Text>
 					<hr />
 					<Text textSize="subheader">
 						<u>Description</u>
 					</Text>
 					<Text textSize="paragraph">{submission.description}</Text>
-					<Text textSize="subheader"><u>Judge&apos;s Review</u></Text>
+					<Text textSize="subheader">
+						<u>Judge&apos;s Review</u>
+					</Text>
 					<Text textSize="paragraph">{submission.review}</Text>
 
 					<Text textSize="subheader">
-						<BiCodeAlt /> Source Code: {
-							submission.submission_url == "EMPTY"
-								? "No Link Provided"
-								: <a href={`${submission.submission_url}`}>Link</a>
-						}
+						<BiCodeAlt /> Source Code:{" "}
+						{submission.submission_url == "EMPTY" ? (
+							"No Link Provided"
+						) : (
+								<a href={`${submission.submission_url}`}>Link</a>
+							)}
 					</Text>
 					<Row className="justify-content-around mt-3">
 						<Div shadow="4" className="col-md-5" rounded="md" m={{ b: "1rem" }}>
@@ -137,13 +143,15 @@ export default function SubmissionDetail() {
 									textDecor="underline"
 								>
 									Team Members
-								</Text>
+                				</Text>
 								{teamStat !== 190 ? (
 									<div className="text-center pt-3 mb-2">
-										<Text textSize="display1"><HiOutlineEmojiSad /></Text>
+										<Text textSize="display1">
+											<HiOutlineEmojiSad />
+										</Text>
 										<Text textWeight="600" textColor="red">
 											Unable to Fetch Team Details
-										</Text>
+                    					</Text>
 									</div>
 								) : team ? (
 									<>
@@ -217,7 +225,7 @@ export default function SubmissionDetail() {
 									textDecor="underline"
 								>
 									Hackathon Details
-								</Text>
+                				</Text>
 								<Table hover size="sm" className="mb-3 pb-3" responsive>
 									<tbody>
 										<tr>
@@ -230,11 +238,11 @@ export default function SubmissionDetail() {
 										</tr>
 										<tr>
 											<td>Start Date</td>
-											<td>{(Date(submission.hackathon.start)).toString()} </td>
+											<td>{Date(submission.hackathon.start).toString()} </td>
 										</tr>
 										<tr>
 											<td>End Date</td>
-											<td>{(Date(submission.hackathon.end)).toString()} </td>
+											<td>{Date(submission.hackathon.end).toString()} </td>
 										</tr>
 										<tr>
 											<td>Status</td>
@@ -256,16 +264,34 @@ export default function SubmissionDetail() {
 					<a href={`/hackathon/${submission.hackathon.slug}`}>
 						<Button className="mb-3" bg="purple">
 							View Other Submissions
-						</Button>
+            			</Button>
 					</a>
 				</Container>
 			</div>
 		);
-	else return (
-		<>
-			<Head>
-				<title>Submission Details</title>
-			</Head>
-			<div>Some Error Occurred</div>
-		</>);
+	else if (status == 403)
+		return (
+			<Container className="text-center">
+				<Head>
+					<title>Submission Details</title>
+				</Head>
+				{token ? (
+					<Text>You are not authorised to view this submission.</Text>
+				) : (
+						<Text>
+							Only the team members can view their submissions in an Ongoing
+							Hackathon
+						</Text>
+					)}
+			</Container>
+		);
+	else
+		return (
+			<>
+				<Head>
+					<title>Submission Details</title>
+				</Head>
+				<div>Error {status}</div>
+			</>
+		);
 }

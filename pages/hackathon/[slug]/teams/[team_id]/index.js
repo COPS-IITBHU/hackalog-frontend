@@ -12,11 +12,11 @@ import {
 } from "atomize"
 import axios from "axios"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
-import { useAuth } from "../../../../context/auth"
-import { API_URL } from "../../../../util/constants"
-import Clipboard from "../../../../components/Clipboard/Clipboard"
 import { ListGroup, Container, Spinner } from "react-bootstrap"
+import { useEffect, useState } from "react"
+import { useAuth } from "../../../../../context/auth"
+import { API_URL } from "../../../../../util/constants"
+import Clipboard from "../../../../../components/Clipboard/Clipboard"
 
 // team management
 export default function ManageTeam() {
