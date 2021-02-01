@@ -544,18 +544,20 @@ function Leaderboard({ slug, status, token }) {
             .get(`/hackathons/${slug}/submissions/`)
             .then((response) => {
                 setSubmisssions(
-                    response.data.map((submission, index) => (
-                        <tr key={index}>
-                            <td>{index + 1}</td>
-                            <td>{submission.teamName} </td>
-                            <td> {submission.score}</td>
-                            <td>
-                                <a href={`/submission/${submission.id}`}>
-                                    {submission.title}
-                                </a>
-                            </td>
-                        </tr>
-                    ))
+                    response.data
+                        .sort((a, b) => b.score - a.score)
+                        .map((submission, index) => (
+                            <tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{submission.teamName} </td>
+                                <td> {submission.score}</td>
+                                <td>
+                                    <a href={`/submission/${submission.id}`}>
+                                        {submission.title}
+                                    </a>
+                                </td>
+                            </tr>
+                        ))
                 )
             })
             .catch((err) => {
