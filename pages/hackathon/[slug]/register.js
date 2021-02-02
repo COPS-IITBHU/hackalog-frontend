@@ -6,6 +6,7 @@ import { useAuth } from "../../../context/auth"
 import { useState } from "react"
 import { API_URL } from "../../../util/constants"
 import Clipboard from "../../../components/Clipboard/Clipboard"
+import Head from "next/head"
 
 export default function Register() {
     const { token } = useAuth()
@@ -161,6 +162,13 @@ export default function Register() {
 
     return (
         <Div>
+            <Head>
+                <title>Register - {hackathonId}</title>
+                <meta
+                    name="description"
+                    content={`Register for hackathon ${hackathonId} at COPS Hackalog`}
+                />
+            </Head>
             <Notification
                 bg={notif.bg}
                 isOpen={notif.show}
