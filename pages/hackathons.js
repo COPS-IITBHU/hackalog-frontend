@@ -1,14 +1,22 @@
 import HackathonCard from "../components/HackathonCard/HackathonCard"
 import axiosInstance from "../util/axios"
-import { Tab, Col, Row, Nav, Container } from "react-bootstrap"
+import { Tab, Col, Row, Nav, Spinner } from "react-bootstrap"
 import { Text } from "atomize"
 import { useEffect, useState } from "react"
 import Head from "next/head"
 
+import Lottie from 'react-lottie';
+import animationData from '../lottie/sad.json'
+const defaultOptions = {
+	loop: true,
+	autoplay: true,
+	animationData: animationData,
+};
+
 export default function Hackathons() {
-    const [ongoing, setOngoing] = useState([])
-    const [upcoming, setUpcoming] = useState([])
-    const [completed, setCompleted] = useState([])
+    const [ongoing, setOngoing] = useState()
+    const [upcoming, setUpcoming] = useState()
+    const [completed, setCompleted] = useState()
     const [error, setError] = useState([false, false, false])
 
     useEffect(() => {
@@ -101,46 +109,100 @@ export default function Hackathons() {
                         <Col sm={9}>
                             <Tab.Content>
                                 <Tab.Pane eventKey="ongoing">
-                                    {error[0] ? (
-                                        <Container>
-                                            Couldn&apos;t Fetch the List from
-                                            Backend
-                                        </Container>
-                                    ) : ongoing.length ? (
-                                        <HackathonList hackathons={ongoing} />
-                                    ) : (
-                                        <Container>
-                                            No Ongoing Hackathons Right Now
-                                        </Container>
-                                    )}
+                                    {error[0] ?
+                                        <div className="text-center">
+                                            Unable to fetch data, please try again!
+                                        </div>
+                                    :                                       
+                                        <>
+                                            { ongoing && ongoing.length ?
+                                                <HackathonList hackathons={ongoing} />
+                                                :
+                                                ongoing ?
+                                                    <div className="text-center">
+                                                        <Lottie options={defaultOptions}
+                                                            height={300}
+                                                        />
+                                                        <Text tag="h6" textSize="subheader" textColor="003e54bd" fontFamily="madetommy-bold">
+                                                            No Ongoing Hackathons Right Now
+                                                        </Text>
+                                                    </div>
+                                                    :
+                                                    <div className="text-center">
+                                                        <Spinner
+                                                            animation="border"
+                                                            role="status"
+                                                        >
+                                                            <span className="sr-only">Loading...</span>
+                                                        </Spinner>
+                                                    </div>
+                                            }
+                                        </>
+                                    }
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="upcoming">
-                                    {error[1] ? (
-                                        <Container>
-                                            Couldn&apos;t Fetch the List from
-                                            Backend
-                                        </Container>
-                                    ) : upcoming.length ? (
-                                        <HackathonList hackathons={upcoming} />
-                                    ) : (
-                                        <Container>
-                                            No Upcoming Hackathons Right Now
-                                        </Container>
-                                    )}
+                                    {error[1] ?
+                                        <div className="text-center">
+                                            Unable to fetch data, please try again!
+                                        </div>
+                                    : 
+                                        <>
+                                            {  upcoming && upcoming.length ?
+                                                <HackathonList hackathons={upcoming} />
+                                                :
+                                                upcoming ?
+                                                    <div className="text-center">
+                                                        <Lottie options={defaultOptions}
+                                                            height={300}
+                                                        />
+                                                        <Text tag="h6" textSize="subheader" textColor="003e54bd" fontFamily="madetommy-bold">
+                                                            No Upcoming Hackathons Right Now
+                                                        </Text>
+                                                    </div>
+                                                    :
+                                                    <div className="text-center">
+                                                        <Spinner
+                                                            animation="border"
+                                                            role="status"
+                                                        >
+                                                            <span className="sr-only">Loading...</span>
+                                                        </Spinner>
+                                                    </div>
+                                            }
+                                        </>
+                                    }
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="completed">
-                                    {error[2] ? (
-                                        <Container>
-                                            Couldn&apos;t Fetch the List from
-                                            Backend
-                                        </Container>
-                                    ) : completed.length ? (
-                                        <HackathonList hackathons={completed} />
-                                    ) : (
-                                        <Container>
-                                            No Completed Hackathons Right Now
-                                        </Container>
-                                    )}
+                                    {error[2] ?
+                                        <div className="text-center">
+                                            Unable to fetch data, please try again!
+                                        </div>
+                                    : 
+                                        <>
+                                            { completed && completed.length ?
+                                                <HackathonList hackathons={completed} />
+                                                :
+                                                completed ?
+                                                    <div className="text-center">
+                                                        <Lottie options={defaultOptions}
+                                                            height={300}
+                                                        />
+                                                        <Text tag="h6" textSize="subheader" textColor="003e54bd" fontFamily="madetommy-bold">
+                                                            No Completed Hackathons Right Now
+                                                        </Text>                                                        
+                                                    </div>
+                                                    :
+                                                    <div className="text-center">
+                                                        <Spinner
+                                                            animation="border"
+                                                            role="status"
+                                                        >
+                                                            <span className="sr-only">Loading...</span>
+                                                        </Spinner>
+                                                    </div>
+                                            }
+                                        </>
+                                    }
                                 </Tab.Pane>
                             </Tab.Content>
                         </Col>

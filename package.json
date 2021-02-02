@@ -24,6 +24,7 @@
     "react-bootstrap": "^1.4.0",
     "react-dom": "16.13.1",
     "react-icons": "^3.11.0",
+    "react-lottie": "^1.2.3",
     "react-markdown": "^5.0.3",
     "react-select": "^3.1.1",
     "react-transition-group": "^4.4.1",

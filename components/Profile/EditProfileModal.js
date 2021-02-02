@@ -96,7 +96,7 @@ const EditProfile = ({
                         <Form.Row>
                             <Col>
                                 <Form.Group controlId="handle">
-                                    <Form.Label>Handle</Form.Label>
+                                    <Form.Label>Github Handle</Form.Label>
                                     <Form.Control
                                         type="text"
                                         placeholder="GitHub Handle"
