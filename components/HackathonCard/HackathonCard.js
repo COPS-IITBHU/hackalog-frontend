@@ -7,7 +7,7 @@ export default function HackathonCard({ hackathon }) {
         <>
             <Div bg="white" shadow="4" rounded="xl" m={{ b: "1rem" }}>
                 <Div
-                    bgImg={hackathon.image}
+                    bgImg={hackathon.thumbnail}
                     bgSize="cover"
                     bgPos="center"
                     h="12rem"
