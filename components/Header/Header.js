@@ -32,8 +32,26 @@ export default function Header() {
             <div className={`d-flex align-items-center justify-content-between w-100 h-100 p-3`}>
                 <Link href="/">
                     <a className="text-dark">
-                        <div className="font-weight-bold">
-                            COPS <span className="text-monospace">Hackalog</span>
+                        <div>
+                            <span
+                                style={{
+                                    fontWeight: 700,
+                                    fontSize: 28,
+                                    fontFamily:"Righteous"
+                                }}
+                            >
+                                COPS
+                            </span>
+                            <span
+                                style={{
+                                    fontFamily: "Big Shoulders Display",
+                                    fontSize: 28,
+                                    marginLeft: 12,
+                                    letterSpacing: 5,
+                                }}
+                            >
+                                Hackalog
+                            </span>
                         </div>
                     </a>
                 </Link>
