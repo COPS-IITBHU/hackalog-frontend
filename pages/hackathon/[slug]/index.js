@@ -26,7 +26,7 @@ export default function Hackathon() {
 
     const { token, profile, loading } = useAuth()
     const [localLoading, setLocalLoading] = useState(true)
-    const [hackathon, setHackathon] = useState([])
+    const [hackathon, setHackathon] = useState({})
     const [error, setError] = useState(0)
 
     useEffect(() => {
@@ -118,7 +118,10 @@ export default function Hackathon() {
     return (
         <>
             <Head>
-                <title>Hackathon - {slug}</title>
+                {hackathon.title
+                ? <title>{hackathon.title}</title>
+                : <title>Hackathon - {slug}</title>
+                }
                 <meta
                     name="description"
                     content={`${slug} Hackathon being organized on COPS Hackalog`}
@@ -227,6 +230,21 @@ export default function Hackathon() {
                                                                     Your Team
                                                                 </a>
                                                             </Link>
+                                                            {/*
+                                                            <div
+                                                                style={{
+                                                                    height:
+                                                                        "1rem",
+                                                                }}
+                                                            ></div>
+                                                            <Link
+                                                                href={`/hackathon/${slug}/teams/${myTeam.team_id}/submit`}
+                                                            >
+                                                                <a className="btn btn-success w-100">
+                                                                    Submit Your Project
+                                                                </a>
+                                                            </Link>
+                                                            */}
                                                         </div>
                                                     </>
                                                 ) : hackathon.userStatus ==
@@ -586,12 +604,8 @@ function Participants({ slug }) {
                                             {team.leader.name}{" "}
                                             <Badge variant="info">Leader</Badge>
                                         </td>
-                                        <td>
-                                            <a
-                                                href={`/hackathon/${team.hackathon.slug}/teams/${team.team_id}`}
-                                            >
-                                                {team.name}
-                                            </a>
+                                        <td>                                            
+                                            {team.name}
                                         </td>
                                         <td>
                                             <a
