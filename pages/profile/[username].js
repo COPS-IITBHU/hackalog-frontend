@@ -8,7 +8,6 @@ import { MdLocationOn } from "react-icons/md"
 
 import axios from "../../util/axios"
 import { useAuth } from "../../context/auth"
-import Footer from "../../components/Footer/Footer"
 import { Interests } from "../../components/Profile"
 import TeamCard from "../../components/Profile/TeamCard"
 import HackathonCard from "../../components/HackathonCard/HackathonCard"
@@ -224,7 +223,6 @@ function Profile() {
 					</Tab.Container>
 				</div>
 			}
-			<Footer />
 			<style>{`
 				.cover-image-container {
 					background-image: url("/backgrounds/bg2.jpg");

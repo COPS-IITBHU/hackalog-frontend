@@ -99,8 +99,8 @@ export default function SubmissionDetail() {
                     {team ? (
                         <title>Team {team.name}&apos;s Submission</title>
                     ) : (
-                            <title>Submission Details</title>
-                        )}
+                        <title>Submission Details</title>
+                    )}
                 </Head>
                 <Jumbotron
                     fluid
@@ -122,23 +122,25 @@ export default function SubmissionDetail() {
                         <u>Description</u>
                     </Text>
                     <Text textSize="paragraph">{submission.description}</Text>
-                    {
-                        submission.review !== "There had been no reviews till now."
-                            ? <>
-                                <Text textSize="subheader">
-                                    <u>Judge&apos;s Review</u>
-                                </Text>
-                                <Text textSize="paragraph">{submission.review}</Text>
-                            </>
-                            : null
-                    }
+                    {submission.review !==
+                        "There had been no reviews till now." &&
+                    submission.review.length ? (
+                        <>
+                            <Text textSize="subheader">
+                                <u>Judge&apos;s Review</u>
+                            </Text>
+                            <Text textSize="paragraph">
+                                {submission.review}
+                            </Text>
+                        </>
+                    ) : null}
                     <Text textSize="subheader">
                         <BiCodeAlt /> Source Code:{" "}
                         {submission.submission_url == "EMPTY" ? (
                             "No Link Provided"
                         ) : (
-                                <a href={`${submission.submission_url}`}>Link</a>
-                            )}
+                            <a href={`${submission.submission_url}`}>Link</a>
+                        )}
                     </Text>
                     <Row className="justify-content-around mt-3">
                         <Div
@@ -217,32 +219,32 @@ export default function SubmissionDetail() {
                                                 Scored: {submission.score}/100
                                             </Text>
                                         ) : (
-                                                <Text
-                                                    textSize="title"
-                                                    className="text-center pb-2"
-                                                    textColor="blue"
-                                                >
-                                                    Scores Awaited
-                                                </Text>
-                                            )}
+                                            <Text
+                                                textSize="title"
+                                                className="text-center pb-2"
+                                                textColor="blue"
+                                            >
+                                                Scores Awaited
+                                            </Text>
+                                        )}
                                     </>
                                 ) : (
-                                            <Container className="text-center">
-                                                <Spinner
-                                                    style={{
-                                                        position: "absolute",
-                                                        top: "50%",
-                                                    }}
-                                                    className="mt-auto mb-auto"
-                                                    animation="border"
-                                                    role="status"
-                                                >
-                                                    <span className="sr-only">
-                                                        Loading...
+                                    <Container className="text-center">
+                                        <Spinner
+                                            style={{
+                                                position: "absolute",
+                                                top: "50%",
+                                            }}
+                                            className="mt-auto mb-auto"
+                                            animation="border"
+                                            role="status"
+                                        >
+                                            <span className="sr-only">
+                                                Loading...
                                             </span>
-                                                </Spinner>
-                                            </Container>
-                                        )}
+                                        </Spinner>
+                                    </Container>
+                                )}
                             </Container>
                         </Div>
 
@@ -331,11 +333,11 @@ export default function SubmissionDetail() {
                 {token ? (
                     <Text>You are not authorised to view this submission.</Text>
                 ) : (
-                        <Text>
-                            Only the team members can view their submissions in an
-                            Ongoing Hackathon
-                        </Text>
-                    )}
+                    <Text>
+                        Only the team members can view their submissions in an
+                        Ongoing Hackathon
+                    </Text>
+                )}
             </Container>
         )
     else

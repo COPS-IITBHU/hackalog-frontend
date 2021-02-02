@@ -11,6 +11,7 @@ import {
     Spinner,
     Image,
     Badge,
+    Button,
 } from "react-bootstrap"
 import { Text } from "atomize"
 import ReactMarkdown from "react-markdown"
@@ -23,7 +24,7 @@ export default function Hackathon() {
     const router = useRouter()
     const slug = router.query.slug
 
-    const { token, loading } = useAuth()
+    const { token, profile, loading } = useAuth()
     const [localLoading, setLocalLoading] = useState(true)
     const [hackathon, setHackathon] = useState([])
     const [error, setError] = useState(0)
@@ -31,6 +32,10 @@ export default function Hackathon() {
     useEffect(() => {
         if (slug) {
             setLocalLoading(true)
+            if (token)
+                axios.defaults.headers.common[
+                    "Authorization"
+                ] = `Token ${token}`
             axios
                 .get(`/hackathons/${slug}/`)
                 .then((response) => {
@@ -46,7 +51,29 @@ export default function Hackathon() {
                 })
             setLocalLoading(false)
         }
-    }, [slug])
+    }, [slug, token])
+
+    const [submissions, setSubmisssions] = useState([])
+    const [leaderboardLoading, setLeaderboardLoading] = useState(true)
+
+    useEffect(() => {
+        if (slug) {
+            setLeaderboardLoading(true)
+            if (token)
+                axios.defaults.headers.common[
+                    "Authorization"
+                ] = `Token ${token}`
+            axios
+                .get(`/hackathons/${slug}/submissions/`)
+                .then((response) => {
+                    setSubmisssions(response.data)
+                })
+                .catch((err) => {
+                    console.error(err)
+                })
+            setLeaderboardLoading(false)
+        }
+    }, [token, slug])
 
     if (error != 0) {
         return (
@@ -78,6 +105,16 @@ export default function Hackathon() {
             </>
         )
     }
+
+    var myTeam = { team_id: "#" }
+    if (profile) {
+        myTeam = profile.teams.filter(
+            (team) => team.hackathon.slug == hackathon.slug
+        )
+        if (myTeam.length) myTeam = myTeam[0]
+        else myTeam = { team_id: "#" }
+    }
+    console.log(hackathon.userStatus)
     return (
         <>
             <Head>
@@ -162,9 +199,9 @@ export default function Hackathon() {
                                             title="Leaderboard"
                                         >
                                             <Leaderboard
-                                                slug={hackathon.slug}
+                                                submissions={submissions}
+                                                loading={leaderboardLoading}
                                                 status={hackathon.status}
-                                                token={token}
                                             />
                                         </Tab.Pane>
                                     </Tab.Content>
@@ -174,7 +211,7 @@ export default function Hackathon() {
                                         <div className="pb-5 pb-lg-0">
                                             <div className="bg-grey p-3 p-md-4 rounded">
                                                 {hackathon.userStatus ==
-                                                "registered" ? (
+                                                    "registered" && token ? (
                                                     <>
                                                         <div className="pb-3">
                                                             You have already
@@ -184,17 +221,16 @@ export default function Hackathon() {
                                                         </div>
                                                         <div>
                                                             <Link
-                                                                href={`/hackathon/${slug}/register`}
+                                                                href={`/hackathon/${slug}/teams/${myTeam.team_id}`}
                                                             >
                                                                 <a className="btn btn-success w-100">
-                                                                    Login to
                                                                     Your Team
                                                                 </a>
                                                             </Link>
                                                         </div>
                                                     </>
                                                 ) : hackathon.userStatus ==
-                                                  "submitted" ? (
+                                                      "submitted" && token ? (
                                                     <>
                                                         <div className="pb-3">
                                                             We have already
@@ -209,16 +245,50 @@ export default function Hackathon() {
                                                         </div>
                                                         <div>
                                                             <Link
-                                                                href={`/hackathon/${slug}/register`}
+                                                                href={`/hackathon/${slug}/teams/${myTeam.team_id}`}
                                                             >
                                                                 <a className="btn btn-success w-100">
-                                                                    Login to
                                                                     Your Team
                                                                 </a>
                                                             </Link>
+                                                            <div
+                                                                style={{
+                                                                    height:
+                                                                        "1rem",
+                                                                }}
+                                                            ></div>
+                                                            {submissions.length ? (
+                                                                <Link
+                                                                    className="pt-3"
+                                                                    href={`/submission/${submissions[0].id}`}
+                                                                >
+                                                                    <a className="btn btn-success w-100">
+                                                                        Your
+                                                                        Submission
+                                                                    </a>
+                                                                </Link>
+                                                            ) : (
+                                                                <Link
+                                                                    className="pt-3"
+                                                                    href="#"
+                                                                >
+                                                                    <a className="btn btn-success w-100">
+                                                                        <Spinner
+                                                                            animation="border"
+                                                                            role="status"
+                                                                        >
+                                                                            <span className="sr-only">
+                                                                                Loading
+                                                                                Submission
+                                                                                Link...
+                                                                            </span>
+                                                                        </Spinner>
+                                                                    </a>
+                                                                </Link>
+                                                            )}
                                                         </div>
                                                     </>
-                                                ) : (
+                                                ) : token ? (
                                                     <>
                                                         <div className="pb-3">
                                                             Join to receive
@@ -237,44 +307,37 @@ export default function Hackathon() {
                                                             </Link>
                                                         </div>
                                                     </>
+                                                ) : (
+                                                    <>
+                                                        <div className="pb-3">
+                                                            Join to receive
+                                                            hackathon updates,
+                                                            find teammates, and
+                                                            submit a project.
+                                                        </div>
+                                                        <div>
+                                                            <Link
+                                                                href={`/hackathon/${slug}/register`}
+                                                            >
+                                                                <a className="w-100">
+                                                                    <Button
+                                                                        variant="success"
+                                                                        disabled
+                                                                    >
+                                                                        Login to
+                                                                        Join
+                                                                    </Button>
+                                                                </a>
+                                                            </Link>
+                                                        </div>
+                                                    </>
                                                 )}
                                             </div>
                                         </div>
-                                    ) : hackathon.status == "Upcoming" ? (
+                                    ) : hackathon.status == "Completed" ? (
                                         <div className="pb-5 pb-lg-0 mt-3">
                                             <div className="bg-grey p-3 p-md-4 rounded">
-                                                <div className="pb-3">
-                                                    The hackathon has not stated
-                                                    yet.&nbsp;
-                                                    {hackathon.userstatus ==
-                                                    "registered"
-                                                        ? "You have already registered for the hackathon. Wait for the hackathon to begin!"
-                                                        : "Join to receive hackathon updates, find teammates, and submit a project!"}
-                                                </div>
-                                                <div className="pb-3"></div>
-                                                <div>
-                                                    <Link
-                                                        href={`/hackathon/${slug}/register`}
-                                                    >
-                                                        {hackathon.userstatus ==
-                                                        "registered" ? (
-                                                            <a className="btn btn-success w-100">
-                                                                Login/Create a
-                                                                Team
-                                                            </a>
-                                                        ) : (
-                                                            <a className="btn btn-success w-100">
-                                                                Join Hackathon
-                                                            </a>
-                                                        )}
-                                                    </Link>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ) : (
-                                        <div className="pb-5 pb-lg-0 mt-3">
-                                            <div className="bg-grey p-3 p-md-4 rounded">
-                                                <div className="pb-3">
+                                                <div className="">
                                                     The hackathon has concluded.
                                                     Hope you had a nice
                                                     experience!
@@ -284,6 +347,52 @@ export default function Hackathon() {
                                                             ? "have been declared. You can view it under the leaderboard section."
                                                             : "will be declared shortly."}
                                                     </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div className="pb-5 pb-lg-0 mt-3">
+                                            <div className="bg-grey p-3 p-md-4 rounded">
+                                                <div className="pb-3">
+                                                    The hackathon has not stated
+                                                    yet.&nbsp;
+                                                    {hackathon.userStatus ==
+                                                    false
+                                                        ? "Login to register for the hackathon and make a team!"
+                                                        : hackathon.userStatus ==
+                                                          "not registered"
+                                                        ? "Click the button below to join the hackathon and make a team!"
+                                                        : "You have already registered for the hackathon. Wait for the hackathon to begin!"}
+                                                </div>
+                                                <div>
+                                                    {hackathon.userStatus ===
+                                                    false ? (
+                                                        <Button
+                                                            variant="success"
+                                                            disabled
+                                                        >
+                                                            Login First
+                                                        </Button>
+                                                    ) : hackathon.userStatus ==
+                                                      "not registered" ? (
+                                                        <a
+                                                            href={`/hackathon/${slug}/register`}
+                                                        >
+                                                            <Button variant="success">
+                                                                Register
+                                                            </Button>
+                                                        </a>
+                                                    ) : hackathon.userStatus ==
+                                                          "registered" &&
+                                                      token ? (
+                                                        <a
+                                                            href={`/hackathon/${slug}/teams/${myTeam.team_id}`}
+                                                        >
+                                                            <Button variant="success">
+                                                                Your Team
+                                                            </Button>
+                                                        </a>
+                                                    ) : null}
                                                 </div>
                                             </div>
                                         </div>
@@ -552,40 +661,21 @@ function Participants({ slug }) {
     )
 }
 
-function Leaderboard({ slug, status, token }) {
-    const [submissions, setSubmisssions] = useState([])
-    const [loading, setLoading] = useState(false)
-
-    useEffect(() => {
-        setLoading(true)
-        if (token)
-            axios.defaults.headers.common["Authorization"] = `Token ${token}`
-        axios
-            .get(`/hackathons/${slug}/submissions/`)
-            .then((response) => {
-                setSubmisssions(
-                    response.data
-                        .sort((a, b) => b.score - a.score)
-                        .map((submission, index) => (
-                            <tr key={index}>
-                                <td>{index + 1}</td>
-                                <td>{submission.teamName} </td>
-                                <td> {submission.score}</td>
-                                <td>
-                                    <a href={`/submission/${submission.id}`}>
-                                        {submission.title}
-                                    </a>
-                                </td>
-                            </tr>
-                        ))
-                )
-            })
-            .catch((err) => {
-                console.error(err)
-            })
-        setLoading(false)
-    }, [token, slug])
-
+function Leaderboard({ status, submissions, loading }) {
+    const submissionList = submissions
+        .sort((a, b) => b.score - a.score)
+        .map((submission, index) => (
+            <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{submission.teamName} </td>
+                <td> {submission.score}</td>
+                <td>
+                    <a href={`/submission/${submission.id}`}>
+                        {submission.title}
+                    </a>
+                </td>
+            </tr>
+        ))
     return (
         <div>
             <Table responsive>
@@ -621,6 +711,28 @@ function Leaderboard({ slug, status, token }) {
                                 </div>
                             </td>
                         </tr>
+                    ) : status == "Ongoing" ? (
+                        <tr>
+                            <td colSpan={4} className="px-3">
+                                <div
+                                    className="row rounded-bottom"
+                                    style={{
+                                        backgroundColor: "rgba(0.9,0,0,0.04)",
+                                    }}
+                                >
+                                    <div className="col-12 text-center py-3">
+                                        <Image
+                                            src="/images/rocket.svg"
+                                            style={{ height: "80px" }}
+                                        />
+                                        <p>
+                                            Submissions can only be viewed once
+                                            the hackathon has ended!
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
                     ) : (
                         <>
                             {loading ? (
@@ -642,8 +754,8 @@ function Leaderboard({ slug, status, token }) {
                                 </tr>
                             ) : (
                                 <>
-                                    {submissions.length ? (
-                                        <>{submissions}</>
+                                    {submissionList.length ? (
+                                        <>{submissionList}</>
                                     ) : (
                                         <tr>
                                             <td colSpan={4} className="px-3">
