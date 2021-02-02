@@ -120,7 +120,7 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-                <div className="row justify-content-between align-items-center">
+                <div className="row justify-content-between align-items-center" style={{flexWrap:"nowrap"}}>
                     <div className="pl-3">
                         <Text tag="h3" textSize="title" textColor="#003e54" fontFamily="madetommy-bold">
                             Ongoing and Upcoming Hackathons:
@@ -164,7 +164,7 @@ export default function Home() {
                         </Spinner>
                     }
                 </div>
-                <div className="row justify-content-between align-items-center">
+                <div className="row justify-content-between align-items-center" style={{flexWrap:"nowrap"}}>
                     <div className="pl-3">
                         <Text tag="h3" textSize="title" textColor="#003e54" fontFamily="madetommy-bold">
                             Hackathons and Events Archive:

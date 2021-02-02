@@ -13,6 +13,10 @@ import {
     Badge,
 } from "react-bootstrap"
 import { Text } from "atomize"
+import ReactMarkdown from "react-markdown"
+import gfm from "remark-gfm"
+import highlight from "remark-highlight.js"
+import codeformatter from "remark-code-frontmatter"
 
 export default function Hackathon() {
     const router = useRouter()
@@ -315,7 +319,12 @@ function Overview({ hackathon }) {
                 >
                     {hackathon.title}
                 </Text>
-                <div className="pb-3">{hackathon.description}</div>
+                <ReactMarkdown
+                    plugins={[gfm, codeformatter, highlight]}
+                    className="pb-3"
+                >
+                    {hackathon.description}
+                </ReactMarkdown>
                 <div className="pb-3">
                     <Text
                         tag="h6"
@@ -535,18 +544,20 @@ function Leaderboard({ slug, status, token }) {
             .get(`/hackathons/${slug}/submissions/`)
             .then((response) => {
                 setSubmisssions(
-                    response.data.map((submission, index) => (
-                        <tr key={index}>
-                            <td>{index + 1}</td>
-                            <td>{submission.teamName} </td>
-                            <td> {submission.score}</td>
-                            <td>
-                                <a href={`/submission/${submission.id}`}>
-                                    {submission.title}
-                                </a>
-                            </td>
-                        </tr>
-                    ))
+                    response.data
+                        .sort((a, b) => b.score - a.score)
+                        .map((submission, index) => (
+                            <tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{submission.teamName} </td>
+                                <td> {submission.score}</td>
+                                <td>
+                                    <a href={`/submission/${submission.id}`}>
+                                        {submission.title}
+                                    </a>
+                                </td>
+                            </tr>
+                        ))
                 )
             })
             .catch((err) => {
