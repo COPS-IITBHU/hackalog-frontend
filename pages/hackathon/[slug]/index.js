@@ -477,7 +477,13 @@ function Participants({ slug }) {
                                             {team.leader.name}{" "}
                                             <Badge variant="info">Leader</Badge>
                                         </td>
-                                        <td>{team.name}</td>
+                                        <td>
+                                            <a
+                                                href={`/hackathon/${team.hackathon.slug}/teams/${team.team_id}`}
+                                            >
+                                                {team.name}
+                                            </a>
+                                        </td>
                                         <td>
                                             <a
                                                 href={`/profile/${team.leader.username}`}
@@ -502,7 +508,13 @@ function Participants({ slug }) {
                                                 className="bg-grey rounded"
                                             >
                                                 <td>{team.members[i].name}</td>
-                                                <td>{team.name}</td>
+                                                <td>
+                                                    <a
+                                                        href={`/hackathon/${team.hackathon.slug}/teams/${team.team_id}`}
+                                                    >
+                                                        {team.name}
+                                                    </a>
+                                                </td>
                                                 <td>
                                                     <a
                                                         href={`/profile/${team.members[i].username}`}
