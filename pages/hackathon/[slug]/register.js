@@ -42,9 +42,10 @@ export default function Register() {
                 notifHandler("Team creation successful", true, "success700")
                 editCode({ code: response.data.team_id, show: true })
                 setTimeout(() => {
-                    // router.push(`http://localhost:3000/hackathon/${hackathonId}/teams/${code}`)
+                    // router.push(`http://localhost:3000/hackathon/${hackathonId}/teams/${code.code}`)
+                    let team_id = response.data.team_id
                     router.push(
-                        `https://cops-hackalog.netlify.app/hackathon/${hackathonId}/teams/${code}`
+                        `/hackathon/${hackathonId}/teams/${team_id}`
                     )
                 }, 1000)
                 console.log("code updated successfully!")
@@ -92,15 +93,15 @@ export default function Register() {
         }
     }
 
-    const doJoin = async (code) => {
+    const doJoin = async (joinCode) => {
         try {
             axios.defaults.headers.common["Authorization"] = `Token ${token}`
             const response = await axios.patch(
-                `${API_URL}hackathons/${hackathonId}/teams/join/${code}/`,
+                `${API_URL}hackathons/${hackathonId}/teams/join/${joinCode}/`,
                 {}
             )
             // const response = await axios.patch(
-            //     `http://127.0.0.1:8000/hackathons/${hackathonId}/teams/join/${code}/`,
+            //     `http://127.0.0.1:8000/hackathons/${hackathonId}/teams/join/${joinCode}/`,
             //     {}
             // )
             if (response.status === 200) {
@@ -110,9 +111,9 @@ export default function Register() {
                     "success700"
                 )
                 setTimeout(() => {
-                    // router.push(`http://localhost:3000/hackathon/${hackathonId}/teams/${code}`)
+                    // router.push(`http://localhost:3000/hackathon/${hackathonId}/teams/${joinCode}`)
                     router.push(
-                        `https://cops-hackalog.netlify.app/hackathon/${hackathonId}/teams/${code}`
+                        `/hackathon/${hackathonId}/teams/${joinCode}`
                     )
                 }, 1000)
             } else {

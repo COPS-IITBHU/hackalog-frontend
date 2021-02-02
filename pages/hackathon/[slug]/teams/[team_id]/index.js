@@ -42,16 +42,10 @@ export default function ManageTeam() {
                 axios.defaults.headers.common[
                     "Authorization"
                 ] = `Token ${token}`
-                // axios.defaults.headers.common[
-                //     "Authorization"
-                // ] = `Token b672633aab1e632e0520bbbd0ff38b5919126604`
                 const [responseTeam, responseUser] = await Promise.all([
                     axios.get(`${API_URL}teams/${router.query.team_id}/`),
                     axios.get(`${API_URL}profile/`),
                 ])
-                // const responseTeam = await axios.get(
-                //     `http://127.0.0.1:8000/teams/${router.query.team_id}`
-                // )
                 if (
                     responseTeam.status === 200 &&
                     responseUser.status === 200
@@ -110,7 +104,7 @@ export default function ManageTeam() {
                         //     `http://localhost:3000/hackathon/${teamData.hackathon.slug}`
                         // )
                         router.push(
-                            `https://cops-hackalog.netlify.app/hackathon/${teamData.hackathon.slug}`
+                            `/hackathon/${teamData.hackathon.slug}`
                         )
                     }, 1000)
                 } else {
