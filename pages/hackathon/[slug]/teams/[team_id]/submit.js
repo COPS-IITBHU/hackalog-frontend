@@ -43,7 +43,12 @@ export default function Submit() {
                     submission_url: url,
                 })
                 .then(
-                    (res) => setSuccess(true),
+                    (res) => {
+                        setSuccess(true)
+                        setTimeout(() => {
+                            location.replace(`/submission/${res.data.id}`)
+                        }, 1000)
+                    },
                     (err) => {
                         if (typeof err.response.data == "string")
                             ErrorNotification(err.response.data, true)
@@ -142,7 +147,7 @@ export default function Submit() {
                         type="submit"
                         disabled={!validateForm()}
                     >
-                        Login
+                        Submit
                     </Button>
                 </Form>
             </Container>
