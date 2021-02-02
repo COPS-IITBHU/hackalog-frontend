@@ -1,32 +1,39 @@
 module.exports = {
-    "env": {
-        "browser": true,
-        "es2021": true,
-        "node": true
+    env: {
+        browser: true,
+        es2021: true,
+        node: true,
     },
-    "extends": [
+    extends: [
         "eslint:recommended",
-        "plugin:react/recommended"
+        "plugin:react/recommended",
+        "plugin:import/errors",
+        "plugin:import/warnings",
+        "prettier",
+        "prettier/react",
     ],
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
+    parserOptions: {
+        ecmaFeatures: {
+            jsx: true,
         },
-        "ecmaVersion": 12,
-        "sourceType": "module"
+        ecmaVersion: 12,
+        sourceType: "module",
     },
-    "plugins": [
-        "react",
-        "react-hooks"
-    ],
-    "rules": {
+    plugins: ["react", "react-hooks", "import"],
+    rules: {
         "react/prop-types": "off",
+        "no-console": "warn",
         "react/react-in-jsx-scope": "off",
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": 1,
-        "no-unused-vars": "warn"
+        "no-unused-vars": "warn",
     },
-    "globals": {
-        "React": "writable"
-    }
-};
+    globals: {
+        React: "writable",
+    },
+    settings: {
+        react: {
+            version: "detect",
+        },
+    },
+}

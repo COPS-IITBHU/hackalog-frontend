@@ -1,19 +1,18 @@
 import { useState, useEffect, lazy, Suspense } from "react"
 import { useRouter } from "next/router"
 import DefaultErrorPage from "next/error"
-import {
-	Spinner, Row, Col, Container, Tab, Nav
-} from "react-bootstrap";
-import { Text, Image, Button, Div } from 'atomize'
+import { Spinner, Row, Col, Container, Tab, Nav } from "react-bootstrap"
+import { Text, Image, Button, Div } from "atomize"
 import { FaGithub } from "react-icons/fa"
-import { MdLocationOn } from 'react-icons/md'
+import { MdLocationOn } from "react-icons/md"
 
 import axios from "../../util/axios"
 import { useAuth } from "../../context/auth"
 import Footer from "../../components/Footer/Footer"
 import { Interests } from "../../components/Profile"
-import TeamCard from '../../components/Profile/TeamCard'
-import HackathonCard from '../../components/HackathonCard/HackathonCard'
+import TeamCard from "../../components/Profile/TeamCard"
+import HackathonCard from "../../components/HackathonCard/HackathonCard"
+import Head from "next/head"
 
 import Lottie from 'react-lottie';
 import animationData from '../../lottie/sad.json'
@@ -30,59 +29,60 @@ const defaultOptions = {
 const EditProfile = lazy(() => import('../../components/Profile/EditProfileModal'))
 
 function Profile() {
-	const router = useRouter();
-	const { username } = router.query;
-	const { token, profile, loading } = useAuth();
+    const router = useRouter()
+    const { username } = router.query
+    const { token, profile, loading } = useAuth()
 
-	const [userRequest, setUserRequest] = useState({ loading: false });
-	const [currentUser, setCurrentUser] = useState(false);
-	const [editDialog, setEdit] = useState({ show: false, closable: true });
+    const [userRequest, setUserRequest] = useState({ loading: false })
+    const [currentUser, setCurrentUser] = useState(false)
+    const [editDialog, setEdit] = useState({ show: false, closable: true })
 
-	const editProfile = () => setEdit({ show: true, closable: true });
-	const handleClose = () => setEdit({ show: false, closable: false });
+    const editProfile = () => setEdit({ show: true, closable: true })
+    const handleClose = () => setEdit({ show: false, closable: false })
 
-	useEffect(() => {
-		if (username) {
-			setUserRequest({ loading: true });
-			axios
-				.get(`profile/${username}/`)
-				.then((res) => {
-					setUserRequest({
-						loading: false,
-						user: res.data,
-					});
-					const arr = [
-						res.data.name,
-						res.data.username,
-						res.data.interests,
-						res.data.bio,
-						res.data.github_handle,
-					];
-					// Check for null fields
-					if (!arr.every((elm) => elm !== "" && elm !== null)) {
-						setEdit({
-							show: true,
-							closable: false,
-						});
-					}
-				})
-				.catch((err) => {
-					console.error(err)
-					setUserRequest({
-						loading: false,
-						user: "NOT FOUND", //dev things, sorry for the changes
-					});
-				});
-		}
-	}, [username]);
+    useEffect(() => {
+        if (username) {
+            setUserRequest({ loading: true })
+            axios
+                .get(`profile/${username}/`)
+                .then((res) => {
+                    setUserRequest({
+                        loading: false,
+                        user: res.data,
+                    })
+                    const arr = [
+                        res.data.name,
+                        res.data.username,
+                        res.data.interests,
+                        res.data.bio,
+                        res.data.github_handle,
+                    ]
+                    // Check for null fields
+                    if (!arr.every((elm) => elm !== "" && elm !== null)) {
+                        setEdit({
+                            show: true,
+                            closable: false,
+                        })
+                    }
+                })
+                .catch((err) => {
+                    console.error(err)
+                    setUserRequest({
+                        loading: false,
+                        user: "NOT FOUND", //dev things, sorry for the changes
+                    })
+                })
+        }
+    }, [username])
 
-	useEffect(() => {
-		if (userRequest.user && token && profile) {
-			if (profile.username === userRequest.user.username) setCurrentUser(true)
-		} else {
-			setCurrentUser(false)
-		}
-	}, [profile, token, userRequest.user]);
+    useEffect(() => {
+        if (userRequest.user && token && profile) {
+            if (profile.username === userRequest.user.username)
+                setCurrentUser(true)
+        } else {
+            setCurrentUser(false)
+        }
+    }, [profile, token, userRequest.user])
 
 	const url = userRequest.user
 		? userRequest.user.photoURL
@@ -261,8 +261,8 @@ function Profile() {
 				// 	color: #003e54;
 				// }
 			`}</style>
-		</div>
-	);
+        </div>
+    )
 }
 
-export default Profile;
+export default Profile
