@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import '../css/font.css'
 import '../css/style.css'
 import '../css/misc.css'
+import 'react-toastify/dist/ReactToastify.css'
 
 import { ThemeProvider, StyleReset } from 'atomize'
 import { Provider as StyletronProvider } from "styletron-react"
@@ -11,6 +12,7 @@ import Head from 'next/head'
 import { AuthProvider } from '../context/auth'
 import Header from '../components/Header/Header'
 import Footer from '../components/Footer/Footer'
+import { ToastContainer } from 'react-toastify'
 
 const theme = {
 	fontFamily: {
@@ -31,6 +33,7 @@ function MyApp({ Component, pageProps }) {
 						<Header />
 						<div style={{paddingTop: "88px"}}>
 							<Component {...pageProps} />
+							<ToastContainer/>
 							<Footer />
 						</div>
 					</AuthProvider>

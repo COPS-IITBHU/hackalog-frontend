@@ -1,28 +1,50 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useRouter } from "next/router"
 import axios from "axios"
-import { Div, Row, Col, Text, Button, Input, Icon, Notification } from "atomize"
+import { Div, Row, Col, Text, Button, Input} from "atomize"
 import { useAuth } from "../../../context/auth"
 import { useState } from "react"
 import { API_URL } from "../../../util/constants"
 import Clipboard from "../../../components/Clipboard/Clipboard"
 import Head from "next/head"
+import { toast } from "react-toastify"
 
 export default function Register() {
     const { token } = useAuth()
     const [teamName, editTeamName] = useState("")
-    const [notif, editNotif] = useState({
-        message: "",
-        show: false,
-        bg: "info700",
-    })
     const [code, editCode] = useState({ code: "", show: false })
     const [joinCode, editJoinCode] = useState("")
     const router = useRouter()
     const hackathonId = router.query.slug
 
-    const notifHandler = (message, show, bg) => {
-        editNotif({ message, show, bg })
+    const notifHandler = (message, type) => {
+        const config = {
+            position:"top-center",
+            autoClose:5000,
+            hideProgressBar:false,
+            newestOnTop:false,
+            closeOnClick: true,
+            rtl:false,
+            pauseOnFocusLoss: true,
+            draggable: true,
+            pauseOnHover: true
+        }
+        switch (type) {
+            case "info":
+                toast.info(message, config)
+                break
+            case "error":
+                toast.error(message, config)
+                break
+            case "warning":
+                toast.warn(message, config)
+                break
+            case "success":
+                toast.success(message, config)
+                break
+            default:
+                toast.info(message, config)
+        }
     }
 
     const doRegister = async (name) => {
@@ -39,39 +61,40 @@ export default function Register() {
             //     { name: name }
             // )
             if (response.status === 201) {
-                notifHandler("Team creation successful", true, "success700")
+                notifHandler(
+                    "Team creation successful",
+                    "success"
+                )
                 editCode({ code: response.data.team_id, show: true })
                 setTimeout(() => {
                     // router.push(`http://localhost:3000/hackathon/${hackathonId}/teams/${code.code}`)
                     let team_id = response.data.team_id
-                    router.push(
-                        `/hackathon/${hackathonId}/teams/${team_id}`
-                    )
+                    router.push(`/hackathon/${hackathonId}/teams/${team_id}`)
                 }, 1000)
                 console.log("code updated successfully!")
             } else {
                 notifHandler(
                     "Some unexpected error in client!",
-                    true,
-                    "warning700"
+                    "warning"
                 )
             }
         } catch (exc) {
             if (exc.response.status === 400) {
                 notifHandler(
                     `${exc.response.data.non_field_errors[0]}`,
-                    true,
-                    "info600"
+                    "error"
                 ) // same team name or. // already present in some team non-field
             } else if (exc.response.status === 404) {
-                notifHandler("Hackathon not found", true, "info600")
+                notifHandler("Hackathon not found", "error")
             } else if (exc.response.status === 403) {
-                notifHandler(`${exc.response.data.detail}`, true, "info600") // incomplete profile!
+                notifHandler(
+                    `${exc.response.data.detail}`,
+                    "error"
+                ) // incomplete profile!
             } else {
                 notifHandler(
                     "Some error occured, try again or contact admin!",
-                    true,
-                    "info600"
+                    "error"
                 )
             }
         }
@@ -81,15 +104,21 @@ export default function Register() {
         if (token) {
             if (hackathonId) {
                 if (teamName === "") {
-                    notifHandler("Invalid team name!", true, "danger700")
+                    notifHandler(
+                        "Invalid team name!",
+                        "error"
+                    )
                 } else {
                     doRegister(teamName)
                 }
             } else {
-                notifHandler("Invalid hackathon id.", true, "danger700")
+                notifHandler(
+                    "Invalid hackathon id.",
+                    "error"
+                )
             }
         } else {
-            notifHandler("You are not authorised", true, "danger700")
+            notifHandler("You are not authorised", "error")
         }
     }
 
@@ -107,39 +136,33 @@ export default function Register() {
             if (response.status === 200) {
                 notifHandler(
                     "Successfully joined the team!",
-                    true,
-                    "success700"
+                    "success"
                 )
                 setTimeout(() => {
                     // router.push(`http://localhost:3000/hackathon/${hackathonId}/teams/${joinCode}`)
-                    router.push(
-                        `/hackathon/${hackathonId}/teams/${joinCode}`
-                    )
+                    router.push(`/hackathon/${hackathonId}/teams/${joinCode}`)
                 }, 1000)
             } else {
                 notifHandler(
                     "Some unexpected error in client!",
-                    true,
-                    "warning700"
+                    "warning"
                 )
             }
         } catch (exc) {
             if (exc.response.status === 400) {
                 // console.log('exc.response =', exc.response)
-                notifHandler(exc.response.data[0], true, "warning700")
+                notifHandler(exc.response.data[0], "warning")
             } else if (exc.response.status === 404) {
                 notifHandler(
                     "Either team or hackathon not found!",
-                    true,
-                    "info600"
+                    "info"
                 )
             } else if (exc.response.status === 403) {
-                notifHandler("Incomplete profile!", true, "danger700")
+                notifHandler("Incomplete profile!", "error")
             } else {
                 notifHandler(
                     "Some error occured, try again or contact admin!",
-                    true,
-                    "info600"
+                    "error"
                 )
             }
         }
@@ -149,15 +172,15 @@ export default function Register() {
         if (token) {
             if (hackathonId) {
                 if (joinCode === "") {
-                    notifHandler("Invalid team code!", true, "danger700")
+                    notifHandler("Invalid team code!", "error")
                 } else {
                     doJoin(joinCode)
                 }
             } else {
-                notifHandler("Invalid hackathon id", true, "info700")
+                notifHandler("Invalid hackathon id", "error")
             }
         } else {
-            notifHandler("You are not authorised", true, "danger700")
+            notifHandler("You are not authorised", "error")
         }
     }
 
@@ -170,42 +193,6 @@ export default function Register() {
                     content={`Register for hackathon ${hackathonId} at COPS Hackalog`}
                 />
             </Head>
-            <Notification
-                bg={notif.bg}
-                isOpen={notif.show}
-                onClose={() => {
-                    editNotif({ message: "", show: false, bg: "info700" })
-                }}
-                prefix={
-                    <Icon
-                        name="Success"
-                        color="white"
-                        size="18px"
-                        m={{ r: "0.5rem" }}
-                    />
-                }
-                suffix={
-                    <Icon
-                        name="Cross"
-                        pos="absolute"
-                        top="1rem"
-                        right="0.5rem"
-                        color="white"
-                        size="18px"
-                        cursor="pointer"
-                        m={{ r: "0.5rem" }}
-                        onClick={() => {
-                            editNotif({
-                                message: "",
-                                show: false,
-                                bg: "info700",
-                            })
-                        }}
-                    />
-                }
-            >
-                {notif.message}
-            </Notification>
             <Row justify="center" m={{ t: "3.5rem", b: "1.5rem", x: "0.5rem" }}>
                 <Text
                     tag="h1"
@@ -264,8 +251,7 @@ export default function Register() {
                                     notify={() => {
                                         notifHandler(
                                             "Code copied!",
-                                            true,
-                                            "success700"
+                                            "success"
                                         )
                                     }}
                                 ></Clipboard>
