@@ -17,6 +17,7 @@ import ReactMarkdown from "react-markdown"
 import gfm from "remark-gfm"
 import highlight from "remark-highlight.js"
 import codeformatter from "remark-code-frontmatter"
+import Head from "next/head"
 
 export default function Hackathon() {
     const router = useRouter()
@@ -79,6 +80,13 @@ export default function Hackathon() {
     }
     return (
         <>
+            <Head>
+                <title>Hackathon - {slug}</title>
+                <meta
+                    name="description"
+                    content={`${slug} Hackathon being organized on COPS Hackalog`}
+                />
+            </Head>
             {loading || localLoading ? (
                 <Container className="text-center">
                     <Spinner

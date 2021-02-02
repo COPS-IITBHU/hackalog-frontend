@@ -1,50 +1,59 @@
-import HackathonCard from "../components/HackathonCard/HackathonCard";
-import axiosInstance from "../util/axios";
-import { Tab, Col, Row, Nav, Container } from "react-bootstrap";
-import { Text } from "atomize";
-import { useEffect, useState } from "react";
+import HackathonCard from "../components/HackathonCard/HackathonCard"
+import axiosInstance from "../util/axios"
+import { Tab, Col, Row, Nav, Container } from "react-bootstrap"
+import { Text } from "atomize"
+import { useEffect, useState } from "react"
+import Head from "next/head"
 
 export default function Hackathons() {
-    const [ongoing, setOngoing] = useState([]);
-    const [upcoming, setUpcoming] = useState([]);
-    const [completed, setCompleted] = useState([]);
-    const [error, setError] = useState([false, false, false]);
+    const [ongoing, setOngoing] = useState([])
+    const [upcoming, setUpcoming] = useState([])
+    const [completed, setCompleted] = useState([])
+    const [error, setError] = useState([false, false, false])
 
     useEffect(() => {
         axiosInstance
             .get("hackathons?query=ongoing")
             .then((response) => setOngoing(response.data))
             .catch((err) => {
-                console.log(err);
-                let arr = error;
-                arr[0] = true;
-                setError(arr);
-            });
-    }, [error]);
+                console.log(err)
+                let arr = error
+                arr[0] = true
+                setError(arr)
+            })
+    }, [error])
 
     useEffect(() => {
         axiosInstance
             .get("hackathons?query=upcoming")
             .then((response) => setUpcoming(response.data))
             .catch((err) => {
-                console.log(err);
-                let arr = error;
-                arr[1] = true;
-                setError(arr);
-            });
+                console.log(err)
+                let arr = error
+                arr[1] = true
+                setError(arr)
+            })
         axiosInstance
             .get("hackathons?query=completed")
             .then((response) => setCompleted(response.data))
             .catch((err) => {
-                console.log(err);
-                let arr = error;
-                arr[2] = true;
-                setError(arr);
-            });
-    }, [error]);
+                console.log(err)
+                let arr = error
+                arr[2] = true
+                setError(arr)
+            })
+    }, [error])
 
     return (
         <div style={{ background: "#87a3bb17", minHeight: "100vh" }}>
+            <Head>
+                <title>Hackathons</title>
+                <meta name="title" content="Hackathons" />
+                <meta
+                    name="description"
+                    content="A list of all the completed, ongoing and upcoming hackthaons on COPS Hacklog."
+                />
+            </Head>
             <div
                 style={{
                     background: "url(/images/home-jumbo.jpg) no-repeat",
@@ -94,41 +103,44 @@ export default function Hackathons() {
                                 <Tab.Pane eventKey="ongoing">
                                     {error[0] ? (
                                         <Container>
-                                            Couldn&apos;t Fetch the List from Backend
+                                            Couldn&apos;t Fetch the List from
+                                            Backend
                                         </Container>
                                     ) : ongoing.length ? (
                                         <HackathonList hackathons={ongoing} />
                                     ) : (
-                                                <Container>
-                                                    No Ongoing Hackathons Right Now
-                                                </Container>
-                                            )}
+                                        <Container>
+                                            No Ongoing Hackathons Right Now
+                                        </Container>
+                                    )}
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="upcoming">
                                     {error[1] ? (
                                         <Container>
-                                            Couldn&apos;t Fetch the List from Backend
+                                            Couldn&apos;t Fetch the List from
+                                            Backend
                                         </Container>
                                     ) : upcoming.length ? (
                                         <HackathonList hackathons={upcoming} />
                                     ) : (
-                                                <Container>
-                                                    No Upcoming Hackathons Right Now
-                                                </Container>
-                                            )}
+                                        <Container>
+                                            No Upcoming Hackathons Right Now
+                                        </Container>
+                                    )}
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="completed">
                                     {error[2] ? (
                                         <Container>
-                                            Couldn&apos;t Fetch the List from Backend
+                                            Couldn&apos;t Fetch the List from
+                                            Backend
                                         </Container>
                                     ) : completed.length ? (
                                         <HackathonList hackathons={completed} />
                                     ) : (
-                                                <Container>
-                                                    No Completed Hackathons Right Now
-                                                </Container>
-                                            )}
+                                        <Container>
+                                            No Completed Hackathons Right Now
+                                        </Container>
+                                    )}
                                 </Tab.Pane>
                             </Tab.Content>
                         </Col>
@@ -136,7 +148,7 @@ export default function Hackathons() {
                 </Tab.Container>
             </div>
         </div>
-    );
+    )
 }
 
 function HackathonList(props) {
@@ -151,5 +163,5 @@ function HackathonList(props) {
                 </div>
             ))}
         </div>
-    );
+    )
 }
