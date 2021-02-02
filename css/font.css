@@ -21,3 +21,13 @@
     font-family: 'helvetica-regular';
     src: url('/static/fonts/helvetica/helvetica-regular.ttf')  format('truetype')
 }
+
+@font-face {
+    font-family: 'Big Shoulders Display';
+    src: url('/static/fonts/Big_Shoulders_Display/BigShouldersDisplay-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Righteous';
+    src: url('/static/fonts/Righteous/Righteous-Regular.ttf') format('truetype');
+}
