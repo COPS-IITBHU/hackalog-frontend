@@ -2,7 +2,6 @@
 import {
     Div,
     Text,
-    Notification,
     Icon,
     Row,
     Col,
@@ -14,6 +13,7 @@ import axios from "axios"
 import { useRouter } from "next/router"
 import { ListGroup, Container, Spinner } from "react-bootstrap"
 import { useEffect, useState } from "react"
+import { toast } from "react-toastify"
 import { useAuth } from "../../../../../context/auth"
 import { API_URL } from "../../../../../util/constants"
 import Clipboard from "../../../../../components/Clipboard/Clipboard"
@@ -30,11 +30,6 @@ export default function ManageTeam() {
     const [bufferTeamName, setBufferTeamName] = useState("") // buffer team name to handle editing of team name.
     const [members, editMembers] = useState([]) // for team members
     const [clientUser, editClientUser] = useState({}) // user who is logged in.
-    const [notif, editNotif] = useState({
-        message: "",
-        show: false,
-        bg: "info700",
-    })
 
     useEffect(() => {
         async function getData() {
@@ -42,16 +37,10 @@ export default function ManageTeam() {
                 axios.defaults.headers.common[
                     "Authorization"
                 ] = `Token ${token}`
-                // axios.defaults.headers.common[
-                //     "Authorization"
-                // ] = `Token b672633aab1e632e0520bbbd0ff38b5919126604`
                 const [responseTeam, responseUser] = await Promise.all([
                     axios.get(`${API_URL}teams/${router.query.team_id}/`),
                     axios.get(`${API_URL}profile/`),
                 ])
-                // const responseTeam = await axios.get(
-                //     `http://127.0.0.1:8000/teams/${router.query.team_id}`
-                // )
                 if (
                     responseTeam.status === 200 &&
                     responseUser.status === 200
@@ -68,9 +57,9 @@ export default function ManageTeam() {
             }
         }
         if (token === null && !loading) {
-            // router.push(`http://localhost:3000/hackathon/${router.query.slug}`)
+            // router.push(/hackathon/${router.query.slug}`)
             router.push(
-                `https://cops-hackalog.netlify.app/hackathon/${router.query.slug}`
+                `/hackathon/${router.query.slug}`
             )
         }
         if (token && !loading) {
@@ -80,15 +69,41 @@ export default function ManageTeam() {
         }
     }, [token, router.query.team_id, loading, router])
 
-    const notifHandler = (message, show, bg) => {
-        editNotif({ message, show, bg })
+    const notifHandler = (message, type) => {
+        const config = {
+            position:"top-center",
+            autoClose:5000,
+            hideProgressBar:false,
+            newestOnTop:false,
+            closeOnClick: true,
+            rtl:false,
+            pauseOnFocusLoss: true,
+            draggable: true,
+            pauseOnHover: true
+        }
+        switch (type) {
+            case "info":
+                toast.info(message, config)
+                break
+            case "error":
+                toast.error(message, config)
+                break
+            case "warning":
+                toast.warn(message, config)
+                break
+            case "success":
+                toast.success(message, config)
+                break
+            default:
+                toast.info(message, config)
+        }
     }
 
     const checkToken = () => {
         if (token) {
             return true
         } else {
-            notifHandler("You are not authenticated!", true, "warning700")
+            notifHandler("You are not authenticated!", "error")
             return false
         }
     }
@@ -104,35 +119,31 @@ export default function ManageTeam() {
                     `${API_URL}teams/${router.query.team_id}/`
                 )
                 if (response.status === 204) {
-                    notifHandler("Deleted Successfully!", true, "success700")
+                    notifHandler("Deleted Successfully!", "success")
                     setTimeout(() => {
                         // router.push(
                         //     `http://localhost:3000/hackathon/${teamData.hackathon.slug}`
                         // )
-                        router.push(
-                            `https://cops-hackalog.netlify.app/hackathon/${teamData.hackathon.slug}`
-                        )
+                        router.push(`/hackathon/${teamData.hackathon.slug}`)
                     }, 1000)
                 } else {
                     notifHandler(
                         "Some unexpected error in client!",
-                        true,
-                        "warning700"
+                        "error"
                     )
                 }
             } catch (exc) {
                 console.log("exception in deleting the team: ", exc)
                 if (exc.response.status === 404) {
-                    notifHandler("Team not found!", true, "warning700")
+                    notifHandler("Team not found!", "error")
                 } else {
-                    notifHandler("Facing server error!", true, "warning700")
+                    notifHandler("Facing server error!", "error")
                 }
             }
         } else {
             notifHandler(
                 "You are not allowed to perform this action",
-                true,
-                "warning700"
+                "warning"
             )
         }
     }
@@ -148,45 +159,43 @@ export default function ManageTeam() {
             )
             if (response.status === 200) {
                 if (isLeader) {
-                    notifHandler("Removed Successfully!", true, "success700")
+                    notifHandler("Removed Successfully!", "success")
                     setTimeout(() => {
                         router.reload()
                     }, 1000)
                 } else {
-                    notifHandler("Left Successfully!", true, "success700")
+                    notifHandler("Left Successfully!", "success")
                     setTimeout(() => {
                         // router.push(
-                        //     `http://localhost:3000/hackathon/${teamData.hackathon.slug}`
+                        //     `/hackathon/${teamData.hackathon.slug}`
                         // )
                         router.push(
-                            `https://cops-hackalog.netlify.app/hackathon/${teamData.hackathon.slug}`
+                            `/hackathon/${teamData.hackathon.slug}`
                         )
                     }, 1000)
                 }
             } else {
                 notifHandler(
                     "Some unexpected error in client!",
-                    true,
-                    "warning700"
+                    "error"
                 )
             }
         } catch (exc) {
             console.log("exc.response =", exc.response)
             switch (exc.response.status) {
                 case 400:
-                    notifHandler(`${exc.response.data[0]}`, true, "info600")
+                    notifHandler(`${exc.response.data[0]}`, "error")
                     return
                 case 401:
-                    notifHandler(`You are not authenticated`, true, "info600")
+                    notifHandler(`You are not authenticated`, "error")
                     return
                 case 404:
-                    notifHandler(`Hackathon not found`, true, "info600")
+                    notifHandler(`Hackathon not found`, "error")
                     return
                 default:
                     notifHandler(
                         `Unexpected error from server`,
-                        true,
-                        "info600"
+                        "info"
                     )
                     return
             }
@@ -310,24 +319,22 @@ export default function ManageTeam() {
             )
             if (response.status === 200) {
                 normalizeState()
-                notifHandler("Update successfull!", true, "success700")
+                notifHandler("Update successfull!", "success")
                 setTeamData(response.data)
             } else {
                 normalizeState()
-                notifHandler("Unexpected error in client!", true, "warning700")
+                notifHandler("Unexpected error in client!", "warning")
             }
         } catch (exc) {
             console.log("Exception in updating the name:", exc.response)
             normalizeState()
             if (exc.response.status === 404) {
-                notifHandler("Team not found!", true, "warning700")
+                notifHandler("Team not found!", "warning")
             } else if (exc.response.status === 403) {
-                notifHandler(`${exc.response.data.detail}`, true, "warning700")
+                notifHandler(`${exc.response.data.detail}`, "warning")
             } else {
                 notifHandler(
-                    "Unexpected error from server!",
-                    true,
-                    "warning700"
+                    "Unexpected error from server!", "error"
                 )
             }
         }
@@ -355,46 +362,6 @@ export default function ManageTeam() {
                 </Container>
             ) : (
                 <>
-                    <Notification
-                        bg={notif.bg}
-                        isOpen={notif.show}
-                        onClose={() => {
-                            editNotif({
-                                message: "",
-                                show: false,
-                                bg: "info700",
-                            })
-                        }}
-                        prefix={
-                            <Icon
-                                name="Success"
-                                color="white"
-                                size="18px"
-                                m={{ r: "0.5rem" }}
-                            />
-                        }
-                        suffix={
-                            <Icon
-                                name="Cross"
-                                pos="absolute"
-                                top="1rem"
-                                right="0.5rem"
-                                color="white"
-                                size="18px"
-                                cursor="pointer"
-                                m={{ r: "0.5rem" }}
-                                onClick={() => {
-                                    editNotif({
-                                        message: "",
-                                        show: false,
-                                        bg: "info700",
-                                    })
-                                }}
-                            />
-                        }
-                    >
-                        {notif.message}
-                    </Notification>
                     <Row
                         justify="center"
                         m={{ t: "3.5rem", b: "2.5rem", x: "0.5rem" }}
@@ -431,8 +398,7 @@ export default function ManageTeam() {
                                             notify={() => {
                                                 notifHandler(
                                                     "Code copied!",
-                                                    true,
-                                                    "success700"
+                                                    "success"
                                                 )
                                             }}
                                         ></Clipboard>

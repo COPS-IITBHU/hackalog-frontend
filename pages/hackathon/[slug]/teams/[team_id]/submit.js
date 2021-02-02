@@ -7,10 +7,9 @@ import {
     Container,
     Jumbotron,
 } from "react-bootstrap"
-import { Notification } from "atomize"
-import { TiTick } from "react-icons/ti"
 import { useState } from "react"
 import { useRouter } from "next/router"
+import { toast} from "react-toastify"
 import { useAuth } from "../../../../../context/auth"
 import axios from "../../../../../util/axios"
 import Head from "next/head"
@@ -22,14 +21,40 @@ export default function Submit() {
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const [url, setURL] = useState("")
-    const [showSuccess, setSuccess] = useState(false)
 
     const validateForm = () => {
         return title.length > 0 && description.length > 0 && url.length > 0
     }
 
-    const [notif, editNotif] = useState({ message: "", show: false })
-    const ErrorNotification = (message, show) => editNotif({ message, show })
+    const notifHandler = (message, type) => {
+        const config = {
+            position:"top-center",
+            autoClose:5000,
+            hideProgressBar:false,
+            newestOnTop:false,
+            closeOnClick: true,
+            rtl:false,
+            pauseOnFocusLoss: true,
+            draggable: true,
+            pauseOnHover: true
+        }
+        switch (type) {
+            case "info":
+                toast.info(message, config)
+                break
+            case "error":
+                toast.error(message, config)
+                break
+            case "warning":
+                toast.warn(message, config)
+                break
+            case "success":
+                toast.success(message, config)
+                break
+            default:
+                toast.info(message, config)
+        }
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -44,18 +69,18 @@ export default function Submit() {
                 })
                 .then(
                     (res) => {
-                        setSuccess(true)
+                        notifHandler("Successfully submitted your project! Redirecting...", "success")
                         setTimeout(() => {
-                            location.replace(`/submission/${res.data.id}`)
+                            router.push(`/submission/${res.data.id}`)
                         }, 1000)
                     },
                     (err) => {
                         if (typeof err.response.data == "string")
-                            ErrorNotification(err.response.data, true)
-                        else ErrorNotification(err.response.data.detail, true)
+                            notifHandler(err.response.data, "error")
+                        else notifHandler(err.response.data, "error")
                     }
                 )
-        } else ErrorNotification("Login to Make a Submission", true)
+        } else notifHandler("Login to make a Submission", "warning")
     }
 
     return (
@@ -67,24 +92,6 @@ export default function Submit() {
                     content={`Submission page for ${router.query.slug} Hackathon`}
                 />
             </Head>
-            <Notification
-                bg="danger700"
-                isOpen={notif.show}
-                onClose={() =>
-                    editNotif({ message: "", show: false, bg: "danger900" })
-                }
-            >
-                {notif.message}
-            </Notification>
-            <Notification
-                isOpen={showSuccess}
-                bg="success700"
-                prefix={<TiTick className="mr-3" />}
-                onClose={() => setSuccess(false)}
-            >
-                Successfully submitted your project! Redirecting...
-            </Notification>
-
             <Jumbotron>
                 <Container>
                     <Row>
