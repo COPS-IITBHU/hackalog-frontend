@@ -144,7 +144,7 @@ function Profile() {
 									</Text>
 									<p className="text-muted">@{userRequest.user.username}</p>
 									{userRequest.user.github_handle && (
-										<a href={`https://github.com/${userRequest.user.github_handle}`} className="d-flex align-items-center text-muted">
+										<a href={`https://github.com/${userRequest.user.github_handle}`} target="_blank" className="d-flex align-items-center text-muted">
 											<FaGithub className="mr-1" /> {userRequest.user.github_handle}
 										</a>
 									)}

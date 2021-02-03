@@ -393,23 +393,23 @@ export default function Hackathon() {
                                                         </Button>
                                                     ) : hackathon.userStatus ==
                                                       "not registered" ? (
-                                                        <a
-                                                            href={`/hackathon/${slug}/register`}
-                                                        >
-                                                            <Button variant="success">
-                                                                Register
-                                                            </Button>
-                                                        </a>
+                                                        <Link href={`/hackathon/${slug}/register`}>
+                                                            <a>
+                                                                <Button variant="success">
+                                                                    Register
+                                                                </Button>
+                                                            </a>
+                                                        </Link>
                                                     ) : hackathon.userStatus ==
                                                           "registered" &&
                                                       token ? (
-                                                        <a
-                                                            href={`/hackathon/${slug}/teams/${myTeam.team_id}`}
-                                                        >
-                                                            <Button variant="success">
-                                                                Your Team
-                                                            </Button>
-                                                        </a>
+                                                        <Link href={`/hackathon/${slug}/teams/${myTeam.team_id}`}>
+                                                            <a>
+                                                                <Button variant="success">
+                                                                    Your Team
+                                                                </Button>
+                                                            </a>
+                                                        </Link>
                                                     ) : null}
                                                 </div>
                                             </div>
@@ -608,11 +608,11 @@ function Participants({ slug }) {
                                             {team.name}
                                         </td>
                                         <td>
-                                            <a
-                                                href={`/profile/${team.leader.username}`}
-                                            >
-                                                {team.leader.username}
-                                            </a>
+                                            <Link href={`/profile/${team.leader.username}`}>
+                                                <a>
+                                                    {team.leader.username}
+                                                </a>
+                                            </Link>
                                         </td>
                                     </tr>
                                 )
@@ -632,21 +632,21 @@ function Participants({ slug }) {
                                             >
                                                 <td>{team.members[i].name}</td>
                                                 <td>
-                                                    <a
-                                                        href={`/hackathon/${team.hackathon.slug}/teams/${team.team_id}`}
-                                                    >
-                                                        {team.name}
-                                                    </a>
+                                                    <Link href={`/hackathon/${team.hackathon.slug}/teams/${team.team_id}`}>
+                                                        <a>
+                                                            {team.name}
+                                                        </a>
+                                                    </Link>
                                                 </td>
                                                 <td>
-                                                    <a
-                                                        href={`/profile/${team.members[i].username}`}
-                                                    >
-                                                        {
-                                                            team.members[i]
-                                                                .username
-                                                        }
-                                                    </a>
+                                                    <Link href={`/profile/${team.members[i].username}`}>
+                                                        <a>
+                                                            {
+                                                                team.members[i]
+                                                                    .username
+                                                            }
+                                                        </a>
+                                                    </Link>
                                                 </td>
                                             </tr>
                                         )
@@ -684,9 +684,11 @@ function Leaderboard({ status, submissions, loading }) {
                 <td>{submission.teamName} </td>
                 <td> {submission.score}</td>
                 <td>
-                    <a href={`/submission/${submission.id}`}>
-                        {submission.title}
-                    </a>
+                    <Link href={`/submission/${submission.id}`}>
+                        <a>
+                            {submission.title}
+                        </a>
+                    </Link>
                 </td>
             </tr>
         ))
