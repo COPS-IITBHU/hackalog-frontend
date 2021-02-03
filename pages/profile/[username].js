@@ -164,9 +164,6 @@ function Profile() {
 											<FaGithub className="mr-1" /> {userRequest.user.github_handle}
 										</a>
 									)}
-									<Text textSize="paragraph" className="overflow-auto text-muted">
-										<GrMail className="mr-1" />  {userRequest.user.email}
-									</Text>
 									{/* <p className="text-muted"><MdLocationOn /> IIT BHU Varanasi</p> */}
 									<Nav variant="pills" className="flex-column pt-4">
 										<Nav.Item>
@@ -190,6 +187,15 @@ function Profile() {
 													Edit Profile
 												</Button>
 											)}
+											<div>
+												<Text tag="h4" textSize="title" textColor="#003e54" fontFamily="madetommy-bold">
+													Email
+												</Text>
+												<Text tag="p" textSize="paragraph" textColor="#003e54">
+													{userRequest.user.email}
+												</Text>
+											</div>
+											<br />
 											<div>
 												<Text tag="h4" textSize="title" textColor="#003e54" fontFamily="madetommy-bold">
 													About Me
