@@ -8,6 +8,7 @@ import { Jumbotron } from "react-bootstrap"
 import Head from "next/head"
 import { BiCodeAlt } from "react-icons/bi"
 import { HiOutlineEmojiSad } from "react-icons/hi"
+import Link from "next/link"
 
 export default function SubmissionDetail() {
     /*
@@ -139,7 +140,7 @@ export default function SubmissionDetail() {
                         {submission.submission_url == "EMPTY" ? (
                             "No Link Provided"
                         ) : (
-                            <a href={`${submission.submission_url}`}>Link</a>
+                            <a href={`${submission.submission_url}`} target="_blank">Link</a>
                         )}
                     </Text>
                     <Row className="justify-content-around mt-3">
@@ -179,15 +180,11 @@ export default function SubmissionDetail() {
                                                 <tr>
                                                     <td>{team.leader.name}</td>
                                                     <td>
-                                                        <a
-                                                            href={`/profile/${team.leader.username}`}
-                                                        >
-                                                            @
-                                                            {
-                                                                team.leader
-                                                                    .username
-                                                            }
-                                                        </a>
+                                                        <Link href={`/profile/${team.leader.username}`}>
+                                                            <a>
+                                                                @{team.leader.username}
+                                                            </a>
+                                                        </Link>
                                                     </td>
                                                     <td>Leader</td>
                                                 </tr>
@@ -196,14 +193,11 @@ export default function SubmissionDetail() {
                                                         <tr key={elm.username}>
                                                             <td>{elm.name}</td>
                                                             <td>
-                                                                <a
-                                                                    href={`/profile/${elm.username}`}
-                                                                >
-                                                                    @
-                                                                    {
-                                                                        elm.username
-                                                                    }
-                                                                </a>
+                                                                <Link href={`/profile/${elm.username}`}>
+                                                                    <a>
+                                                                        @{elm.username}
+                                                                    </a>
+                                                                </Link>
                                                             </td>
                                                             <td>Member</td>
                                                         </tr>
@@ -316,11 +310,13 @@ export default function SubmissionDetail() {
                             </Container>
                         </Div>
                     </Row>
-                    <a href={`/hackathon/${submission.hackathon.slug}`}>
-                        <Button className="mb-3" bg="purple">
-                            View Other Submissions
-                        </Button>
-                    </a>
+                    <Link href={`/hackathon/${submission.hackathon.slug}`}>
+                        <a>
+                            <Button className="mb-3" bg="purple">
+                                View Other Submissions
+                            </Button>
+                        </a>
+                    </Link>
                 </Container>
             </div>
         )

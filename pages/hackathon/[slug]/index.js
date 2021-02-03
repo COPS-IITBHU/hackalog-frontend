@@ -117,11 +117,10 @@ export default function Hackathon() {
     return (
         <>
             <Head>
-                {hackathon.title ? (
-                    <title>{hackathon.title}</title>
-                ) : (
-                    <title>Hackathon - {slug}</title>
-                )}
+                {hackathon.title
+                ? <title>{hackathon.title} | COPS Hackalog</title>
+                : <title>Hackathon - {slug} | COPS Hackalog</title>
+                }
                 <meta
                     name="description"
                     content={`${slug} Hackathon being organized on COPS Hackalog`}
@@ -393,23 +392,23 @@ export default function Hackathon() {
                                                         </Button>
                                                     ) : hackathon.userStatus ==
                                                       "not registered" ? (
-                                                        <a
-                                                            href={`/hackathon/${slug}/register`}
-                                                        >
-                                                            <Button variant="success">
-                                                                Register
-                                                            </Button>
-                                                        </a>
+                                                        <Link href={`/hackathon/${slug}/register`}>
+                                                            <a>
+                                                                <Button variant="success">
+                                                                    Register
+                                                                </Button>
+                                                            </a>
+                                                        </Link>
                                                     ) : hackathon.userStatus ==
                                                           "registered" &&
                                                       token ? (
-                                                        <a
-                                                            href={`/hackathon/${slug}/teams/${myTeam.team_id}`}
-                                                        >
-                                                            <Button variant="success">
-                                                                Your Team
-                                                            </Button>
-                                                        </a>
+                                                        <Link href={`/hackathon/${slug}/teams/${myTeam.team_id}`}>
+                                                            <a>
+                                                                <Button variant="success">
+                                                                    Your Team
+                                                                </Button>
+                                                            </a>
+                                                        </Link>
                                                     ) : null}
                                                 </div>
                                             </div>
@@ -480,7 +479,7 @@ function Overview({ hackathon }) {
                     </Text>
                     {new Date(hackathon.end).toString()}
                 </div>
-                <div className="pb-3">
+                {/* <div className="pb-3">
                     <Text
                         tag="h6"
                         textSize="subheader"
@@ -489,6 +488,16 @@ function Overview({ hackathon }) {
                         STATUS:
                     </Text>
                     {hackathon.status}
+                </div> */}
+                <div className="pb-3">
+                    <Text
+                        tag="h6"
+                        textSize="subheader"
+                        fontFamily="madetommy-bold"
+                    >
+                        MAX TEAM SIZE:
+                    </Text>
+                    {hackathon.max_team_size}
                 </div>
                 <div className="pb-3">
                     <Text
@@ -499,16 +508,6 @@ function Overview({ hackathon }) {
                         RESULTS DECLARED:
                     </Text>
                     {hackathon.results_declared ? "Yes" : "No"}
-                </div>
-                <div className="pb-3">
-                    <Text
-                        tag="h6"
-                        textSize="subheader"
-                        fontFamily="madetommy-bold"
-                    >
-                        MAX TEAM SIZE:
-                    </Text>
-                    {hackathon.max_team_size}
                 </div>
             </div>
             <style jsx>{`
@@ -608,11 +607,11 @@ function Participants({ slug }) {
                                         </td>
                                         <td>{team.name}</td>
                                         <td>
-                                            <a
-                                                href={`/profile/${team.leader.username}`}
-                                            >
-                                                {team.leader.username}
-                                            </a>
+                                            <Link href={`/profile/${team.leader.username}`}>
+                                                <a>
+                                                    {team.leader.username}
+                                                </a>
+                                            </Link>
                                         </td>
                                     </tr>
                                 )
@@ -633,14 +632,14 @@ function Participants({ slug }) {
                                                 <td>{team.members[i].name}</td>
                                                 <td>{team.name}</td>
                                                 <td>
-                                                    <a
-                                                        href={`/profile/${team.members[i].username}`}
-                                                    >
-                                                        {
-                                                            team.members[i]
-                                                                .username
-                                                        }
-                                                    </a>
+                                                    <Link href={`/profile/${team.members[i].username}`}>
+                                                        <a>
+                                                            {
+                                                                team.members[i]
+                                                                    .username
+                                                            }
+                                                        </a>
+                                                    </Link>
                                                 </td>
                                             </tr>
                                         )
@@ -678,9 +677,11 @@ function Leaderboard({ status, submissions, loading }) {
                 <td>{submission.teamName} </td>
                 <td> {submission.score}</td>
                 <td>
-                    <a href={`/submission/${submission.id}`}>
-                        {submission.title}
-                    </a>
+                    <Link href={`/submission/${submission.id}`}>
+                        <a>
+                            {submission.title}
+                        </a>
+                    </Link>
                 </td>
             </tr>
         ))

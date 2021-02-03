@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
         provider.addScope('profile');
         firebase.auth().signInWithPopup(provider)
             .then(() => {
-                console.log("firebase login success")
+                //console.log("firebase login success")
             })
             .catch(err => {
                 alert('Error Processing request, try again.');
@@ -47,18 +47,18 @@ export const AuthProvider = ({ children }) => {
         setLoading(true)
         let firebase = await loadFirebase()
         firebase.auth().onAuthStateChanged(authUser => {
-            console.log("firebase user: ", authUser)
+            //console.log("firebase user: ", authUser)
             setFirebaseUser(authUser)
             if (authUser) {
                 authUser.getIdToken(true)
                     .then(idToken => {
                         axios.post("login/", { id_token: idToken })
                             .then(response => {
-                                console.log(response.status, response.data)
+                                //console.log(response.status, response.data)
                                 let newToken = response.data.token
                                 updateProfile(newToken)
                                     .then(response => {
-                                        console.log("Profile Response: ", response.data)
+                                        //console.log("Profile Response: ", response.data)
                                         setToken(newToken)
                                         setProfile(response.data)
                                         setLoading(false)

@@ -353,7 +353,7 @@ export default function ManageTeam() {
     return (
         <>
             <Head>
-                <title>Team Page</title>
+                <title>Team {teamData.name} | COPS Hackalog</title>
                 <meta name="description" content="Team's page for hackathon" />
             </Head>
             {localLoading ? (
