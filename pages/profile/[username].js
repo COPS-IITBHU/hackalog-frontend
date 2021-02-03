@@ -90,24 +90,46 @@ function Profile() {
 		: "../images/person.jpeg";
 	if (loading || userRequest.loading)
 		return (
-			<Container className="text-center">
-				<Spinner
-					style={{
-						position: "absolute",
-						top: "50%",
-					}}
-					className="mt-auto mb-auto"
-					animation="border"
-					role="status"
-				>
-					<span className="sr-only">Loading...</span>
-				</Spinner>
-			</Container>
+            <Container className="text-center">
+                <Head>
+                    {username ? (
+                        <title>{username} on COPS Hackalog</title>
+                    ) : (
+                        <title>Profile Page</title>
+                    )}
+                </Head>
+                <Spinner
+                    style={{
+                        position: "absolute",
+                        top: "50%",
+                    }}
+                    className="mt-auto mb-auto"
+                    animation="border"
+                    role="status"
+                >
+                    <span className="sr-only">Loading...</span>
+                </Spinner>
+            </Container>
 		);
 	else if (userRequest.user === "NOT FOUND")
 		return <DefaultErrorPage statusCode={404} />;
 	return (
 		<div style={{ background: "#87a3bb17" }}>
+            <Head>
+                {userRequest.user ?(
+                    <title>{userRequest.user.name} - on COPS Hackalog</title>
+                ) : (
+                    <title>{username} on COPS Hackalog</title>
+                )}
+                <meta
+                    name="description"
+                    content={
+                        userRequest.user
+                            ? `${userRequest.user.name}'s Profile on COPS Hackalog, a platform for organising hackathons`
+                            : `${username}'s Profile on COPS Hackalog, a platform for organising hackathons`
+                    }
+                />
+            </Head>
 			{currentUser && editDialog.show && (
 				<Suspense fallback={<h1>Loading...</h1>}>
 					<EditProfile
