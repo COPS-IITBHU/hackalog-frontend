@@ -479,7 +479,7 @@ function Overview({ hackathon }) {
                     </Text>
                     {new Date(hackathon.end).toString()}
                 </div>
-                <div className="pb-3">
+                {/* <div className="pb-3">
                     <Text
                         tag="h6"
                         textSize="subheader"
@@ -488,6 +488,16 @@ function Overview({ hackathon }) {
                         STATUS:
                     </Text>
                     {hackathon.status}
+                </div> */}
+                <div className="pb-3">
+                    <Text
+                        tag="h6"
+                        textSize="subheader"
+                        fontFamily="madetommy-bold"
+                    >
+                        MAX TEAM SIZE:
+                    </Text>
+                    {hackathon.max_team_size}
                 </div>
                 <div className="pb-3">
                     <Text
@@ -498,16 +508,6 @@ function Overview({ hackathon }) {
                         RESULTS DECLARED:
                     </Text>
                     {hackathon.results_declared ? "Yes" : "No"}
-                </div>
-                <div className="pb-3">
-                    <Text
-                        tag="h6"
-                        textSize="subheader"
-                        fontFamily="madetommy-bold"
-                    >
-                        MAX TEAM SIZE:
-                    </Text>
-                    {hackathon.max_team_size}
                 </div>
             </div>
             <style jsx>{`
