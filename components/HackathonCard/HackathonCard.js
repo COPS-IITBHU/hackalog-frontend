@@ -15,26 +15,26 @@ export default function HackathonCard({ hackathon }) {
                 >
                     {/* <Image src= rounded={{ t: "xl" }} maxH="9rem" /> */}
                 </Div>
-                <Div p="1.5rem">
-                    <Text tag="h3" textSize="title" textColor="#003e54" fontFamily="madetommy-bold">
+                <Div p={{ xs: "1rem", md: "1.5rem" }}>
+                    <Text tag="h3" textSize={{ xs: "subheader", md: "title" }} textColor="#003e54" fontFamily="madetommy-bold">
                         {hackathon.title}
                     </Text>
-                    <Text m={{ b: "1rem" }}>
+                    <Text m={{ b: "1rem" }} textSize={{ xs: "caption", md: "body" }}>
                         {hackathon.tagline}
                     </Text>
                     <Row>
-                        <Col size="7">
-                            <Text textSize="subheader" textWeight="500">
+                        <Col size="6">
+                            <Text textSize={{ xs: "body", md: "subheader"}} textWeight="500">
                                 <Date dateString={hackathon.start} />
                             </Text>
                             <Text textSize="caption" textColor="light">
                                 event
                             </Text>
                         </Col>
-                        <Col size="5">
+                        <Col size="6">
                             <Link href={`/hackathon/${hackathon.slug}`}>
                                 <a>
-                                    <Button m={{ l: "auto" }}>
+                                    <Button m={{ l: "auto" }} textSize={{ xs: "tiny", md: "tiny", lg: "tiny", xl: "body" }}>
                                         See more...
                                     </Button>
                                 </a>
