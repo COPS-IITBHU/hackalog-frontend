@@ -4,7 +4,7 @@ import DefaultErrorPage from "next/error"
 import { Spinner, Row, Col, Container, Tab, Nav } from "react-bootstrap"
 import { Text, Image, Button, Div } from "atomize"
 import { FaGithub } from "react-icons/fa"
-import { MdLocationOn } from "react-icons/md"
+import { GrMail } from "react-icons/gr"
 
 import axios from "../../util/axios"
 import { useAuth } from "../../context/auth"
@@ -187,6 +187,15 @@ function Profile() {
 													Edit Profile
 												</Button>
 											)}
+											<div>
+												<Text tag="h4" textSize="title" textColor="#003e54" fontFamily="madetommy-bold">
+													Email
+												</Text>
+												<Text tag="p" textSize="paragraph" textColor="#003e54">
+													{userRequest.user.email}
+												</Text>
+											</div>
+											<br />
 											<div>
 												<Text tag="h4" textSize="title" textColor="#003e54" fontFamily="madetommy-bold">
 													About Me
