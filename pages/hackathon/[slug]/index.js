@@ -119,8 +119,8 @@ export default function Hackathon() {
         <>
             <Head>
                 {hackathon.title
-                ? <title>{hackathon.title}</title>
-                : <title>Hackathon - {slug}</title>
+                ? <title>{hackathon.title} | COPS Hackalog</title>
+                : <title>Hackathon - {slug} | COPS Hackalog</title>
                 }
                 <meta
                     name="description"

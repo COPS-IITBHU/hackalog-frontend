@@ -55,7 +55,7 @@ export default function Hackathons() {
     return (
         <div style={{ background: "#87a3bb17", minHeight: "100vh" }}>
             <Head>
-                <title>Hackathons</title>
+                <title>Hackathons | COPS Hackalog</title>
                 <meta name="title" content="Hackathons" />
                 <meta
                     name="description"

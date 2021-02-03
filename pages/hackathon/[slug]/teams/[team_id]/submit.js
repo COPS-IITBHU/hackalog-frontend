@@ -3,10 +3,9 @@ import {
     Col,
     Row,
     Form,
-    Button,
-    Container,
     Jumbotron,
 } from "react-bootstrap"
+import { Button, Container, Text } from 'atomize'
 import { useState } from "react"
 import { useRouter } from "next/router"
 import { toast} from "react-toastify"
@@ -86,7 +85,7 @@ export default function Submit() {
     return (
         <div>
             <Head>
-                <title>Submission</title>
+                <title>Submission | COPS Hackalog</title>
                 <meta
                     name="description"
                     content={`Submission page for ${router.query.slug} Hackathon`}
@@ -96,14 +95,26 @@ export default function Submit() {
                 <Container>
                     <Row>
                         <Col md={8} xs={12} className="align-self-center">
-                            <h1 className="display-4">Ready to Submit?</h1>
-                            <p className="lead mb-3">
+                            <Text
+                                tag="h1"
+                                textSize={{ xs: "title", md: "display3" }}
+                                textColor="#003e54"
+                                fontFamily="madetommy-bold"
+                            >
+                                Ready to Submit?
+                            </Text>
+                            <Text
+                                tag="h2"
+                                textSize={{ xs: "body", md: "subheader" }}
+                                textColor="#003e54"
+                                fontFamily="madetommy-regular"
+                            >
                                 Enter Submission details below
-                            </p>
+                            </Text>
                         </Col>
-                        <Col md={4} xs={12} className="pt-3 text-center">
+                        <Col md={4} xs={12} className="pt-3 text-center d-none d-md-block">
                             <Image
-                                style={{ maxHeight: "200px" }}
+                                style={{ maxHeight: "130px" }}
                                 src="/images/submit.svg"
                                 alt="My image"
                             />
@@ -111,10 +122,10 @@ export default function Submit() {
                     </Row>
                 </Container>
             </Jumbotron>
-            <Container>
+            <Container p={{ y: { xs: "1rem", md: "4rem" }, x: "1rem" }}>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group size="sm" controlId="title">
-                        <Form.Label>Title</Form.Label>
+                        <Form.Label>Title*</Form.Label>
                         <Form.Control
                             autoFocus
                             type="text"
@@ -123,7 +134,7 @@ export default function Submit() {
                         />
                     </Form.Group>
                     <Form.Group size="lg" controlId="description">
-                        <Form.Label>Description</Form.Label>
+                        <Form.Label>Description*</Form.Label>
                         <Form.Control
                             autoFocus
                             as="textarea"
@@ -133,7 +144,7 @@ export default function Submit() {
                         />
                     </Form.Group>
                     <Form.Group size="lg" controlId="url">
-                        <Form.Label>URL</Form.Label>
+                        <Form.Label>URL*</Form.Label>
                         <Form.Control
                             autoFocus
                             type="url"
@@ -149,8 +160,7 @@ export default function Submit() {
                         />
                     </Form.Group>
                     <Button
-                        block
-                        size="lg"
+                        w="100%"
                         type="submit"
                         disabled={!validateForm()}
                     >

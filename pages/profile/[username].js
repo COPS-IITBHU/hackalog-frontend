@@ -91,6 +91,9 @@ function Profile() {
 	if (loading || userRequest.loading)
 		return (
 			<Container className="text-center">
+				<Head>
+					<title>Profile | COPS Hackalog</title>
+				</Head>
 				<Spinner
 					style={{
 						position: "absolute",
@@ -108,6 +111,9 @@ function Profile() {
 		return <DefaultErrorPage statusCode={404} />;
 	return (
 		<div style={{ background: "#87a3bb17" }}>
+			<Head>
+            	<title>{(userRequest && userRequest.user && userRequest.user.username) ? userRequest.user.username : "Profile"} | COPS Hackalog</title>
+            </Head>
 			{currentUser && editDialog.show && (
 				<Suspense fallback={<h1>Loading...</h1>}>
 					<EditProfile

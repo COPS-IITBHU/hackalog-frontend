@@ -187,7 +187,7 @@ export default function Register() {
     return (
         <Div>
             <Head>
-                <title>Register - {hackathonId}</title>
+                <title>Register - {hackathonId} | COPS Hackalog</title>
                 <meta
                     name="description"
                     content={`Register for hackathon ${hackathonId} at COPS Hackalog`}
