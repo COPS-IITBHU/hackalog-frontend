@@ -92,6 +92,10 @@ export default function Home() {
                     content="Hackathons are an enjoyable, inspiring experience for hackers and organizers alike. To promote budding developers and hackathon like events, the hackers at Club of Programmers IIT BHU have developed The COPS Hackalog a platform for organizing Hackathons and Dev sprints. This platform opens up opportunities to learn from others, collaborate with people and get your great projects reviewed all you have to do is register ;)."
                 />
                 <meta
+                    property="og:image:secure"
+                    content="https://raw.githubusercontent.com/COPS-IITBHU/hackalog-frontend/main/public/images/OG.png"
+                />
+                <meta
                     property="og:image"
                     content="https://raw.githubusercontent.com/COPS-IITBHU/hackalog-frontend/main/public/images/OG.png"
                 />
