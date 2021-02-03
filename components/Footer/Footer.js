@@ -3,7 +3,7 @@ import { Text } from 'atomize'
 export default function Footer() {
     return (
         <div style={{ backgroundColor: "rgb(197 210 213 / 28%)" }}>
-            <footer className="container mt-4">
+            <footer className="container">
                 <div className="d-flex flex-wrap align-items-center justify-content-between p-3 py-4">
                     <div>
                         <Text tag="h6" textSize="paragraph" textColor="#003e54c9" fontFamily="madetommy-light">
