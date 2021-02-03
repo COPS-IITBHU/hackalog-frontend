@@ -49,7 +49,7 @@ export default function Hackathon() {
                     setError(err.response.status)
                     console.error(err)
                 })
-            setLocalLoading(false)
+                .finally(() => setLocalLoading(false))
         }
     }, [slug, token])
 
@@ -57,7 +57,7 @@ export default function Hackathon() {
     const [leaderboardLoading, setLeaderboardLoading] = useState(true)
 
     useEffect(() => {
-        if (slug) {
+        if (slug && hackathon) {
             setLeaderboardLoading(true)
             if (token)
                 axios.defaults.headers.common[
@@ -114,14 +114,14 @@ export default function Hackathon() {
         if (myTeam.length) myTeam = myTeam[0]
         else myTeam = { team_id: "#" }
     }
-    console.log(hackathon.userStatus)
     return (
         <>
             <Head>
-                {hackathon.title
-                ? <title>{hackathon.title}</title>
-                : <title>Hackathon - {slug}</title>
-                }
+                {hackathon.title ? (
+                    <title>{hackathon.title}</title>
+                ) : (
+                    <title>Hackathon - {slug}</title>
+                )}
                 <meta
                     name="description"
                     content={`${slug} Hackathon being organized on COPS Hackalog`}
@@ -530,18 +530,20 @@ function Overview({ hackathon }) {
 
 function Participants({ slug }) {
     const [teams, setTeams] = useState([])
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         setLoading(true)
-        axios
-            .get(`/hackathons/${slug}/teams/`)
-            .then((response) => {
-                setTeams(response.data)
-            })
-            .catch((err) => {
-                console.error(err)
-            })
+        if (slug) {
+            axios
+                .get(`/hackathons/${slug}/teams/`)
+                .then((response) => {
+                    setTeams(response.data)
+                })
+                .catch((err) => {
+                    console.error(err)
+                })
+        }
         setLoading(false)
     }, [slug])
 
@@ -604,9 +606,7 @@ function Participants({ slug }) {
                                             {team.leader.name}{" "}
                                             <Badge variant="info">Leader</Badge>
                                         </td>
-                                        <td>                                            
-                                            {team.name}
-                                        </td>
+                                        <td>{team.name}</td>
                                         <td>
                                             <a
                                                 href={`/profile/${team.leader.username}`}
@@ -631,13 +631,7 @@ function Participants({ slug }) {
                                                 className="bg-grey rounded"
                                             >
                                                 <td>{team.members[i].name}</td>
-                                                <td>
-                                                    <a
-                                                        href={`/hackathon/${team.hackathon.slug}/teams/${team.team_id}`}
-                                                    >
-                                                        {team.name}
-                                                    </a>
-                                                </td>
+                                                <td>{team.name}</td>
                                                 <td>
                                                     <a
                                                         href={`/profile/${team.members[i].username}`}
