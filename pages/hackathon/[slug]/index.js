@@ -119,11 +119,11 @@ export default function Hackathon() {
             <Head>
                 {hackathon.title
                 ? <title>{hackathon.title} | COPS Hackalog</title>
-                : <title>Hackathon - {slug} | COPS Hackalog</title>
+                : <title>Hackathon - COPS Hackalog</title>
                 }
                 <meta
                     name="description"
-                    content={`${slug} Hackathon being organized on COPS Hackalog`}
+                    content="Register for Hackathons and Dev-Sprints at COPS Hackalog"
                 />
             </Head>
             {loading || localLoading ? (
