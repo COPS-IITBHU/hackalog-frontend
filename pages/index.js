@@ -165,9 +165,8 @@ export default function Home() {
                                 </div>
                                 <h5 className="card-title">Collaborate</h5>
                                 <div className="regular-text">
-                                    To cooperate with or willingly assist an
-                                    enemy of one&apos;s country and especially
-                                    an occupying force
+                                    Use your skills on cool real world
+                                    projects while making new friends.
                                 </div>
                             </div>
                         </div>
@@ -181,9 +180,8 @@ export default function Home() {
                                 </div>
                                 <h5 className="card-title">Learn</h5>
                                 <div className="regular-text">
-                                    To cooperate with or willingly assist an
-                                    enemy of one&apos;s country and especially
-                                    an occupying force
+                                    Kickstart your journey to new technologies
+                                    while working on them.
                                 </div>
                             </div>
                         </div>
@@ -197,8 +195,8 @@ export default function Home() {
                                 </div>
                                 <h5 className="card-title">Share</h5>
                                 <div className="regular-text">
-                                    A portion belonging to, due to, or
-                                    contributed by an individual or group
+                                    Share your achievements and the projects 
+                                    you can be proud of.
                                 </div>
                             </div>
                         </div>
