@@ -10,7 +10,7 @@ import {
     Tag,
 } from "atomize"
 import axios from "axios"
-import { useRouter } from "next/router"
+import Router, { useRouter } from "next/router"
 import { ListGroup, Container, Spinner } from "react-bootstrap"
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
@@ -18,6 +18,7 @@ import { useAuth } from "../../../../../context/auth"
 import { API_URL } from "../../../../../util/constants"
 import Clipboard from "../../../../../components/Clipboard/Clipboard"
 import Head from "next/head"
+import { execOnce } from "next/dist/next-server/lib/utils"
 
 // team management
 export default function ManageTeam() {
@@ -49,11 +50,15 @@ export default function ManageTeam() {
                     editMembers(responseTeam.data.members)
                     editClientUser(responseUser.data)
                     console.log("responseTeam =", responseTeam)
+                    setLocalLoading(false)
                 }
             } catch (exc) {
-                setSpinner(false)
+                //setSpinner(false)
                 console.log("Exception occcured!")
                 console.log("exception responseTeam =", exc.response)
+                if(exc.response && exc.response.status === 404){
+                    Router.push("/404")
+                }
             }
         }
         if (token === null && !loading) {
@@ -65,7 +70,6 @@ export default function ManageTeam() {
         if (token && !loading) {
             setLocalLoading(true)
             getData()
-            setLocalLoading(false)
         }
     }, [token, router.query.team_id, loading, router])
 
@@ -204,10 +208,12 @@ export default function ManageTeam() {
 
     const leaderTag = (
         <Tag
-            bg={`info500`}
-            textColor="white"
-            p={{ x: "0.75rem", y: "0.25rem" }}
-            m={{ r: "0.5rem", b: "0.5rem" }}
+            bg="white"
+            border="1px solid"
+            borderColor="gray700"
+            textColor="#003e54c9"
+            p={{ x: "0.75rem", y: "0" }}
+            m={{ r: "0.5rem" }}
         >
             Leader
         </Tag>
@@ -220,10 +226,11 @@ export default function ManageTeam() {
             name !== clientUser.username
         ) {
             return (
-                <Tag
-                    bg={`info500`}
-                    hoverBg="info600"
+                <Button
+                    bg={`warning700`}
+                    hoverBg="warning800"
                     textColor="white"
+                    textSize={{ xs: "tiny", md: "body" }}
                     p={{ x: "0.75rem", y: "0.25rem" }}
                     m={{ r: "0.5rem", b: "0.5rem" }}
                     onClick={() => {
@@ -232,17 +239,18 @@ export default function ManageTeam() {
                     }}
                 >
                     Remove
-                </Tag>
+                </Button>
             )
         } else if (
             clientUser.username === name &&
             teamData.leader.username !== clientUser.username
         ) {
             return (
-                <Tag
-                    bg={`info500`}
-                    hoverBg="info600"
+                <Button
+                    bg={`warning700`}
+                    hoverBg="warning800"
                     textColor="white"
+                    textSize={{ xs: "tiny", md: "body" }}
                     p={{ x: "0.75rem", y: "0.25rem" }}
                     m={{ r: "0.5rem", b: "0.5rem" }}
                     onClick={() => {
@@ -251,7 +259,7 @@ export default function ManageTeam() {
                     }}
                 >
                     Leave Team
-                </Tag>
+                </Button>
             )
         } else {
             return null
@@ -260,40 +268,42 @@ export default function ManageTeam() {
 
     const membersUI = members.map((el, index) => {
         return (
-            <Row key={el.username}>
-                <ListGroup.Item action>
-                    <Row justify="space-between">
-                        <Text
-                            tag="h6"
-                            textSize="title"
-                            textColor="gray800"
-                            fontFamily="madetommy-regular"
-                            m={{ r: "1rem" }}
-                        >
-                            {index + 1}. {el.username}
-                        </Text>
+            <Row key={el.username} justify="space-between" align="center">
+                <div className="d-flex align-items-center py-3">
+                    <Text
+                        tag="h6"
+                        textSize="subheader"
+                        textColor="#003e54"
+                        fontFamily="madetommy-light"
+                        m={{ r: "1rem" }}
+                    >
+                        {index + 1}. {el.username}
+                    </Text>
+                    <div>
                         {el.username === teamData.leader.username
                             ? leaderTag
                             : null}
-                        {el.username === teamData.leader.username &&
-                        clientUser.username === teamData.leader.username ? (
-                            <Tag
-                                bg={`info500`}
-                                hoverBg="info600"
-                                textColor="white"
-                                p={{ x: "0.75rem", y: "0.25rem" }}
-                                m={{ r: "0.5rem", b: "0.5rem" }}
-                                onClick={() => {
-                                    console.log("Handle team deletion")
-                                    deleteTeam()
-                                }}
-                            >
-                                Delete Team
-                            </Tag>
-                        ) : null}
-                        {handleMemberExitUI(el.username)}
-                    </Row>
-                </ListGroup.Item>
+                    </div>
+                </div>
+                {el.username === teamData.leader.username &&
+                clientUser.username === teamData.leader.username ? (
+                    <Button
+                        bg={`danger700`}
+                        hoverBg="danger800"
+                        shadow="3"
+                        textColor="white"
+                        textSize={{ xs: "tiny", md: "body" }}
+                        p={{ x: "0.75rem", y: "0.25rem" }}
+                        m={{ r: "0.5rem" }}
+                        onClick={() => {
+                            console.log("Handle team deletion")
+                            deleteTeam()
+                        }}
+                    >
+                        Delete Team
+                    </Button>
+                ) : null}
+                {handleMemberExitUI(el.username)}
             </Row>
         )
     })
@@ -368,7 +378,7 @@ export default function ManageTeam() {
                     >
                         <Text
                             tag="h2"
-                            textSize="display2"
+                            textSize={{ xs: "title", md: "display2" }}
                             textColor="#003e54"
                             fontFamily="madetommy-regular"
                             textDecor="underline"
@@ -381,18 +391,13 @@ export default function ManageTeam() {
                         <Col size={{ xs: "12", md: "10" }}>
                             <Div
                                 bg="white"
-                                shadow={{ md: "4" }}
+                                shadow={{ md: "3" }}
                                 rounded="xl"
+                                p={{ xs: "1rem", md: "2rem" }}
                                 m={{ b: "1rem" }}
                             >
-                                <Row
-                                    m={{ x: "0.5rem", y: "1rem" }}
-                                    justify="space-between"
-                                >
-                                    <Col
-                                        size={{ xs: "12", md: "6" }}
-                                        m={{ y: "0.5rem" }}
-                                    >
+                                <div className="d-flex justify-content-center align-items-center flex-wrap">
+                                    <div className="px-2">
                                         <Clipboard
                                             code={teamData.team_id}
                                             notify={() => {
@@ -402,16 +407,13 @@ export default function ManageTeam() {
                                                 )
                                             }}
                                         ></Clipboard>
-                                    </Col>
+                                    </div>
                                     {!nameEdit ? (
-                                        <Col
-                                            size={{ xs: "12", md: "6" }}
-                                            m={{ y: "0.5rem" }}
-                                        >
+                                        <div className="px-2">
                                             <Row>
                                                 <Text
                                                     tag="h4"
-                                                    textSize="title"
+                                                    textSize="subheader"
                                                     textColor="#003e54"
                                                     fontFamily="madetommy-regular"
                                                     m={{ r: "1rem" }}
@@ -420,7 +422,7 @@ export default function ManageTeam() {
                                                 </Text>
                                                 <Text
                                                     tag="h6"
-                                                    textSize="title"
+                                                    textSize="subheader"
                                                     textColor="gray800"
                                                     fontFamily="madetommy-regular"
                                                     m={{ r: "1rem" }}
@@ -428,35 +430,31 @@ export default function ManageTeam() {
                                                     {teamData.name}
                                                 </Text>
                                                 <Button
-                                                    h="2.5rem"
-                                                    w="2.5rem"
+                                                    h="2rem"
+                                                    w="2rem"
                                                     rounded="circle"
                                                     m={{ r: "1rem" }}
                                                     onClick={() => {
                                                         setNameEdit(true)
                                                     }}
                                                     bg="#178a80"
-                                                    hoverBg="success600"
                                                     hoverShadow="3"
                                                     title="Edit"
                                                 >
                                                     <Icon
                                                         name="Edit"
-                                                        size="20px"
+                                                        size="16px"
                                                         color="white"
                                                     />
                                                 </Button>
                                             </Row>
-                                        </Col>
+                                        </div>
                                     ) : (
-                                        <Col
-                                            size={{ xs: "12", md: "6" }}
-                                            m={{ y: "0.5rem" }}
-                                        >
+                                        <div className="px-2">
                                             <Row>
                                                 <Text
                                                     tag="h4"
-                                                    textSize="title"
+                                                    textSize="subheader"
                                                     textColor="#003e54"
                                                     fontFamily="madetommy-regular"
                                                     m={{ r: "1rem" }}
@@ -478,13 +476,12 @@ export default function ManageTeam() {
                                                     }}
                                                     w="3rem"
                                                     bg="#178a80"
-                                                    hoverBg="success600"
                                                     m={{ x: "0.5rem" }}
                                                 >
                                                     {showSpinner ? (
                                                         <Icon
                                                             name="Loading2"
-                                                            size="20px"
+                                                            size="16px"
                                                             color="white"
                                                         />
                                                     ) : (
@@ -504,31 +501,29 @@ export default function ManageTeam() {
                                                     Back
                                                 </Button>
                                             </Row>
-                                        </Col>
+                                        </div>
                                     )}
-                                </Row>
-                                <Row m={{ y: "1rem" }}>
-                                    <Col size={{ xs: "12" }}>
-                                        <Text
-                                            tag="h4"
-                                            textSize="title"
-                                            textColor="#003e54"
-                                            fontFamily="madetommy-regular"
-                                            m={{ r: "1rem" }}
-                                        >
-                                            Members:
-                                        </Text>
-                                        <Div
-                                            m={{
-                                                t: "0.5rem",
-                                                b: "1.5rem",
-                                                x: "1rem",
-                                            }}
-                                        >
-                                            <ListGroup>{membersUI}</ListGroup>
-                                        </Div>
-                                    </Col>
-                                </Row>
+                                </div>
+                                <div className="container pt-5">
+                                    <Text
+                                        tag="h4"
+                                        textSize="subheader"
+                                        textColor="#003e54"
+                                        fontFamily="madetommy-regular"
+                                        m={{ r: "1rem" }}
+                                    >
+                                        Members:
+                                    </Text>
+                                    <Div
+                                        m={{
+                                            t: "0.5rem",
+                                            b: "1.5rem",
+                                            x: "1rem",
+                                        }}
+                                    >
+                                    {membersUI}
+                                    </Div>
+                                </div>
                             </Div>
                         </Col>
                     </Row>

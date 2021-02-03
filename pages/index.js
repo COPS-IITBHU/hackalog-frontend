@@ -119,28 +119,28 @@ export default function Home() {
                     backgroundAttachment: "fixed",
                 }}
             >
-                <div className="container py-10 text-center">
+                <div className="container py-10 text-center px-2">
                     <Text
                         tag="h1"
-                        textSize="display2"
+                        textSize={{ xs: "title", md: "display2" }}
                         m={{ b: "1rem" }}
                         fontFamily="madetommy-bold"
                     >
                         The home for hackathons organised under COPS IIT(BHU)
                     </Text>
-                    <Text tag="h2" textSize="title" textColor="#003e54">
+                    <Text tag="h2" textSize={{ xs: "subheader", md: "title" }} textColor="#003e54">
                         Build products, practice skills, learn technologies, win
                         prizes,and connect with people.
                     </Text>
                 </div>
             </div>
-            <div className="container fluid">
-                <div className="py-5">
+            <div className="container">
+                <div className="py-3 py-md-5">
                     <div className="row no-gutters align-items-stretch justify-content-center">
-                        <div className="col-12 py-4">
+                        <div className="col-12 py-2 py-md-4">
                             <Text
                                 tag="h3"
-                                textSize="title"
+                                textSize={{ xs: "subheader", md: "title" }}
                                 textColor="#003e54"
                                 fontFamily="madetommy-bold"
                             >
@@ -197,13 +197,13 @@ export default function Home() {
                     </div>
                 </div>
                 <div
-                    className="row justify-content-between align-items-center"
+                    className="row justify-content-between align-items-center py-2"
                     style={{ flexWrap: "nowrap" }}
                 >
                     <div className="pl-3">
                         <Text
                             tag="h3"
-                            textSize="title"
+                            textSize={{ xs: "subheader", md: "title" }}
                             textColor="#003e54"
                             fontFamily="madetommy-bold"
                         >
@@ -217,6 +217,7 @@ export default function Home() {
                                 hoverShadow="4"
                                 m={{ r: "1rem" }}
                                 p="1rem"
+                                textSize={{ xs: "tiny", md: "body" }}
                             >
                                 View More
                             </Button>
@@ -232,7 +233,7 @@ export default function Home() {
                                         (hackathon) => (
                                             <div
                                                 key={hackathon.slug}
-                                                className="col-12 col-md-4 p-3"
+                                                className="col-12 col-md-4 p-1 p-md-3"
                                             >
                                                 <HackathonCard
                                                     hackathon={hackathon}
@@ -263,13 +264,13 @@ export default function Home() {
                     )}
                 </div>
                 <div
-                    className="row justify-content-between align-items-center"
+                    className="row justify-content-between align-items-center py-2"
                     style={{ flexWrap: "nowrap" }}
                 >
                     <div className="pl-3">
                         <Text
                             tag="h3"
-                            textSize="title"
+                            textSize={{ xs: "subheader", md: "title" }}
                             textColor="#003e54"
                             fontFamily="madetommy-bold"
                         >
@@ -283,6 +284,7 @@ export default function Home() {
                                 hoverShadow="4"
                                 m={{ r: "1rem" }}
                                 p="1rem"
+                                textSize={{ xs: "tiny", md: "body" }}
                             >
                                 View More
                             </Button>
@@ -306,7 +308,7 @@ export default function Home() {
                             {previousHackathons.map((hackathon) => (
                                 <div
                                     key={hackathon.slug}
-                                    className="col-12 col-md-4 p-3"
+                                    className="col-12 col-md-4 p-1 p-md-3"
                                 >
                                     <HackathonCard hackathon={hackathon} />
                                 </div>

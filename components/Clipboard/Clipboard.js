@@ -12,7 +12,7 @@ const Clipboard = (props) => {
         <Row align="center">
             <Text
                 tag="h4"
-                textSize="title"
+                textSize="subheader"
                 textColor={props.titleColor || "#003e54"}
                 fontFamily="madetommy-regular"
                 m={{ r: "1rem" }}
@@ -21,7 +21,7 @@ const Clipboard = (props) => {
             </Text>
             <Text
                 tag="h4"
-                textSize="title"
+                textSize="subheader"
                 textColor={props.codeColor || "gray800"}
                 fontFamily="madetommy-regular"
                 textDecor="underline"
@@ -30,19 +30,18 @@ const Clipboard = (props) => {
                 {props.code}
             </Text>
             <Button
-                h="2.5rem"
-                w="2.5rem"
+                h="2rem"
+                w="2rem"
                 rounded="circle"
                 m={{ r: "1rem" }}
                 onClick={copyClipboard}
                 bg={props.buttonBg || "#178a80"}
-                hoverBg={props.buttonHoverBg || "success600"}
                 hoverShadow="3"
                 title="Copy Code"
             >
                 <Icon
                     name={props.iconName || "Rename"}
-                    size="20px"
+                    size="16px"
                     color="white"
                 />
             </Button>
