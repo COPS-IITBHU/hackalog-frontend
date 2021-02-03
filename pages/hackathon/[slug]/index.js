@@ -371,7 +371,7 @@ export default function Hackathon() {
                                         <div className="pb-5 pb-lg-0 mt-3">
                                             <div className="bg-grey p-3 p-md-4 rounded">
                                                 <div className="pb-3">
-                                                    The hackathon has not stated
+                                                    The hackathon has not started
                                                     yet.&nbsp;
                                                     {hackathon.userStatus ==
                                                     false
