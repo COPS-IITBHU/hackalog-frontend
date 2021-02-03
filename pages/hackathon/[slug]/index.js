@@ -51,6 +51,7 @@ export default function Hackathon() {
                 })
                 .finally(() => setLocalLoading(false))
         }
+        return () => delete axios.defaults.headers.common['Authorization']
     }, [slug, token])
 
     const [submissions, setSubmisssions] = useState([])
