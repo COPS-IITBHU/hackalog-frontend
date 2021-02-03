@@ -8,6 +8,14 @@ import React from "react"
 import Link from "next/link"
 import Head from "next/head"
 
+import Lottie from 'react-lottie';
+import animationData from '../lottie/sad.json'
+const defaultOptions = {
+	loop: true,
+	autoplay: true,
+	animationData: animationData,
+};
+
 function useOnScreen(options) {
     const ref = React.useRef()
     const [visible, setVisible] = React.useState(false)
@@ -134,7 +142,7 @@ export default function Home() {
                     </Text>
                 </div>
             </div>
-            <div className="container">
+            <div className="container pb-5">
                 <div className="py-3 py-md-5">
                     <div className="row no-gutters align-items-stretch justify-content-center">
                         <div className="col-12 py-2 py-md-4">
@@ -243,10 +251,13 @@ export default function Home() {
                                     )}
                                 </div>
                             ) : (
-                                <div className="row align-items-stretch justify-content-center">
-                                    <div className="col-12 col-md-4 p-3">
-                                        <Sorry />
-                                    </div>
+                                <div className="text-center">
+                                    <Lottie options={defaultOptions}
+                                        height={300}
+                                    />
+                                    <Text tag="h6" textSize="subheader" textColor="#bfbfc7" fontFamily="madetommy-bold">
+                                        Nothing to show here
+                                    </Text>
                                 </div>
                             )}
                         </>
@@ -315,10 +326,13 @@ export default function Home() {
                             ))}
                         </div>
                     ) : (
-                        <div className="row align-items-stretch justify-content-center">
-                            <div className="col-12 col-md-4 p-3">
-                                <Sorry />
-                            </div>
+                        <div className="text-center">
+                            <Lottie options={defaultOptions}
+                                height={300}
+                            />
+                            <Text tag="h6" textSize="subheader" textColor="#bfbfc7" fontFamily="madetommy-bold">
+                                Nothing to show here
+                            </Text>
                         </div>
                     )}
                 </div>
