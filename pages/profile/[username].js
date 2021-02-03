@@ -4,7 +4,7 @@ import DefaultErrorPage from "next/error"
 import { Spinner, Row, Col, Container, Tab, Nav } from "react-bootstrap"
 import { Text, Image, Button, Div } from "atomize"
 import { FaGithub } from "react-icons/fa"
-import { MdLocationOn } from "react-icons/md"
+import { GrMail } from "react-icons/gr"
 
 import axios from "../../util/axios"
 import { useAuth } from "../../context/auth"
@@ -164,6 +164,9 @@ function Profile() {
 											<FaGithub className="mr-1" /> {userRequest.user.github_handle}
 										</a>
 									)}
+									<Text textSize="paragraph" className="overflow-auto text-muted">
+										<GrMail className="mr-1" />  {userRequest.user.email}
+									</Text>
 									{/* <p className="text-muted"><MdLocationOn /> IIT BHU Varanasi</p> */}
 									<Nav variant="pills" className="flex-column pt-4">
 										<Nav.Item>
