@@ -31,7 +31,7 @@ function MyApp({ Component, pageProps }) {
 					<StyleReset />
 					<AuthProvider>
 						<Header />
-						<div style={{paddingTop: "88px"}}>
+						<div style={{paddingTop: "88px", minHeight: "100vh"}} className="d-flex flex-column justify-content-between">
 							<Component {...pageProps} />
 							<ToastContainer/>
 							<Footer />
