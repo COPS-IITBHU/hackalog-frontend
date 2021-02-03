@@ -50,6 +50,7 @@ export default function ManageTeam() {
                     editMembers(responseTeam.data.members)
                     editClientUser(responseUser.data)
                     console.log("responseTeam =", responseTeam)
+                    setLocalLoading(false)
                 }
             } catch (exc) {
                 //setSpinner(false)
@@ -69,7 +70,6 @@ export default function ManageTeam() {
         if (token && !loading) {
             setLocalLoading(true)
             getData()
-            setLocalLoading(false)
         }
     }, [token, router.query.team_id, loading, router])
 
