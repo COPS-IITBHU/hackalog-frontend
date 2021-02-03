@@ -114,7 +114,6 @@ export default function Hackathon() {
         if (myTeam.length) myTeam = myTeam[0]
         else myTeam = { team_id: "#" }
     }
-    console.log(hackathon.userStatus)
     return (
         <>
             <Head>
