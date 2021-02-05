@@ -220,7 +220,7 @@ export default function Hackathon() {
                                                             You have already
                                                             registered for the
                                                             hackathon. Submit
-                                                            you project below!
+                                                            your project below!
                                                         </div>
                                                         <div>
                                                             <Link
@@ -230,7 +230,7 @@ export default function Hackathon() {
                                                                     Your Team
                                                                 </a>
                                                             </Link>
-                                                            {/*
+                                                            
                                                             <div
                                                                 style={{
                                                                     height:
@@ -244,7 +244,7 @@ export default function Hackathon() {
                                                                     Submit Your Project
                                                                 </a>
                                                             </Link>
-                                                            */}
+                                                            
                                                         </div>
                                                     </>
                                                 ) : hackathon.userStatus ==
@@ -454,9 +454,10 @@ function Overview({ hackathon }) {
                 >
                     {hackathon.title}
                 </Text>
-                <ReactMarkdown
+
+                <ReactMarkdown 
                     plugins={[gfm, codeformatter, highlight]}
-                    className="pb-3"
+                    className="pb-3 markabcs"
                 >
                     {hackathon.description}
                 </ReactMarkdown>
