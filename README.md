@@ -1,4 +1,4 @@
-https://api.netlify.com/api/v1/badges/984a296a-70af-4c2a-9e3f-97924d0a507c/deploy-status)](https://app.netlify.com/sites/cops-hackalog/deploys)
+[https://api.netlify.com/api/v1/badges/984a296a-70af-4c2a-9e3f-97924d0a507c/deploy-status)](https://app.netlify.com/sites/cops-hackalog/deploys)
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
