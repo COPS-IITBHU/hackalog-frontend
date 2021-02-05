@@ -543,8 +543,8 @@ function Participants({ slug }) {
                 .catch((err) => {
                     console.error(err)
                 })
+                .finally(() => setLoading(false))
         }
-        setLoading(false)
     }, [slug])
 
     return (
