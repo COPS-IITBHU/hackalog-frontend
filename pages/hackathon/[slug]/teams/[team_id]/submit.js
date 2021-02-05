@@ -1,5 +1,6 @@
 import {
     Image,
+    Alert,
     Col,
     Row,
     Form,
@@ -123,6 +124,7 @@ export default function Submit() {
                 </Container>
             </Jumbotron>
             <Container p={{ y: { xs: "1rem", md: "4rem" }, x: "1rem" }}>
+                <Alert variant="warning">You cannot edit or delete your submission once submitted.</Alert>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group size="sm" controlId="title">
                         <Form.Label>Title*</Form.Label>
