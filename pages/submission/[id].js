@@ -123,8 +123,7 @@ export default function SubmissionDetail() {
                         <u>Description</u>
                     </Text>
                     <Text textSize="paragraph">{submission.description}</Text>
-                    {submission.review !==
-                        "There had been no reviews till now." &&
+                    {submission.hackathon.results_declared &&
                     submission.review.length ? (
                         <>
                             <Text textSize="subheader">
@@ -140,7 +139,12 @@ export default function SubmissionDetail() {
                         {submission.submission_url == "EMPTY" ? (
                             "No Link Provided"
                         ) : (
-                            <a href={`${submission.submission_url}`} target="_blank">Link</a>
+                            <a
+                                href={`${submission.submission_url}`}
+                                target="_blank"
+                            >
+                                Link
+                            </a>
                         )}
                     </Text>
                     <Row className="justify-content-around mt-3">
@@ -180,9 +184,15 @@ export default function SubmissionDetail() {
                                                 <tr>
                                                     <td>{team.leader.name}</td>
                                                     <td>
-                                                        <Link href={`/profile/${team.leader.username}`}>
+                                                        <Link
+                                                            href={`/profile/${team.leader.username}`}
+                                                        >
                                                             <a>
-                                                                @{team.leader.username}
+                                                                @
+                                                                {
+                                                                    team.leader
+                                                                        .username
+                                                                }
                                                             </a>
                                                         </Link>
                                                     </td>
@@ -193,9 +203,14 @@ export default function SubmissionDetail() {
                                                         <tr key={elm.username}>
                                                             <td>{elm.name}</td>
                                                             <td>
-                                                                <Link href={`/profile/${elm.username}`}>
+                                                                <Link
+                                                                    href={`/profile/${elm.username}`}
+                                                                >
                                                                     <a>
-                                                                        @{elm.username}
+                                                                        @
+                                                                        {
+                                                                            elm.username
+                                                                        }
                                                                     </a>
                                                                 </Link>
                                                             </td>
@@ -204,7 +219,8 @@ export default function SubmissionDetail() {
                                                 })}
                                             </tbody>
                                         </Table>
-                                        {submission.score ? (
+                                        {submission.hackathon
+                                            .results_declared ? (
                                             <Text
                                                 textSize="title"
                                                 className="text-center pb-2"
