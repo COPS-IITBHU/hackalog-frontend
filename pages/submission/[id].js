@@ -295,7 +295,7 @@ export default function SubmissionDetail() {
                                         <tr>
                                             <td>Start Date</td>
                                             <td>
-                                                {Date(
+                                                {new Date(
                                                     submission.hackathon.start
                                                 ).toString()}{" "}
                                             </td>
@@ -303,7 +303,7 @@ export default function SubmissionDetail() {
                                         <tr>
                                             <td>End Date</td>
                                             <td>
-                                                {Date(
+                                                {new Date(
                                                     submission.hackathon.end
                                                 ).toString()}{" "}
                                             </td>
