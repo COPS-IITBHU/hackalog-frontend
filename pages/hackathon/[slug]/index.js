@@ -51,7 +51,7 @@ export default function Hackathon() {
                 })
                 .finally(() => setLocalLoading(false))
         }
-        return () => delete axios.defaults.headers.common['Authorization']
+        return () => delete axios.defaults.headers.common["Authorization"]
     }, [slug, token])
 
     const [submissions, setSubmisssions] = useState([])
@@ -118,10 +118,11 @@ export default function Hackathon() {
     return (
         <>
             <Head>
-                {hackathon.title
-                ? <title>{hackathon.title} | COPS Hackalog</title>
-                : <title>Hackathon - COPS Hackalog</title>
-                }
+                {hackathon.title ? (
+                    <title>{hackathon.title} | COPS Hackalog</title>
+                ) : (
+                    <title>Hackathon - COPS Hackalog</title>
+                )}
                 <meta
                     name="description"
                     content="Register for Hackathons and Dev-Sprints at COPS Hackalog"
@@ -230,7 +231,7 @@ export default function Hackathon() {
                                                                     Your Team
                                                                 </a>
                                                             </Link>
-                                                            
+
                                                             <div
                                                                 style={{
                                                                     height:
@@ -241,10 +242,10 @@ export default function Hackathon() {
                                                                 href={`/hackathon/${slug}/teams/${myTeam.team_id}/submit`}
                                                             >
                                                                 <a className="btn btn-success w-100">
-                                                                    Submit Your Project
+                                                                    Submit Your
+                                                                    Project
                                                                 </a>
                                                             </Link>
-                                                            
                                                         </div>
                                                     </>
                                                 ) : hackathon.userStatus ==
@@ -372,8 +373,8 @@ export default function Hackathon() {
                                         <div className="pb-5 pb-lg-0 mt-3">
                                             <div className="bg-grey p-3 p-md-4 rounded">
                                                 <div className="pb-3">
-                                                    The hackathon has not started
-                                                    yet.&nbsp;
+                                                    The hackathon has not
+                                                    started yet.&nbsp;
                                                     {hackathon.userStatus ==
                                                     false
                                                         ? "Login to register for the hackathon and make a team!"
@@ -393,7 +394,9 @@ export default function Hackathon() {
                                                         </Button>
                                                     ) : hackathon.userStatus ==
                                                       "not registered" ? (
-                                                        <Link href={`/hackathon/${slug}/register`}>
+                                                        <Link
+                                                            href={`/hackathon/${slug}/register`}
+                                                        >
                                                             <a>
                                                                 <Button variant="success">
                                                                     Register
@@ -403,7 +406,9 @@ export default function Hackathon() {
                                                     ) : hackathon.userStatus ==
                                                           "registered" &&
                                                       token ? (
-                                                        <Link href={`/hackathon/${slug}/teams/${myTeam.team_id}`}>
+                                                        <Link
+                                                            href={`/hackathon/${slug}/teams/${myTeam.team_id}`}
+                                                        >
                                                             <a>
                                                                 <Button variant="success">
                                                                     Your Team
@@ -455,7 +460,7 @@ function Overview({ hackathon }) {
                     {hackathon.title}
                 </Text>
 
-                <ReactMarkdown 
+                <ReactMarkdown
                     plugins={[gfm, codeformatter, highlight]}
                     className="pb-3 markabcs"
                 >
@@ -609,10 +614,10 @@ function Participants({ slug }) {
                                         </td>
                                         <td>{team.name}</td>
                                         <td>
-                                            <Link href={`/profile/${team.leader.username}`}>
-                                                <a>
-                                                    {team.leader.username}
-                                                </a>
+                                            <Link
+                                                href={`/profile/${team.leader.username}`}
+                                            >
+                                                <a>{team.leader.username}</a>
                                             </Link>
                                         </td>
                                     </tr>
@@ -634,7 +639,9 @@ function Participants({ slug }) {
                                                 <td>{team.members[i].name}</td>
                                                 <td>{team.name}</td>
                                                 <td>
-                                                    <Link href={`/profile/${team.members[i].username}`}>
+                                                    <Link
+                                                        href={`/profile/${team.members[i].username}`}
+                                                    >
                                                         <a>
                                                             {
                                                                 team.members[i]
@@ -680,9 +687,7 @@ function Leaderboard({ status, submissions, loading }) {
                 <td> {submission.score}</td>
                 <td>
                     <Link href={`/submission/${submission.id}`}>
-                        <a>
-                            {submission.title}
-                        </a>
+                        <a>{submission.title}</a>
                     </Link>
                 </td>
             </tr>

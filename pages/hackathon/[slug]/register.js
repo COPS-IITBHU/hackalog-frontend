@@ -1,7 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useRouter } from "next/router"
 import axios from "axios"
-import { Div, Row, Col, Text, Button, Input} from "atomize"
+import { Div, Row, Col, Text, Button, Input } from "atomize"
 import { useAuth } from "../../../context/auth"
 import { useState } from "react"
 import { API_URL } from "../../../util/constants"
@@ -19,15 +19,15 @@ export default function Register() {
 
     const notifHandler = (message, type) => {
         const config = {
-            position:"top-center",
-            autoClose:5000,
-            hideProgressBar:false,
-            newestOnTop:false,
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            newestOnTop: false,
             closeOnClick: true,
-            rtl:false,
+            rtl: false,
             pauseOnFocusLoss: true,
             draggable: true,
-            pauseOnHover: true
+            pauseOnHover: true,
         }
         switch (type) {
             case "info":
@@ -61,10 +61,7 @@ export default function Register() {
             //     { name: name }
             // )
             if (response.status === 201) {
-                notifHandler(
-                    "Team creation successful",
-                    "success"
-                )
+                notifHandler("Team creation successful", "success")
                 editCode({ code: response.data.team_id, show: true })
                 setTimeout(() => {
                     // router.push(`http://localhost:3000/hackathon/${hackathonId}/teams/${code.code}`)
@@ -73,10 +70,7 @@ export default function Register() {
                 }, 1000)
                 console.log("code updated successfully!")
             } else {
-                notifHandler(
-                    "Some unexpected error in client!",
-                    "warning"
-                )
+                notifHandler("Some unexpected error in client!", "warning")
             }
         } catch (exc) {
             if (exc.response.status === 400) {
@@ -87,10 +81,7 @@ export default function Register() {
             } else if (exc.response.status === 404) {
                 notifHandler("Hackathon not found", "error")
             } else if (exc.response.status === 403) {
-                notifHandler(
-                    `${exc.response.data.detail}`,
-                    "error"
-                ) // incomplete profile!
+                notifHandler(`${exc.response.data.detail}`, "error") // incomplete profile!
             } else {
                 notifHandler(
                     "Some error occured, try again or contact admin!",
@@ -104,18 +95,12 @@ export default function Register() {
         if (token) {
             if (hackathonId) {
                 if (teamName === "") {
-                    notifHandler(
-                        "Invalid team name!",
-                        "error"
-                    )
+                    notifHandler("Invalid team name!", "error")
                 } else {
                     doRegister(teamName)
                 }
             } else {
-                notifHandler(
-                    "Invalid hackathon id.",
-                    "error"
-                )
+                notifHandler("Invalid hackathon id.", "error")
             }
         } else {
             notifHandler("You are not authorised", "error")
@@ -134,29 +119,20 @@ export default function Register() {
             //     {}
             // )
             if (response.status === 200) {
-                notifHandler(
-                    "Successfully joined the team!",
-                    "success"
-                )
+                notifHandler("Successfully joined the team!", "success")
                 setTimeout(() => {
                     // router.push(`http://localhost:3000/hackathon/${hackathonId}/teams/${joinCode}`)
                     router.push(`/hackathon/${hackathonId}/teams/${joinCode}`)
                 }, 1000)
             } else {
-                notifHandler(
-                    "Some unexpected error in client!",
-                    "warning"
-                )
+                notifHandler("Some unexpected error in client!", "warning")
             }
         } catch (exc) {
             if (exc.response.status === 400) {
                 // console.log('exc.response =', exc.response)
                 notifHandler(exc.response.data[0], "warning")
             } else if (exc.response.status === 404) {
-                notifHandler(
-                    "Either team or hackathon not found!",
-                    "info"
-                )
+                notifHandler("Either team or hackathon not found!", "info")
             } else if (exc.response.status === 403) {
                 notifHandler("Incomplete profile!", "error")
             } else {
@@ -249,10 +225,7 @@ export default function Register() {
                                 <Clipboard
                                     code={code.code}
                                     notify={() => {
-                                        notifHandler(
-                                            "Code copied!",
-                                            "success"
-                                        )
+                                        notifHandler("Code copied!", "success")
                                     }}
                                 ></Clipboard>
                             </Div>
