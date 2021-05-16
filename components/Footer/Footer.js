@@ -1,4 +1,4 @@
-import { Text } from 'atomize'
+import { Text } from "atomize"
 
 export default function Footer() {
     return (
@@ -6,14 +6,26 @@ export default function Footer() {
             <footer className="container">
                 <div className="d-flex flex-wrap align-items-center justify-content-between p-3 py-4">
                     <div>
-                        <Text tag="h6" textSize="paragraph" textColor="#003e54c9" fontFamily="madetommy-light">
+                        <Text
+                            tag="h6"
+                            textSize="paragraph"
+                            textColor="#003e54c9"
+                            fontFamily="madetommy-light"
+                        >
                             &copy;{new Date().getFullYear()}
                             {"  "}
-                            <a href="https://copsiitbhu.co.in/" target="_blank">COPS</a>
-                        </Text>                
+                            <a href="https://copsiitbhu.co.in/" target="_blank">
+                                COPS
+                            </a>
+                        </Text>
                     </div>
                     <div>
-                        <Text tag="h6" textSize="paragraph" textColor="#003e54c9" fontFamily="madetommy-light">
+                        <Text
+                            tag="h6"
+                            textSize="paragraph"
+                            textColor="#003e54c9"
+                            fontFamily="madetommy-light"
+                        >
                             Hackalog is made with 🍕, ☕ and 💻 ✨
                         </Text>
                     </div>

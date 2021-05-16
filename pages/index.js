@@ -8,13 +8,13 @@ import React from "react"
 import Link from "next/link"
 import Head from "next/head"
 
-import Lottie from 'react-lottie';
-import animationData from '../lottie/sad.json'
+import Lottie from "react-lottie"
+import animationData from "../lottie/sad.json"
 const defaultOptions = {
-	loop: true,
-	autoplay: true,
-	animationData: animationData,
-};
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+}
 
 function useOnScreen(options) {
     const ref = React.useRef()
@@ -140,7 +140,11 @@ export default function Home() {
                     >
                         The home for hackathons organised under COPS IIT(BHU)
                     </Text>
-                    <Text tag="h2" textSize={{ xs: "subheader", md: "title" }} textColor="#003e54">
+                    <Text
+                        tag="h2"
+                        textSize={{ xs: "subheader", md: "title" }}
+                        textColor="#003e54"
+                    >
                         Build products, practice skills, learn technologies, win
                         prizes,and connect with people.
                     </Text>
@@ -169,8 +173,8 @@ export default function Home() {
                                 </div>
                                 <h5 className="card-title">Collaborate</h5>
                                 <div className="regular-text">
-                                    Use your skills on cool real world
-                                    projects while making new friends.
+                                    Use your skills on cool real world projects
+                                    while making new friends.
                                 </div>
                             </div>
                         </div>
@@ -199,8 +203,8 @@ export default function Home() {
                                 </div>
                                 <h5 className="card-title">Share</h5>
                                 <div className="regular-text">
-                                    Share your achievements and the projects 
-                                    you can be proud of.
+                                    Share your achievements and the projects you
+                                    can be proud of.
                                 </div>
                             </div>
                         </div>
@@ -254,10 +258,16 @@ export default function Home() {
                                 </div>
                             ) : (
                                 <div className="text-center">
-                                    <Lottie options={defaultOptions}
+                                    <Lottie
+                                        options={defaultOptions}
                                         height={300}
                                     />
-                                    <Text tag="h6" textSize="subheader" textColor="#bfbfc7" fontFamily="madetommy-bold">
+                                    <Text
+                                        tag="h6"
+                                        textSize="subheader"
+                                        textColor="#bfbfc7"
+                                        fontFamily="madetommy-bold"
+                                    >
                                         Nothing to show here
                                     </Text>
                                 </div>
@@ -329,10 +339,13 @@ export default function Home() {
                         </div>
                     ) : (
                         <div className="text-center">
-                            <Lottie options={defaultOptions}
-                                height={300}
-                            />
-                            <Text tag="h6" textSize="subheader" textColor="#bfbfc7" fontFamily="madetommy-bold">
+                            <Lottie options={defaultOptions} height={300} />
+                            <Text
+                                tag="h6"
+                                textSize="subheader"
+                                textColor="#bfbfc7"
+                                fontFamily="madetommy-bold"
+                            >
                                 Nothing to show here
                             </Text>
                         </div>

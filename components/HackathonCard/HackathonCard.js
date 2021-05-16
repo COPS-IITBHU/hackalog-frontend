@@ -1,6 +1,6 @@
-import { Div, Row, Col, Text, Image, Button } from 'atomize'
-import Link from 'next/link';
-import Date from "../Date/Date";
+import { Div, Row, Col, Text, Image, Button } from "atomize"
+import Link from "next/link"
+import Date from "../Date/Date"
 
 export default function HackathonCard({ hackathon }) {
     return (
@@ -16,15 +16,26 @@ export default function HackathonCard({ hackathon }) {
                     {/* <Image src= rounded={{ t: "xl" }} maxH="9rem" /> */}
                 </Div>
                 <Div p={{ xs: "1rem", md: "1.5rem" }}>
-                    <Text tag="h3" textSize={{ xs: "subheader", md: "title" }} textColor="#003e54" fontFamily="madetommy-bold">
+                    <Text
+                        tag="h3"
+                        textSize={{ xs: "subheader", md: "title" }}
+                        textColor="#003e54"
+                        fontFamily="madetommy-bold"
+                    >
                         {hackathon.title}
                     </Text>
-                    <Text m={{ b: "1rem" }} textSize={{ xs: "caption", md: "body" }}>
+                    <Text
+                        m={{ b: "1rem" }}
+                        textSize={{ xs: "caption", md: "body" }}
+                    >
                         {hackathon.tagline}
                     </Text>
                     <Row>
                         <Col size="6">
-                            <Text textSize={{ xs: "body", md: "subheader"}} textWeight="500">
+                            <Text
+                                textSize={{ xs: "body", md: "subheader" }}
+                                textWeight="500"
+                            >
                                 <Date dateString={hackathon.start} />
                             </Text>
                             <Text textSize="caption" textColor="light">
@@ -34,7 +45,15 @@ export default function HackathonCard({ hackathon }) {
                         <Col size="6">
                             <Link href={`/hackathon/${hackathon.slug}`}>
                                 <a>
-                                    <Button m={{ l: "auto" }} textSize={{ xs: "tiny", md: "tiny", lg: "tiny", xl: "body" }}>
+                                    <Button
+                                        m={{ l: "auto" }}
+                                        textSize={{
+                                            xs: "tiny",
+                                            md: "tiny",
+                                            lg: "tiny",
+                                            xl: "body",
+                                        }}
+                                    >
                                         See more...
                                     </Button>
                                 </a>
@@ -44,5 +63,5 @@ export default function HackathonCard({ hackathon }) {
                 </Div>
             </Div>
         </>
-    );
+    )
 }

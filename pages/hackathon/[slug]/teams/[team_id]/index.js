@@ -1,14 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
-import {
-    Div,
-    Text,
-    Icon,
-    Row,
-    Col,
-    Button,
-    Input,
-    Tag,
-} from "atomize"
+import { Div, Text, Icon, Row, Col, Button, Input, Tag } from "atomize"
 import axios from "axios"
 import Router, { useRouter } from "next/router"
 import { ListGroup, Container, Spinner } from "react-bootstrap"
@@ -56,16 +47,14 @@ export default function ManageTeam() {
                 //setSpinner(false)
                 console.log("Exception occcured!")
                 console.log("exception responseTeam =", exc.response)
-                if(exc.response && exc.response.status === 404){
+                if (exc.response && exc.response.status === 404) {
                     Router.push("/404")
                 }
             }
         }
         if (token === null && !loading) {
             // router.push(/hackathon/${router.query.slug}`)
-            router.push(
-                `/hackathon/${router.query.slug}`
-            )
+            router.push(`/hackathon/${router.query.slug}`)
         }
         if (token && !loading) {
             setLocalLoading(true)
@@ -75,15 +64,15 @@ export default function ManageTeam() {
 
     const notifHandler = (message, type) => {
         const config = {
-            position:"top-center",
-            autoClose:5000,
-            hideProgressBar:false,
-            newestOnTop:false,
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            newestOnTop: false,
             closeOnClick: true,
-            rtl:false,
+            rtl: false,
             pauseOnFocusLoss: true,
             draggable: true,
-            pauseOnHover: true
+            pauseOnHover: true,
         }
         switch (type) {
             case "info":
@@ -131,10 +120,7 @@ export default function ManageTeam() {
                         router.push(`/hackathon/${teamData.hackathon.slug}`)
                     }, 1000)
                 } else {
-                    notifHandler(
-                        "Some unexpected error in client!",
-                        "error"
-                    )
+                    notifHandler("Some unexpected error in client!", "error")
                 }
             } catch (exc) {
                 console.log("exception in deleting the team: ", exc)
@@ -173,16 +159,11 @@ export default function ManageTeam() {
                         // router.push(
                         //     `/hackathon/${teamData.hackathon.slug}`
                         // )
-                        router.push(
-                            `/hackathon/${teamData.hackathon.slug}`
-                        )
+                        router.push(`/hackathon/${teamData.hackathon.slug}`)
                     }, 1000)
                 }
             } else {
-                notifHandler(
-                    "Some unexpected error in client!",
-                    "error"
-                )
+                notifHandler("Some unexpected error in client!", "error")
             }
         } catch (exc) {
             console.log("exc.response =", exc.response)
@@ -197,10 +178,7 @@ export default function ManageTeam() {
                     notifHandler(`Hackathon not found`, "error")
                     return
                 default:
-                    notifHandler(
-                        `Unexpected error from server`,
-                        "info"
-                    )
+                    notifHandler(`Unexpected error from server`, "info")
                     return
             }
         }
@@ -343,9 +321,7 @@ export default function ManageTeam() {
             } else if (exc.response.status === 403) {
                 notifHandler(`${exc.response.data.detail}`, "warning")
             } else {
-                notifHandler(
-                    "Unexpected error from server!", "error"
-                )
+                notifHandler("Unexpected error from server!", "error")
             }
         }
     }
@@ -521,7 +497,7 @@ export default function ManageTeam() {
                                             x: "1rem",
                                         }}
                                     >
-                                    {membersUI}
+                                        {membersUI}
                                     </Div>
                                 </div>
                             </Div>
