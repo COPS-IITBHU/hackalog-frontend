@@ -22,11 +22,10 @@ export const AuthProvider = ({ children }) => {
         provider.addScope('profile');
         firebase.auth().signInWithPopup(provider)
             .then(() => {
-                //console.log("firebase login success")
+            //Notify to user by succes login    
             })
             .catch(err => {
                 alert('Error Processing request, try again.');
-                console.log(err);
             });
     }
 
@@ -39,7 +38,6 @@ export const AuthProvider = ({ children }) => {
             delete axios.defaults.headers.common['Authentication']
         }).catch(function (err) {
             alert('Error Processing request, try again.');
-            console.log(err);
         });
     }
 
@@ -47,34 +45,27 @@ export const AuthProvider = ({ children }) => {
         setLoading(true)
         let firebase = await loadFirebase()
         firebase.auth().onAuthStateChanged(authUser => {
-            //console.log("firebase user: ", authUser)
             setFirebaseUser(authUser)
             if (authUser) {
                 authUser.getIdToken(true)
                     .then(idToken => {
                         axios.post("login/", { id_token: idToken })
                             .then(response => {
-                                //console.log(response.status, response.data)
                                 let newToken = response.data.token
                                 updateProfile(newToken)
                                     .then(response => {
-                                        //console.log("Profile Response: ", response.data)
                                         setToken(newToken)
                                         setProfile(response.data)
                                         setLoading(false)
                                     }).catch(error => {
                                         setLoading(false)
-                                        console.log(error)
                                     })
                             })
                             .catch(error => {
-                                console.log(error)
-                                console.log(error.response)
                                 setLoading(false)
                             })
                     })
                     .catch(error => {
-                        console.log(error)
                         setLoading(false)
                     });
             }

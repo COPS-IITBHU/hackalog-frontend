@@ -40,13 +40,10 @@ export default function ManageTeam() {
                     setTeamData(responseTeam.data)
                     editMembers(responseTeam.data.members)
                     editClientUser(responseUser.data)
-                    console.log("responseTeam =", responseTeam)
                     setLocalLoading(false)
                 }
             } catch (exc) {
                 //setSpinner(false)
-                console.log("Exception occcured!")
-                console.log("exception responseTeam =", exc.response)
                 if (exc.response && exc.response.status === 404) {
                     Router.push("/404")
                 }
@@ -123,7 +120,6 @@ export default function ManageTeam() {
                     notifHandler("Some unexpected error in client!", "error")
                 }
             } catch (exc) {
-                console.log("exception in deleting the team: ", exc)
                 if (exc.response.status === 404) {
                     notifHandler("Team not found!", "error")
                 } else {
@@ -166,7 +162,6 @@ export default function ManageTeam() {
                 notifHandler("Some unexpected error in client!", "error")
             }
         } catch (exc) {
-            console.log("exc.response =", exc.response)
             switch (exc.response.status) {
                 case 400:
                     notifHandler(`${exc.response.data[0]}`, "error")
@@ -212,7 +207,6 @@ export default function ManageTeam() {
                     p={{ x: "0.75rem", y: "0.25rem" }}
                     m={{ r: "0.5rem", b: "0.5rem" }}
                     onClick={() => {
-                        console.log("Remove from team")
                         memberExit(name, true)
                     }}
                 >
@@ -232,7 +226,6 @@ export default function ManageTeam() {
                     p={{ x: "0.75rem", y: "0.25rem" }}
                     m={{ r: "0.5rem", b: "0.5rem" }}
                     onClick={() => {
-                        console.log("Leave the team")
                         memberExit(name, false)
                     }}
                 >
@@ -274,7 +267,6 @@ export default function ManageTeam() {
                         p={{ x: "0.75rem", y: "0.25rem" }}
                         m={{ r: "0.5rem" }}
                         onClick={() => {
-                            console.log("Handle team deletion")
                             deleteTeam()
                         }}
                     >
@@ -314,7 +306,6 @@ export default function ManageTeam() {
                 notifHandler("Unexpected error in client!", "warning")
             }
         } catch (exc) {
-            console.log("Exception in updating the name:", exc.response)
             normalizeState()
             if (exc.response.status === 404) {
                 notifHandler("Team not found!", "warning")

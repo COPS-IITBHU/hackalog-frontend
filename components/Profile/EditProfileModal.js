@@ -56,7 +56,6 @@ const EditProfile = ({
                 github_handle: handle,
                 photoURL: firebaseUser.photoURL,
             }
-            console.log(url)
             axios
                 .patch(`profile/`, data)
                 .then(setwait(false))
@@ -65,7 +64,6 @@ const EditProfile = ({
                         location.replace(`/profile/${username}`)
                     },
                     (err) => {
-                        console.log(err.response.data)
                         err.response.data.username
                             ? seterr(String(err.response.data.username))
                             : seterr(

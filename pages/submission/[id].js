@@ -37,7 +37,6 @@ export default function SubmissionDetail() {
                     let sub = response.data
                     if (!sub.hackathon.image)
                         sub.hackathon.image = "/images/home-jumbo.jpg"
-                    console.log(sub)
                     setSubmission(sub)
                     setStatus(200)
                 })
