@@ -4,7 +4,6 @@ import DefaultErrorPage from "next/error"
 import { Spinner, Row, Col, Container, Tab, Nav } from "react-bootstrap"
 import { Text, Image, Button, Div } from "atomize"
 import { FaGithub } from "react-icons/fa"
-import { GrMail } from "react-icons/gr"
 
 import axios from "../../util/axios"
 import { useAuth } from "../../context/auth"

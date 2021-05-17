@@ -1,4 +1,4 @@
-import { Div, Row, Col, Text, Image, Button } from "atomize"
+import { Div, Row, Col, Text, Button } from "atomize"
 import Link from "next/link"
 import Date from "../Date/Date"
 
@@ -13,7 +13,6 @@ export default function HackathonCard({ hackathon }) {
                     h="12rem"
                     rounded={{ t: "xl" }}
                 >
-                    {/* <Image src= rounded={{ t: "xl" }} maxH="9rem" /> */}
                 </Div>
                 <Div p={{ xs: "1rem", md: "1.5rem" }}>
                     <Text

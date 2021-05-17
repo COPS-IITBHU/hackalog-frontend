@@ -2,14 +2,13 @@
 import { Div, Text, Icon, Row, Col, Button, Input, Tag } from "atomize"
 import axios from "axios"
 import Router, { useRouter } from "next/router"
-import { ListGroup, Container, Spinner } from "react-bootstrap"
+import { Container, Spinner } from "react-bootstrap"
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import { useAuth } from "../../../../../context/auth"
 import { API_URL } from "../../../../../util/constants"
 import Clipboard from "../../../../../components/Clipboard/Clipboard"
 import Head from "next/head"
-import { execOnce } from "next/dist/next-server/lib/utils"
 
 // team management
 export default function ManageTeam() {
