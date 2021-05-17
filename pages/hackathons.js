@@ -24,7 +24,7 @@ export default function Hackathons() {
             .get("hackathons?query=ongoing")
             .then((response) => setOngoing(response.data))
             .catch((err) => {
-                console.log(err)
+                //console.log(err)
                 let arr = error
                 arr[0] = true
                 setError(arr)
@@ -36,7 +36,7 @@ export default function Hackathons() {
             .get("hackathons?query=upcoming")
             .then((response) => setUpcoming(response.data))
             .catch((err) => {
-                console.log(err)
+                //console.log(err)
                 let arr = error
                 arr[1] = true
                 setError(arr)
@@ -45,7 +45,7 @@ export default function Hackathons() {
             .get("hackathons?query=completed")
             .then((response) => setCompleted(response.data))
             .catch((err) => {
-                console.log(err)
+                //console.log(err)
                 let arr = error
                 arr[2] = true
                 setError(arr)

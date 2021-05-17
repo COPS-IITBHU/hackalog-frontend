@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
             })
             .catch(err => {
                 alert('Error Processing request, try again.');
-                console.log(err);
+                //console.log(err);
             });
     }
 
@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
             delete axios.defaults.headers.common['Authentication']
         }).catch(function (err) {
             alert('Error Processing request, try again.');
-            console.log(err);
+            //console.log(err);
         });
     }
 
@@ -64,17 +64,17 @@ export const AuthProvider = ({ children }) => {
                                         setLoading(false)
                                     }).catch(error => {
                                         setLoading(false)
-                                        console.log(error)
+                                        //console.log(error)
                                     })
                             })
                             .catch(error => {
-                                console.log(error)
-                                console.log(error.response)
+                               // console.log(error)
+                               // console.log(error.response)
                                 setLoading(false)
                             })
                     })
                     .catch(error => {
-                        console.log(error)
+                        //console.log(error)
                         setLoading(false)
                     });
             }

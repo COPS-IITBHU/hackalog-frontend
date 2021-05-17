@@ -37,12 +37,12 @@ export default function SubmissionDetail() {
                     let sub = response.data
                     if (!sub.hackathon.image)
                         sub.hackathon.image = "/images/home-jumbo.jpg"
-                    console.log(sub)
+                   // console.log(sub)
                     setSubmission(sub)
                     setStatus(200)
                 })
                 .catch((err) => {
-                    console.error(err)
+                    // console.error(err)
                     setStatus(err.response.status)
                 })
         }
@@ -57,7 +57,7 @@ export default function SubmissionDetail() {
                 })
                 .catch((err) => {
                     setTeamStat(err.response.status)
-                    console.error(err)
+                   // console.error(err)
                 })
         }
     }, [submission])

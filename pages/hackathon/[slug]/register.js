@@ -68,7 +68,7 @@ export default function Register() {
                     let team_id = response.data.team_id
                     router.push(`/hackathon/${hackathonId}/teams/${team_id}`)
                 }, 1000)
-                console.log("code updated successfully!")
+                //console.log("code updated successfully!")
             } else {
                 notifHandler("Some unexpected error in client!", "warning")
             }
