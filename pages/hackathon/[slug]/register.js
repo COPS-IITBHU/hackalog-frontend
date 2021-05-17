@@ -68,7 +68,6 @@ export default function Register() {
                     let team_id = response.data.team_id
                     router.push(`/hackathon/${hackathonId}/teams/${team_id}`)
                 }, 1000)
-                console.log("code updated successfully!")
             } else {
                 notifHandler("Some unexpected error in client!", "warning")
             }
@@ -129,7 +128,6 @@ export default function Register() {
             }
         } catch (exc) {
             if (exc.response.status === 400) {
-                // console.log('exc.response =', exc.response)
                 notifHandler(exc.response.data[0], "warning")
             } else if (exc.response.status === 404) {
                 notifHandler("Either team or hackathon not found!", "info")

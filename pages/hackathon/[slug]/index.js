@@ -47,7 +47,6 @@ export default function Hackathon() {
                 })
                 .catch((err) => {
                     setError(err.response.status)
-                    console.error(err)
                 })
                 .finally(() => setLocalLoading(false))
         }
@@ -70,7 +69,7 @@ export default function Hackathon() {
                     setSubmisssions(response.data)
                 })
                 .catch((err) => {
-                    console.error(err)
+                    //Notify to user by the error 
                 })
             setLeaderboardLoading(false)
         }
@@ -547,7 +546,6 @@ function Participants({ slug }) {
                     setTeams(response.data)
                 })
                 .catch((err) => {
-                    console.error(err)
                 })
                 .finally(() => setLoading(false))
         }
