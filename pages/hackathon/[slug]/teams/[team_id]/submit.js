@@ -54,7 +54,7 @@ export default function Submit() {
                 .finally(() => setHackathonLoading(false))
         }
         return () => delete axios.defaults.headers.common["Authorization"]
-    }, [router.query.slug])
+    }, [router.query.slug,token])
 
     const notifHandler = (message, type) => {
         const config = {

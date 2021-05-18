@@ -73,7 +73,7 @@ export default function Hackathon() {
                 })
             setLeaderboardLoading(false)
         }
-    }, [token, slug])
+    }, [token, slug, hackathon])
 
     if (error != 0) {
         return (
