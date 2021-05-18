@@ -41,7 +41,7 @@ export function ProfileTabs({ teams }) {
                 <Tab.Pane eventKey="myHackathons">
                     <div className="row">
                         {teams.length ? (
-                            teams.map(({ hackathon, id }) => (
+                            teams.map(({ hackathon}) => (
                                 <Col sm={6} key={hackathon.slug}>
                                     <HackathonCard
                                         hackathon={hackathon}
