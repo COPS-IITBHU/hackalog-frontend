@@ -66,6 +66,7 @@ export default function SubmissionDetail() {
             <div className="text-center pt-3 mb-2">
                 <Image
                     src="/images/404.svg"
+                    alt="404 error image"
                     className="mb-3"
                     maxH={{ xs: "40vw", sm: "25vh" }}
                 />

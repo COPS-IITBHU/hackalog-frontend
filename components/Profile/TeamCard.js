@@ -9,6 +9,7 @@ export default function TeamCard({ team }) {
                 <Div>
                     <Image
                         src={team.hackathon.image}
+                        alt="team image"
                         style={{ height: 200 }}
                         rounded={{ t: "xl" }}
                     />
