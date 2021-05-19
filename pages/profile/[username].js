@@ -162,7 +162,7 @@ function Profile() {
                                 <div className="text-center">
                                     <Image
                                         src={url}
-                                        alt="profile image"
+                                        alt={`${userRequest.user.username} profile image`}
                                         className="profile-image"
                                         shadow="4"
                                     />

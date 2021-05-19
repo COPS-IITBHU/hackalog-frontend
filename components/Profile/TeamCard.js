@@ -9,7 +9,7 @@ export default function TeamCard({ team }) {
                 <Div>
                     <Image
                         src={team.hackathon.image}
-                        alt="team image"
+                        alt={`${team.hackathon.title} hackathon`}
                         style={{ height: 200 }}
                         rounded={{ t: "xl" }}
                     />
