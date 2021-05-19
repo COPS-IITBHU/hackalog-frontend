@@ -1,5 +1,5 @@
 import HackathonCard from "../components/HackathonCard/HackathonCard"
-import Sorry from "../components/Sorry/Sorry"
+
 import Header from "../components/Header/Header"
 import { Text, Button } from "atomize"
 import { Spinner } from "react-bootstrap"
