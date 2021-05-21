@@ -141,6 +141,7 @@ export default function SubmissionDetail() {
                             <a
                                 href={`${submission.submission_url}`}
                                 target="_blank"
+                                rel="noopener noreferrer"
                             >
                                 Link
                             </a>
