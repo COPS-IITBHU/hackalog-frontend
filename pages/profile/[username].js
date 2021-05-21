@@ -184,6 +184,7 @@ function Profile() {
                                             href={`https://github.com/${userRequest.user.github_handle}`}
                                             target="_blank"
                                             className="d-flex align-items-center text-muted"
+                                            rel="noopener noreferrer"
                                         >
                                             <FaGithub className="mr-1" />{" "}
                                             {userRequest.user.github_handle}
