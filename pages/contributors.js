@@ -98,11 +98,10 @@ export default function Contributors() {
                             (fullname[0][res.data.login] = res.data.name),
                         ])
                     )
-                    .catch((e) => console.error(e))
+                    .catch((e) => setError(true))
             }
         }
     }, [contributors])
-
     return (
         <div style={{ background: "#87a3bb17", minHeight: "100vh" }}>
             <Head>
