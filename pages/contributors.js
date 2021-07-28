@@ -17,6 +17,7 @@ const defaultOptions = {
 export default function Contributors() {
     const [contriFrontend, setContributorsFront] = useState()
     const [contriBackend, setContributorsBack] = useState()
+    const [fullname, setFullName] = useState([])
     const [contributors, setContributors] = useState()
     const [error, setError] = useState([false, false, false])
 
@@ -42,8 +43,7 @@ export default function Contributors() {
                 setError(arr)
             })
     }, [error])
-
-    if (!contributors) {
+    useEffect(() => {
         if (contriFrontend && contriBackend) {
             let commonF = []
             let commonB = []
@@ -88,7 +88,21 @@ export default function Contributors() {
             }
             setContributors(arr)
         }
-    }
+    }, [contriFrontend, contriBackend])
+    useEffect(() => {
+        if (contributors) {
+            let arr = contributors
+            for (let x of arr) {
+                let url = x.handle_url
+                axios
+                    .get(url)
+                    .then((res) =>
+                        setFullName((fullname) => [...fullname, res.data.name])
+                    )
+                    .catch((e) => console.error(e))
+            }
+        }
+    }, [contributors])
 
     return (
         <div style={{ background: "#87a3bb17", minHeight: "100vh" }}>
@@ -137,7 +151,7 @@ export default function Contributors() {
                                         key={item.handle_name}
                                     >
                                         <Card
-                                            name={item.name}
+                                            name={fullname[index] || item.name}
                                             image={item.image}
                                             github={item.github}
                                             description={item.description}
@@ -167,54 +181,6 @@ export default function Contributors() {
                     )}
                 </>
             )}
-            {/* <div className="container py-4">
-                <div className="row no-gutters mt-2">
-                    {contributors.map((item, index) => (
-                        <div className="col-12 col-md-6 col-lg-3 p-3" key={item.handle_name}>
-                            <Card name={item.name} image={item.image} github={item.github}>
-                                {item.description}
-                            </Card>
-                        </div>
-                    ))}
-                </div>
-            </div> */}
         </div>
     )
-}
-
-function getContributors(contriFrontend, contriBackend) {
-    let common = contriFrontend.filter((x) => contriBackend.includes(x))
-    let frontend = contriFrontend.filter((x) => !common.includes(x))
-    let backend = contriBackend.filter((x) => !common.includes(x))
-
-    let arr = []
-    for (let x of common) {
-        arr.push({
-            handle_name: x.login,
-            name: x.login,
-            image: x.avatar_url,
-            github: x.html_url,
-            description: ["hackalog-frontend", "hackalog-backend"],
-        })
-    }
-    for (let x of frontend) {
-        arr.push({
-            handle_name: x.login,
-            name: x.login,
-            image: x.avatar_url,
-            github: x.html_url,
-            description: ["hackalog-frontend"],
-        })
-    }
-    for (let x of backend) {
-        arr.push({
-            handle_name: x.login,
-            name: x.login,
-            image: x.avatar_url,
-            github: x.html_url,
-            description: ["hackalog-backend"],
-        })
-    }
-    setContributors(arr)
-    console.log(contributors)
 }
