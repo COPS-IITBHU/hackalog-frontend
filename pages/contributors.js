@@ -19,7 +19,7 @@ export default function Contributors() {
     const [contriBackend, setContributorsBack] = useState()
     const [fullname, setFullName] = useState([{}])
     const [contributors, setContributors] = useState()
-    const [error, setError] = useState([false, false, false])
+    const [error, setError] = useState(false)
 
     useEffect(() => {
         axios
@@ -28,9 +28,7 @@ export default function Contributors() {
             )
             .then((res) => setContributorsFront(res.data))
             .catch((err) => {
-                let arr = error
-                arr[0] = true
-                setError(arr)
+                setError(true)
             })
         axios
             .get(
@@ -38,9 +36,7 @@ export default function Contributors() {
             )
             .then((res) => setContributorsBack(res.data))
             .catch((err) => {
-                let arr = error
-                arr[1] = true
-                setError(arr)
+                setError(true)
             })
     }, [error])
     useEffect(() => {
@@ -139,7 +135,7 @@ export default function Contributors() {
                     </Text>
                 </div>
             </div>
-            {error[0] ? (
+            {error ? (
                 <div className="text-center">
                     Unable to fetch data, please try again!
                 </div>
