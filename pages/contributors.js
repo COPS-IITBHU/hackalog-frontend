@@ -17,7 +17,7 @@ const defaultOptions = {
 export default function Contributors() {
     const [contriFrontend, setContributorsFront] = useState()
     const [contriBackend, setContributorsBack] = useState()
-    const [fullname, setFullName] = useState([])
+    const [fullname, setFullName] = useState([{}])
     const [contributors, setContributors] = useState()
     const [error, setError] = useState([false, false, false])
 
@@ -97,7 +97,10 @@ export default function Contributors() {
                 axios
                     .get(url)
                     .then((res) =>
-                        setFullName((fullname) => [...fullname, res.data.name])
+                        setFullName([
+                            ...fullname,
+                            (fullname[0][res.data.login] = res.data.name),
+                        ])
                     )
                     .catch((e) => console.error(e))
             }
@@ -151,7 +154,10 @@ export default function Contributors() {
                                         key={item.handle_name}
                                     >
                                         <Card
-                                            name={fullname[index] || item.name}
+                                            name={
+                                                fullname[0][item.handle_name] ||
+                                                item.name
+                                            }
                                             image={item.image}
                                             github={item.github}
                                             description={item.description}
