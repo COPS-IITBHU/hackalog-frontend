@@ -4,15 +4,16 @@ export default function Card(props) {
     const { name, image, description } = props
     return (
         <>
-            <div className="item-shadow h-100 d-flex flex-column justify-content-between">
+            <div className="item-shadow h-100 d-flex flex-column justify-content-between Clift">
                 <div>
                     <div
                         className="img-box"
                         style={{ backgroundImage: `url(${image})` }}
                     ></div>
+
                     <div className="p-3">
                         <div>
-                            <h5 className="text-center">{name}</h5>
+                            <h5 className="text-center h5">{name}</h5>
                         </div>
                         <div>
                             <br></br>
@@ -35,7 +36,7 @@ export default function Card(props) {
                 </div>
                 <div className="text-center py-3">
                     <a href={props.github} target="_blank">
-                        <SingleIconButton>Github Profile</SingleIconButton>
+                        <SingleIconButton>{props.handle_name}</SingleIconButton>
                     </a>
                 </div>
             </div>
@@ -44,6 +45,15 @@ export default function Card(props) {
                     padding-top: 85%;
                     background-size: cover;
                     background-position: center center;
+                    border-radius: 5%;
+                }
+                .Clift {
+                    transform: translateZ(0);
+                    backface-visibility: hidden;
+                    transition: transform 0.3s;
+                }
+                .Clift:hover {
+                    transform: scale(1.05);
                 }
             `}</style>
         </>
