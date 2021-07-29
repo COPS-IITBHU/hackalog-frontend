@@ -41,38 +41,30 @@ export default function Contributors() {
     }, [error])
     useEffect(() => {
         if (contriFrontend && contriBackend) {
-            let commonF = []
-            let commonB = []
+            let repoTracker = {}
             let arr = []
             for (let x of contriFrontend) {
-                for (let y of contriBackend) {
-                    if (x.login === y.login) commonF.push(x), commonB.push(y)
-                }
-            }
-
-            for (let x of commonF) {
-                arr.push({
-                    handle_name: x.login,
-                    name: x.login,
-                    handle_url: x.url,
-                    image: x.avatar_url,
-                    github: x.html_url,
-                    description: ["hackalog-frontend", "hackalog-backend"],
-                })
-            }
-            for (let x of contriFrontend) {
-                if (!commonF.includes(x))
-                    arr.push({
-                        handle_name: x.login,
-                        handle_url: x.url,
-                        name: x.login,
-                        image: x.avatar_url,
-                        github: x.html_url,
-                        description: ["hackalog-frontend"],
-                    })
+                repoTracker[x.login] = 1
             }
             for (let x of contriBackend) {
-                if (!commonB.includes(x))
+                if (repoTracker[x.login]) repoTracker[x.login] = 0
+            }
+
+            for (let x of contriFrontend) {
+                let repos = ["hackalog-frontend"]
+                if (repoTracker[x.login] === 0)
+                    repos = ["hackalog-frontend", "hackalog-backend"]
+                arr.push({
+                    handle_name: x.login,
+                    handle_url: x.url,
+                    name: x.login,
+                    image: x.avatar_url,
+                    github: x.html_url,
+                    description: repos,
+                })
+            }
+            for (let x of contriBackend) {
+                if (repoTracker[x.login] !== 0)
                     arr.push({
                         handle_name: x.login,
                         handle_url: x.url,
@@ -105,7 +97,7 @@ export default function Contributors() {
     return (
         <div style={{ background: "#87a3bb17", minHeight: "100vh" }}>
             <Head>
-                <title>CONTRIBUTORS | COPS Hackalog</title>
+                <title>Contributors | COPS Hackalog</title>
                 <meta name="title" content="Contributors" />
                 <meta
                     name="description"
@@ -156,6 +148,7 @@ export default function Contributors() {
                                             image={item.image}
                                             github={item.github}
                                             description={item.description}
+                                            handle_name={item.handle_name}
                                         ></Card>
                                     </div>
                                 ))}
