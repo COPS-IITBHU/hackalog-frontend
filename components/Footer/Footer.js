@@ -1,5 +1,5 @@
 import { Text } from "atomize"
-
+import Link from "next/link"
 export default function Footer() {
     return (
         <div style={{ backgroundColor: "rgb(197 210 213 / 28%)" }}>
@@ -30,7 +30,19 @@ export default function Footer() {
                             textColor="#003e54c9"
                             fontFamily="madetommy-light"
                         >
-                            Hackalog is made with 🍕, ☕ and 💻 ✨
+                            Hackalog is made with 🍕, ☕ and 💻
+                        </Text>
+                    </div>
+                    <div>
+                        <Text
+                            tag="h6"
+                            textSize="paragraph"
+                            textColor="#003e54c9"
+                            fontFamily="madetommy-light"
+                        >
+                            <Link href="/contributors">
+                                <a rel="noopener noreferrer">✨ CONTRIBUTORS</a>
+                            </Link>
                         </Text>
                     </div>
                 </div>

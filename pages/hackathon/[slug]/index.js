@@ -233,7 +233,8 @@ export default function Hackathon() {
 
                                                             <div
                                                                 style={{
-                                                                    height: "1rem",
+                                                                    height:
+                                                                        "1rem",
                                                                 }}
                                                             ></div>
                                                             <Link
@@ -270,7 +271,8 @@ export default function Hackathon() {
                                                             </Link>
                                                             <div
                                                                 style={{
-                                                                    height: "1rem",
+                                                                    height:
+                                                                        "1rem",
                                                                 }}
                                                             ></div>
                                                             {submissions.length ? (
