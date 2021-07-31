@@ -4,7 +4,7 @@ export default function Card(props) {
     const { name, image, description } = props
     return (
         <>
-            <div className="item-shadow h-100 d-flex flex-column justify-content-between Clift">
+            <div className="item-shadow h-100 d-flex flex-column justify-content-between card-lift">
                 <div>
                     <div
                         className="img-box"
@@ -47,12 +47,12 @@ export default function Card(props) {
                     background-position: center center;
                     border-radius: 5%;
                 }
-                .Clift {
+                .card-lift {
                     transform: translateZ(0);
                     backface-visibility: hidden;
                     transition: transform 0.3s;
                 }
-                .Clift:hover {
+                .card-lift:hover {
                     transform: scale(1.05);
                 }
             `}</style>
