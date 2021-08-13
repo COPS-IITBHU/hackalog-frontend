@@ -1,4 +1,4 @@
-import { Div, Row, Col, Text, Image, Button } from "atomize"
+import { Div, Row, Col, Text, Button } from "atomize"
 import Link from "next/link"
 import Date from "../Date/Date"
 
