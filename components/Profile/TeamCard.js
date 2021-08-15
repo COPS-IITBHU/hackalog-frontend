@@ -11,6 +11,7 @@ export default function TeamCard({ team }) {
                         src={team.hackathon.image}
                         style={{ height: 200 }}
                         rounded={{ t: "xl" }}
+                        alt="Hackathon Logo"
                     />
                 </Div>
                 <Div p="1.5rem">

@@ -68,6 +68,7 @@ export default function SubmissionDetail() {
                     src="/images/404.svg"
                     className="mb-3"
                     maxH={{ xs: "40vw", sm: "25vh" }}
+                    alt="Error 404"
                 />
                 <Text textSize="title">Error 404: Submission Not Found</Text>
             </div>

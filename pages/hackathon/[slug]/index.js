@@ -84,6 +84,7 @@ export default function Hackathon() {
                             src={"/images/404.svg"}
                             className="mb-3 mt-3"
                             style={{ maxHeight: "30vh" }}
+                            alt="Error 404"
                         />
                         <Text textSize="title">
                             Error 404: Hackathon Not Found
@@ -718,6 +719,7 @@ function Leaderboard({ status, submissions, loading }) {
                                         <Image
                                             src="/images/rocket.svg"
                                             style={{ height: "80px" }}
+                                            alt="Rocket Icon"
                                         />
                                         <p>Let the Hackathon Begin</p>
                                     </div>
@@ -737,6 +739,7 @@ function Leaderboard({ status, submissions, loading }) {
                                         <Image
                                             src="/images/rocket.svg"
                                             style={{ height: "80px" }}
+                                            alt= "Rocket Icon"
                                         />
                                         <p>
                                             Submissions can only be viewed once
