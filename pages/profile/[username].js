@@ -164,6 +164,7 @@ function Profile() {
                                         src={url}
                                         className="profile-image"
                                         shadow="4"
+                                        alt={`${userRequest.user.name}'s Profile Pic`}
                                     />
                                 </div>
                                 <div className="p-3 p-md-5">
