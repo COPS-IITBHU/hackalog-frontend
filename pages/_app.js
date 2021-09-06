@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css"
-import "../css/font.css"
-import "../css/style.css"
-import "../css/misc.css"
+import "../styles/font.css"
+import "../styles/style.css"
+import "../styles/misc.css"
 import "react-toastify/dist/ReactToastify.css"
 
 import { ThemeProvider, StyleReset } from "atomize"
