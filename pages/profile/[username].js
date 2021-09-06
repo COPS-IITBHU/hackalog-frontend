@@ -5,7 +5,6 @@ import { Spinner, Row, Col, Container, Tab, Nav } from "react-bootstrap"
 import { Text, Image, Button, Div } from "atomize"
 import { FaGithub } from "react-icons/fa"
 
-
 import axios from "../../util/axios"
 import { useAuth } from "../../context/auth"
 import { Interests } from "../../components/Profile"
