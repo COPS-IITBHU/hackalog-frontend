@@ -234,8 +234,7 @@ export default function Hackathon() {
 
                                                             <div
                                                                 style={{
-                                                                    height:
-                                                                        "1rem",
+                                                                    height: "1rem",
                                                                 }}
                                                             ></div>
                                                             <Link
@@ -272,8 +271,7 @@ export default function Hackathon() {
                                                             </Link>
                                                             <div
                                                                 style={{
-                                                                    height:
-                                                                        "1rem",
+                                                                    height: "1rem",
                                                                 }}
                                                             ></div>
                                                             {submissions.length ? (
@@ -739,7 +737,7 @@ function Leaderboard({ status, submissions, loading }) {
                                         <Image
                                             src="/images/rocket.svg"
                                             style={{ height: "80px" }}
-                                            alt= "Rocket Icon"
+                                            alt="Rocket Icon"
                                         />
                                         <p>
                                             Submissions can only be viewed once

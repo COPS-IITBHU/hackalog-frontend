@@ -10,7 +10,6 @@ import { API_URL } from "../../../../../util/constants"
 import Clipboard from "../../../../../components/Clipboard/Clipboard"
 import Head from "next/head"
 
-
 // team management
 export default function ManageTeam() {
     const { token, loading } = useAuth()
