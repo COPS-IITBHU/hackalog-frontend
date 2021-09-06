@@ -34,6 +34,7 @@ const EditProfile = ({
             .getElementById("handle")
             .value.split(" ").join("")
             .toLowerCase()
+            document.getElementById("handle").value = handle
         const bio = document.getElementById("bio").value.trim()
         const interests = selectedSkills
             ? String(selectedSkills.map((s) => s.label))
@@ -42,6 +43,7 @@ const EditProfile = ({
             .getElementById("username")
             .value.split(" ").join("")
             .toLowerCase()
+            document.getElementById("username").value = username
         var check = [name, handle, username, interests, bio].every((elm) => {
             return elm !== ""
         })
