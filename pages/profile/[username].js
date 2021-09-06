@@ -201,7 +201,7 @@ function Profile() {
                                             </Nav.Link>
                                         </Nav.Item>
                                         <Nav.Item>
-                                            <Nav.Link eventKey="Teams">
+                                            <Nav.Link eventKey="teams">
                                                 Teams
                                             </Nav.Link>
                                         </Nav.Item>
@@ -271,7 +271,7 @@ function Profile() {
                                             />
                                         </div>
                                     </Tab.Pane>
-                                    <Tab.Pane eventKey="projects">
+                                    <Tab.Pane eventKey="teams">
                                         <div>
                                             <Row>
                                                 {userRequest.user.teams &&
