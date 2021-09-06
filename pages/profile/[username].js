@@ -201,7 +201,7 @@ function Profile() {
                                             </Nav.Link>
                                         </Nav.Item>
                                         <Nav.Item>
-                                            <Nav.Link eventKey="projects">
+                                            <Nav.Link eventKey="Teams">
                                                 Teams
                                             </Nav.Link>
                                         </Nav.Item>
