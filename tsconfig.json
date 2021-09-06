@@ -20,7 +20,8 @@
             "@/styles/*": ["./styles/*"],
             "@/public/*": ["./public/*"],
             "@/context/*": ["./context/*"],
-            "@/utils/*": ["./utils/*"]
+            "@/utils/*": ["./utils/*"],
+            "@/types/*": ["./types/*"]
         }
     },
     "include": [
