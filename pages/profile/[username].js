@@ -5,7 +5,6 @@ import { Spinner, Row, Col, Container, Tab, Nav } from "react-bootstrap"
 import { Text, Image, Button, Div } from "atomize"
 import { FaGithub } from "react-icons/fa"
 
-
 import axios from "../../util/axios"
 import { useAuth } from "../../context/auth"
 import { Interests } from "../../components/Profile"
@@ -202,8 +201,8 @@ function Profile() {
                                             </Nav.Link>
                                         </Nav.Item>
                                         <Nav.Item>
-                                            <Nav.Link eventKey="projects">
-                                                Projects
+                                            <Nav.Link eventKey="teams">
+                                                Teams
                                             </Nav.Link>
                                         </Nav.Item>
                                         <Nav.Item>
@@ -272,7 +271,7 @@ function Profile() {
                                             />
                                         </div>
                                     </Tab.Pane>
-                                    <Tab.Pane eventKey="projects">
+                                    <Tab.Pane eventKey="teams">
                                         <div>
                                             <Row>
                                                 {userRequest.user.teams &&

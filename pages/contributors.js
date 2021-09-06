@@ -1,7 +1,6 @@
 import axios from "axios"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import Head from "next/head"
-import { useEffect, useState } from "react"
 import animationData from "../lottie/sad.json"
 import { Text } from "atomize"
 import { Spinner } from "react-bootstrap"
