@@ -40,7 +40,7 @@ export interface HackathonDetailSerializer extends HackathonSerializer {
 export type TeamSerializer = {
     id: number
     name: string
-    hackathon: HackathonSerializer
+    hackathon: HackathonSerializer[]
     team_id: number
 }
 
@@ -53,7 +53,7 @@ export type ProfileSerializer = {
     bio: string
     interests: string[]
     photoURL: string // URL
-    teams: TeamSerializer
+    teams: TeamSerializer[]
     email: string
 }
 
@@ -68,9 +68,9 @@ export type TeamDetailSerializer = {
 
 export type SubmissionRUDSerializer = {
     title: string
-    team: TeamDetailSerializer
+    team: TeamDetailSerializer[]
     review: string
-    hackathon: HackathonSerializer
+    hackathon: HackathonSerializer[]
     submission_url: string // URL
     score: number // 0 to 100
 }
