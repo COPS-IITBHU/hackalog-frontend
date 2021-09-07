@@ -1,16 +1,44 @@
 import React from "react"
 import { loadFirebase } from "./firebase"
 import axios from "../util/axios"
+import firebase from "firebase"
+import { ProfileSerializer } from '../types/backend';
+import { AxiosResponse } from "axios";
 
-const AuthContext = React.createContext({})
+export type userType = firebase.User | null;
+export type tokenType = string | null;
+export type profileType = ProfileSerializer | null;
+export type loadingType = boolean;
 
-export const AuthProvider = ({ children }) => {
-    const [firebaseUser, setFirebaseUser] = React.useState(null)
-    const [token, setToken] = React.useState(null)
-    const [profile, setProfile] = React.useState(null)
-    const [loading, setLoading] = React.useState(true)
+const AuthContext = React.createContext<{
+    firebaseUser: userType
+    setFirebaseUser: (user: userType) => void
+    token: tokenType
+    setToken: (token: tokenType) => void
+    profile: profileType
+    setProfile: (profile: profileType) => void
+    loading: loadingType
+    handleSignIn: () => void
+    handleLogout: () => void
+}>({
+    firebaseUser: null,
+    setFirebaseUser: (user: userType) => {},
+    token: null,
+    setToken: (token: tokenType) => {},
+    profile: null,
+    setProfile: (profile: profileType) => {},
+    loading: true,
+    handleSignIn: () => {},
+    handleLogout: () => {},
+})
 
-    const updateProfile = (token) => {
+export const AuthProvider: React.FC<{}> = ({ children }) => {
+    const [firebaseUser, setFirebaseUser] = React.useState<userType>(null)
+    const [token, setToken] = React.useState<tokenType>(null)
+    const [profile, setProfile] = React.useState<profileType>(null)
+    const [loading, setLoading] = React.useState<loadingType>(true)
+
+    const updateProfile = (token: string) => {
         axios.defaults.headers.common["Authorization"] = `Token ${token}`
         return axios.get(`profile/`)
     }
@@ -58,10 +86,10 @@ export const AuthProvider = ({ children }) => {
                     .then((idToken) => {
                         axios
                             .post("login/", { id_token: idToken })
-                            .then((response) => {
-                                let newToken = response.data.token
+                            .then((response: AxiosResponse<{token: string;}>) => {
+                                let newToken: string = response.data.token;
                                 updateProfile(newToken)
-                                    .then((response) => {
+                                    .then((response: AxiosResponse<ProfileSerializer>) => {
                                         setToken(newToken)
                                         setProfile(response.data)
                                         setLoading(false)
