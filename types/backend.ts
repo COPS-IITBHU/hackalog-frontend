@@ -53,7 +53,7 @@ export type ProfileSerializer = {
     bio: string
     interests: string[]
     photoURL: string // URL
-    teams: TeamSerializer
+    teams: TeamSerializer[]
     email: string
 }
 
