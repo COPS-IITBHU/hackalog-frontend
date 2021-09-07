@@ -11,7 +11,7 @@ import Head from "next/head"
 
 import { AuthProvider } from "../context/auth"
 import Header from "../components/Header/Header"
-import Footer from "../components/Footer/Footer"
+import Footer from "../components/Footer/Footer.tsx"
 import { ToastContainer } from "react-toastify"
 import { AppProps } from "next/dist/next-server/lib/router/router"
 
