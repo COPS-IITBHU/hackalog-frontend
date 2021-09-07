@@ -3,17 +3,18 @@ import Link from "next/link"
 import { ReactElement } from "react"
 
 export default function Footer(): ReactElement {
+    const TextProps = {
+        tag: "h6",
+        textSize: "paragraph",
+        textColor: "#003e54c9",
+        fontFamily: "madetommy-light",
+    }
     return (
         <div style={{ backgroundColor: "rgb(197 210 213 / 28%)" }}>
             <footer className="container">
                 <div className="d-flex flex-wrap align-items-center justify-content-between p-3 py-4">
                     <div>
-                        <Text
-                            tag="h6"
-                            textSize="paragraph"
-                            textColor="#003e54c9"
-                            fontFamily="madetommy-light"
-                        >
+                        <Text {...TextProps}>
                             &copy;{new Date().getFullYear()}
                             {"  "}
                             <a
@@ -26,22 +27,12 @@ export default function Footer(): ReactElement {
                         </Text>
                     </div>
                     <div>
-                        <Text
-                            tag="h6"
-                            textSize="paragraph"
-                            textColor="#003e54c9"
-                            fontFamily="madetommy-light"
-                        >
+                        <Text {...TextProps}>
                             Hackalog is made with 🍕, ☕ and 💻
                         </Text>
                     </div>
                     <div>
-                        <Text
-                            tag="h6"
-                            textSize="paragraph"
-                            textColor="#003e54c9"
-                            fontFamily="madetommy-light"
-                        >
+                        <Text {...TextProps}>
                             <Link href="/contributors">
                                 <a rel="noopener noreferrer">✨ CONTRIBUTORS</a>
                             </Link>
