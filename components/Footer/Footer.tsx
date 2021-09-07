@@ -1,6 +1,8 @@
 import { Text } from "atomize"
 import Link from "next/link"
-export default function Footer() {
+import { ReactElement } from "react"
+
+export default function Footer(): ReactElement {
     return (
         <div style={{ backgroundColor: "rgb(197 210 213 / 28%)" }}>
             <footer className="container">
