@@ -3,7 +3,7 @@ import HackathonCard from "../HackathonCard/HackathonCard"
 import TeamCard from "./TeamCard"
 import { TeamSerializer } from "@/types/backend"
 
-export function ProfileTabs({ teams } : { teams: TeamSerializer[] }) {
+export function ProfileTabs({ teams }: { teams: TeamSerializer[] }) {
     return (
         <Tab.Container defaultActiveKey="myProjects">
             <Nav

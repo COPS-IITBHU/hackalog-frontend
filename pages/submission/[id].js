@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useRouter } from "next/router"
-import { Spinner, Row, Container, Table , Jumbotron } from "react-bootstrap"
+import { Spinner, Row, Container, Table, Jumbotron } from "react-bootstrap"
 import { Text, Button, Div, Image } from "atomize"
 import axios from "../../util/axios"
 import { useAuth } from "../../context/auth"
