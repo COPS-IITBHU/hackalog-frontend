@@ -15,6 +15,7 @@ import Head from "next/head"
 
 import Lottie from "react-lottie"
 import animationData from "../../lottie/sad.json"
+import {ProfileSerializer} from "types/backend"
 const defaultOptions: {
     loop: boolean
     autoplay: boolean
@@ -43,7 +44,7 @@ export interface EditSet {
     show: boolean
     closable: boolean
 }
-export type UserArray = [string, string, string, string, string]
+
 
 const EditProfile = lazy(
     () => import("../../components/Profile/EditProfileModal")
@@ -70,13 +71,13 @@ function Profile(): JSX.Element {
         if (username) {
             setUserRequest({ loading: true })
             axios
-                .get(`profile/${username}/`)
+                .get<ProfileSerializer[]>(`profile/${username}/`)
                 .then((res: AxiosResponse) => {
                     setUserRequest({
                         loading: false,
                         user: res.data,
                     })
-                    const arr: UserArray = [
+                    const arr: ProfileSerializer[] = [
                         res.data.name,
                         res.data.username,
                         res.data.interests,
@@ -85,7 +86,7 @@ function Profile(): JSX.Element {
                     ]
                     // Check for null fields
                     if (
-                        !arr.every((elm: string) => elm !== "" && elm !== null)
+                        !arr.every((elm:any) => elm !== "" && elm !== null)
                     ) {
                         setEdit({
                             show: true,
