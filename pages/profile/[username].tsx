@@ -6,6 +6,7 @@ import { Text, Image, Button, Div } from "atomize"
 import { FaGithub } from "react-icons/fa"
 
 import axios from "../../util/axios"
+import { AxiosResponse } from "axios"
 import { useAuth } from "../../context/auth"
 import { Interests } from "../../components/Profile"
 import TeamCard from "../../components/Profile/TeamCard"
@@ -14,7 +15,11 @@ import Head from "next/head"
 
 import Lottie from "react-lottie"
 import animationData from "../../lottie/sad.json"
-const defaultOptions = {
+const defaultOptions: {
+    loop: boolean
+    autoplay: boolean
+    animationData: any | null
+} = {
     loop: true,
     autoplay: true,
     animationData: animationData,
@@ -22,34 +27,56 @@ const defaultOptions = {
     // 	preserveAspectRatio: 'xMidYMid slice'
     // }
 }
+export interface Auth {
+    token?: string | null
+    profile?: any | null
+    loading?: boolean
+}
+export interface RUser {
+    loading?: boolean
+    user?: any | null
+}
+export interface Edit {
+    (e: any): void
+}
+export interface EditSet {
+    show: boolean
+    closable: boolean
+}
+export type UserArray = [string, string, string, string, string]
 
-const EditProfile = lazy(() =>
-    import("../../components/Profile/EditProfileModal")
+const EditProfile = lazy(
+    () => import("../../components/Profile/EditProfileModal")
 )
 
-function Profile() {
+function Profile(): JSX.Element {
     const router = useRouter()
     const { username } = router.query
-    const { token, profile, loading } = useAuth()
+    const { token, profile, loading }: Auth = useAuth()
 
-    const [userRequest, setUserRequest] = useState({ loading: false })
-    const [currentUser, setCurrentUser] = useState(false)
-    const [editDialog, setEdit] = useState({ show: false, closable: true })
+    const [userRequest, setUserRequest] = useState<RUser>({ loading: false })
+    const [currentUser, setCurrentUser] = useState<boolean>(false)
+    const [editDialog, setEdit] = useState<EditSet>({
+        show: false,
+        closable: true,
+    })
 
-    const editProfile = () => setEdit({ show: true, closable: true })
-    const handleClose = () => setEdit({ show: false, closable: false })
+    const editProfile: Edit = (): void =>
+        setEdit({ show: true, closable: true })
+    const handleClose: Edit = (): void =>
+        setEdit({ show: false, closable: false })
 
     useEffect(() => {
         if (username) {
             setUserRequest({ loading: true })
             axios
                 .get(`profile/${username}/`)
-                .then((res) => {
+                .then((res: AxiosResponse) => {
                     setUserRequest({
                         loading: false,
                         user: res.data,
                     })
-                    const arr = [
+                    const arr: UserArray = [
                         res.data.name,
                         res.data.username,
                         res.data.interests,
@@ -57,7 +84,9 @@ function Profile() {
                         res.data.github_handle,
                     ]
                     // Check for null fields
-                    if (!arr.every((elm) => elm !== "" && elm !== null)) {
+                    if (
+                        !arr.every((elm: string) => elm !== "" && elm !== null)
+                    ) {
                         setEdit({
                             show: true,
                             closable: false,
