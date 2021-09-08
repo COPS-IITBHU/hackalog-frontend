@@ -19,7 +19,7 @@ type Contributor = {
 
 // These are few of the fields received from GITHUB APIs
 // Only these field have been used, so rest have been left out
-type ContriResponseSerializer = {
+type ContributorsGithubAPIResponse = {
     login: string
     url: string
     avatar_url: string
@@ -40,16 +40,16 @@ const defaultLottieOptions: DefaultOptionType = {
 
 export default function Contributors() {
     const [contriFrontend, setContributorsFront] =
-        useState<ContriResponseSerializer[]>(null)
+        useState<ContributorsGithubAPIResponse[]>(null)
     const [contriBackend, setContributorsBack] =
-        useState<ContriResponseSerializer[]>(null)
+        useState<ContributorsGithubAPIResponse[]>(null)
     const [fullname, setFullName] = useState<Object[]>([{}] as Object[])
     const [contributors, setContributors] = useState<Contributor[]>(null)
     const [error, setError] = useState<boolean>(false)
 
     useEffect(() => {
         axios
-            .get<ContriResponseSerializer[]>(
+            .get<ContributorsGithubAPIResponse[]>(
                 "https://api.github.com/repos/COPS-IITBHU/hackalog-frontend/contributors"
             )
             .then((res) => setContributorsFront(res.data))
@@ -57,7 +57,7 @@ export default function Contributors() {
                 setError(true)
             })
         axios
-            .get<ContriResponseSerializer[]>(
+            .get<ContributorsGithubAPIResponse[]>(
                 "https://api.github.com/repos/COPS-IITBHU/hackalog-backend/contributors"
             )
             .then((res) => setContributorsBack(res.data))
