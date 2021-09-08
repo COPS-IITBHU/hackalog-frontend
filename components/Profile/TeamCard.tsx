@@ -1,8 +1,10 @@
 import { Text, Div, Image } from "atomize"
 import Link from "next/link"
+import { TeamSerializer } from "@/types/backend"
 
-export default function TeamCard({ team }) {
-    const date = new Date(team.hackathon.end)
+export default function TeamCard({ team }: { team: TeamSerializer }) {
+    const date: Date = new Date(team.hackathon.end)
+    const currentDate: Date = new Date()
     return (
         <Link href={`/hackathon/${team.hackathon.slug}/`}>
             <Div bg="white" shadow="4" rounded="xl" m={{ b: "1rem" }}>
@@ -11,7 +13,7 @@ export default function TeamCard({ team }) {
                         src={team.hackathon.image}
                         style={{ height: 200 }}
                         rounded={{ t: "xl" }}
-                        alt= {`${team.hackathon.title} Logo`}
+                        alt={`${team.hackathon.title} Logo`}
                     />
                 </Div>
                 <Div p="1.5rem">
@@ -27,9 +29,8 @@ export default function TeamCard({ team }) {
                         Participated in {team.hackathon.title}
                     </Text>
                     <Text textSize="subheader" textWeight="500">
-                        {date < Date.now()
-                            ? "Ended on " + date.toDateString()
-                            : "Ends on " + date.toDateString()}
+                        {(date < currentDate ? "Ended on " : "Ends on ") +
+                            date.toDateString()}
                     </Text>
                     <Text textSize="caption" textColor="light">
                         event
