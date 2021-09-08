@@ -30,7 +30,8 @@ export default function Submit() {
     const [description, setDescription] = useState<string>("")
     const [url, setURL] = useState<string>("")
     const [hackathonLoading, setHackathonLoading] = useState<boolean>(true)
-    const [hackathon, setHackathon] = useState<HackathonDetailSerializer>({})
+    const [hackathon, setHackathon] =
+        useState<HackathonDetailSerializer | null>(null)
     const [err, setError] = useState<number>(0)
 
     const validateForm = () => {
@@ -57,7 +58,7 @@ export default function Submit() {
                         hackathon.image = "/images/home-jumbo.jpg"
                     setHackathon(hackathon)
                 })
-                .catch((err: AxiosError) => {
+                .catch((err) => {
                     setError(err.response.status)
                     console.error(err)
                 })
@@ -116,7 +117,7 @@ export default function Submit() {
                             router.push(`/submission/${res.data.id}`)
                         }, 500)
                     },
-                    (err: AxiosError) => {
+                    (err) => {
                         if (typeof err.response.data == "string")
                             notifHandler(err.response.data, "error")
                         else notifHandler(err.response.data, "error")
