@@ -2,7 +2,7 @@
 
 <!-- If PR only partly solves the issue, replace 'Fixes' with 'Fixes part of' -->
 
-Fixes #[issue number] by @[issue author]
+Fixes #[issue number]
 
 **Description**
 
