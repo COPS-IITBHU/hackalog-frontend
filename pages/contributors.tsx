@@ -7,42 +7,47 @@ import { Spinner } from "react-bootstrap"
 import Lottie from "react-lottie"
 import Card from "../components/Cards/Card"
 
-type ContributorSerializer = {
-    handle_name:string
-    name:string
-    handle_url:string
-    image:string
-    github:string
-    description:string[]
+// Created for Contributors props using the data received from GITHUB APIs
+type Contributor = {
+    handle_name: string
+    name: string
+    handle_url: string
+    image: string
+    github: string
+    description: string[]
 }
 
+// These are few of the fields received from GITHUB APIs
+// Only these field have been used, so rest have been left out
 type ContriResponseSerializer = {
-    login:string
-    url:string
-    avatar_url:string
-    html_url:string
+    login: string
+    url: string
+    avatar_url: string
+    html_url: string
 }
 
-interface DefOptType {
-    loop: boolean;
-    autoplay: boolean;
-    animationData:any;
-  }
+interface DefaultOptionType {
+    loop: boolean
+    autoplay: boolean
+    animationData: any
+}
 
-const defaultOptions: DefOptType = {
+const defaultLottieOptions: DefaultOptionType = {
     loop: true,
     autoplay: true,
     animationData: animationData,
 }
 
 export default function Contributors() {
-    const [contriFrontend, setContributorsFront] = useState<ContriResponseSerializer[]>(null)
-    const [contriBackend, setContributorsBack] = useState<ContriResponseSerializer[]>(null)
+    const [contriFrontend, setContributorsFront] =
+        useState<ContriResponseSerializer[]>(null)
+    const [contriBackend, setContributorsBack] =
+        useState<ContriResponseSerializer[]>(null)
     const [fullname, setFullName] = useState<Object[]>([{}] as Object[])
-    const [contributors, setContributors] = useState<ContributorSerializer[]>(null)
+    const [contributors, setContributors] = useState<Contributor[]>(null)
     const [error, setError] = useState<boolean>(false)
 
-    useEffect(() => {  
+    useEffect(() => {
         axios
             .get<ContriResponseSerializer[]>(
                 "https://api.github.com/repos/COPS-IITBHU/hackalog-frontend/contributors"
@@ -62,8 +67,8 @@ export default function Contributors() {
     }, [error])
     useEffect(() => {
         if (contriFrontend && contriBackend) {
-            let repoTracker:Object = {}
-            let arr:ContributorSerializer[] = []
+            let repoTracker: Object = {}
+            let arr: Contributor[] = []
 
             for (let x of contriFrontend) {
                 repoTracker[x.login] = 1
@@ -73,7 +78,7 @@ export default function Contributors() {
             }
 
             for (let x of contriFrontend) {
-                let repos:string[] = ["hackalog-frontend"]
+                let repos: string[] = ["hackalog-frontend"]
                 if (repoTracker[x.login] === 0)
                     repos = ["hackalog-frontend", "hackalog-backend"]
                 arr.push({
@@ -101,11 +106,11 @@ export default function Contributors() {
     }, [contriFrontend, contriBackend])
     useEffect(() => {
         if (contributors) {
-            let arr:ContributorSerializer[] = contributors
+            let arr: Contributor[] = contributors
             for (let x of arr) {
-                let url:string = x.handle_url
+                let url: string = x.handle_url
                 axios
-                    .get<{login:string;name:string}>(url)
+                    .get<{ login: string; name: string }>(url)
                     .then((res) =>
                         setFullName([
                             ...fullname,
@@ -178,7 +183,10 @@ export default function Contributors() {
                         </div>
                     ) : contributors ? (
                         <div className="text-center">
-                            <Lottie options={defaultOptions} height={300} />
+                            <Lottie
+                                options={defaultLottieOptions}
+                                height={300}
+                            />
                             <Text
                                 tag="h6"
                                 textSize="subheader"
