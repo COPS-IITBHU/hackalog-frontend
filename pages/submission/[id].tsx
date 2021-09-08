@@ -8,6 +8,23 @@ import Head from "next/head"
 import { BiCodeAlt } from "react-icons/bi"
 import { HiOutlineEmojiSad } from "react-icons/hi"
 import Link from "next/link"
+import { AxiosResponse } from "axios"
+import {
+    HackathonSerializer,
+    TeamDetailSerializer,
+    SubmissionRUDSerializer,
+} from "@/types/backend"
+
+export interface ModTeamDetailSerializer
+    extends Omit<TeamDetailSerializer, "hackathon"> {
+    hackathon: HackathonSerializer
+}
+
+export interface ModSubmissionSerializer
+    extends Omit<SubmissionRUDSerializer, "team"> {
+    description: string
+    team: ModTeamDetailSerializer
+}
 
 export default function SubmissionDetail() {
     /*
@@ -19,10 +36,11 @@ export default function SubmissionDetail() {
     const router = useRouter()
     const { id } = router.query
     const { token, loading } = useAuth()
-    const [submission, setSubmission] = useState({})
-    const [team, setteam] = useState()
-    const [status, setStatus] = useState(190)
-    const [teamStat, setTeamStat] = useState(190)
+    const [submission, setSubmission] =
+        useState<ModSubmissionSerializer | null>(null)
+    const [team, setteam] = useState<ModTeamDetailSerializer | null>(null)
+    const [status, setStatus] = useState<number>(190)
+    const [teamStat, setTeamStat] = useState<number>(190)
 
     useEffect(() => {
         if (id) {
@@ -32,25 +50,24 @@ export default function SubmissionDetail() {
                 ] = `Token ${token}`
             axios
                 .get(`/submissions/${id}/`)
-                .then((response) => {
-                    let sub = response.data
+                .then((response: AxiosResponse<ModSubmissionSerializer>) => {
+                    let sub: ModSubmissionSerializer = response.data
                     if (!sub.hackathon.image)
                         sub.hackathon.image = "/images/home-jumbo.jpg"
                     setSubmission(sub)
                     setStatus(200)
                 })
                 .catch((err) => {
-                    console.error(err)
                     setStatus(err.response.status)
                 })
         }
     }, [id, token])
 
     useEffect(() => {
-        if (JSON.stringify(submission) !== "{}") {
+        if (submission) {
             axios
                 .get(`/teams/${submission.team.team_id}/`)
-                .then((response) => {
+                .then((response: AxiosResponse<ModTeamDetailSerializer>) => {
                     setteam(response.data)
                 })
                 .catch((err) => {
@@ -105,41 +122,41 @@ export default function SubmissionDetail() {
                 <Jumbotron
                     fluid
                     style={{
-                        backgroundImage: `url(${submission.hackathon.image})`,
+                        backgroundImage: `url(${submission!.hackathon.image})`,
                         minHeight: "20em",
                     }}
                 />
                 <Text className="text-center mb-3" tag="h1" textSize="display1">
-                    {submission.hackathon.title} Submissions
+                    {submission!.hackathon.title} Submissions
                 </Text>
                 <Container>
-                    <Text textSize="title">{submission.title}&nbsp;</Text>
+                    <Text textSize="title">{submission!.title}&nbsp;</Text>
                     <Text textSize="subheader" className="pl-3">
-                        - by Team {submission.team.name}
+                        - by Team {submission!.team.name}
                     </Text>
                     <hr />
                     <Text textSize="subheader">
                         <u>Description</u>
                     </Text>
-                    <Text textSize="paragraph">{submission.description}</Text>
-                    {submission.hackathon.results_declared &&
-                    submission.review.length ? (
+                    <Text textSize="paragraph">{submission!.description}</Text>
+                    {submission!.hackathon.results_declared &&
+                    submission!.review.length ? (
                         <>
                             <Text textSize="subheader">
                                 <u>Judge&apos;s Review</u>
                             </Text>
                             <Text textSize="paragraph">
-                                {submission.review}
+                                {submission!.review}
                             </Text>
                         </>
                     ) : null}
                     <Text textSize="subheader">
                         <BiCodeAlt /> Source Code:{" "}
-                        {submission.submission_url == "EMPTY" ? (
+                        {submission!.submission_url == "EMPTY" ? (
                             "No Link Provided"
                         ) : (
                             <a
-                                href={`${submission.submission_url}`}
+                                href={`${submission!.submission_url}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
@@ -219,14 +236,14 @@ export default function SubmissionDetail() {
                                                 })}
                                             </tbody>
                                         </Table>
-                                        {submission.hackathon
+                                        {submission!.hackathon
                                             .results_declared ? (
                                             <Text
                                                 textSize="title"
                                                 className="text-center pb-2"
                                                 textColor="success900"
                                             >
-                                                Scored: {submission.score}/100
+                                                Scored: {submission!.score}/100
                                             </Text>
                                         ) : (
                                             <Text
@@ -283,20 +300,20 @@ export default function SubmissionDetail() {
                                         <tr>
                                             <td>Title</td>
                                             <td>
-                                                {submission.hackathon.title}
+                                                {submission!.hackathon.title}
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Tagline</td>
                                             <td>
-                                                {submission.hackathon.tagline}
+                                                {submission!.hackathon.tagline}
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Start Date</td>
                                             <td>
                                                 {new Date(
-                                                    submission.hackathon.start
+                                                    submission!.hackathon.start
                                                 ).toString()}{" "}
                                             </td>
                                         </tr>
@@ -304,7 +321,7 @@ export default function SubmissionDetail() {
                                             <td>End Date</td>
                                             <td>
                                                 {new Date(
-                                                    submission.hackathon.end
+                                                    submission!.hackathon.end
                                                 ).toString()}{" "}
                                             </td>
                                         </tr>
@@ -312,13 +329,13 @@ export default function SubmissionDetail() {
                                             <td>Status</td>
                                             <td
                                                 className={
-                                                    submission.hackathon
+                                                    submission!.hackathon
                                                         .status == "Completed"
                                                         ? "text-success"
                                                         : "text-warning"
                                                 }
                                             >
-                                                {submission.hackathon.status}
+                                                {submission!.hackathon.status}
                                             </td>
                                         </tr>
                                     </tbody>
@@ -326,7 +343,7 @@ export default function SubmissionDetail() {
                             </Container>
                         </Div>
                     </Row>
-                    <Link href={`/hackathon/${submission.hackathon.slug}`}>
+                    <Link href={`/hackathon/${submission!.hackathon.slug}`}>
                         <a>
                             <Button className="mb-3" bg="purple">
                                 View Other Submissions
