@@ -1,11 +1,9 @@
 import React from "react"
-import { loadFirebase } from "./firebase"
+import { loadFirebase, userType } from "./firebase"
 import axios from "../util/axios"
-import firebase from "firebase"
 import { ProfileSerializer } from '../types/backend';
 import { AxiosResponse } from "axios";
 
-export type userType = firebase.User | null;
 export type tokenType = string | null;
 export type profileType = ProfileSerializer | null;
 export type loadingType = boolean;
