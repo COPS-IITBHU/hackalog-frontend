@@ -4,7 +4,7 @@ type CardPropTypes = {
     name: string
     image: string
     github: string
-    description: string
+    description: string[]
     handle_name: string
 }
 
