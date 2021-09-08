@@ -1,28 +1,31 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useRouter } from "next/router"
-import axios from "axios"
+import axios, { AxiosError, AxiosResponse } from "axios"
 import { Div, Row, Col, Text, Button, Input } from "atomize"
 import { useAuth } from "../../../context/auth"
-import { useState } from "react"
+import React, { ChangeEvent, useState } from "react"
 import { API_URL } from "../../../util/constants"
 import Clipboard from "../../../components/Clipboard/Clipboard"
 import Head from "next/head"
-import { toast } from "react-toastify"
+import { toast, ToastOptions } from "react-toastify"
+import { TeamCreateSerializer } from "@/types/backend"
 
 export default function Register() {
     const { token } = useAuth()
-    const [teamName, editTeamName] = useState("")
-    const [code, editCode] = useState({ code: "", show: false })
-    const [joinCode, editJoinCode] = useState("")
+    const [teamName, editTeamName] = useState<string>("")
+    const [code, editCode] = useState<{ code: string; show: boolean }>({
+        code: "",
+        show: false,
+    })
+    const [joinCode, editJoinCode] = useState<string>("")
     const router = useRouter()
     const hackathonId = router.query.slug
 
-    const notifHandler = (message, type) => {
-        const config = {
+    const notifHandler = (message: string, type: string) => {
+        const config: ToastOptions = {
             position: "top-center",
             autoClose: 5000,
             hideProgressBar: false,
-            newestOnTop: false,
             closeOnClick: true,
             rtl: false,
             pauseOnFocusLoss: true,
@@ -47,13 +50,13 @@ export default function Register() {
         }
     }
 
-    const doRegister = async (name) => {
+    const doRegister = async (name: string) => {
         try {
             axios.defaults.headers.common["Authorization"] = `Token ${token}`
-            const response = await axios.post(
-                `${API_URL}hackathons/${hackathonId}/teams/`,
-                { name: name }
-            )
+            const response: AxiosResponse<TeamCreateSerializer> =
+                await axios.post(`${API_URL}hackathons/${hackathonId}/teams/`, {
+                    name: name,
+                })
             // const response = await axios.post(
             //     `http://127.0.0.1:8000/hackathons/${Number.parseInt(
             //         hackathonId
@@ -71,7 +74,7 @@ export default function Register() {
             } else {
                 notifHandler("Some unexpected error in client!", "warning")
             }
-        } catch (exc) {
+        } catch (exc: AxiosError) {
             if (exc.response.status === 400) {
                 notifHandler(
                     `${exc.response.data.non_field_errors[0]}`,
@@ -106,10 +109,10 @@ export default function Register() {
         }
     }
 
-    const doJoin = async (joinCode) => {
+    const doJoin = async (joinCode: string) => {
         try {
             axios.defaults.headers.common["Authorization"] = `Token ${token}`
-            const response = await axios.patch(
+            const response: AxiosResponse<{}> = await axios.patch(
                 `${API_URL}hackathons/${hackathonId}/teams/join/${joinCode}/`,
                 {}
             )
@@ -126,7 +129,7 @@ export default function Register() {
             } else {
                 notifHandler("Some unexpected error in client!", "warning")
             }
-        } catch (exc) {
+        } catch (exc: AxiosError) {
             if (exc.response.status === 400) {
                 notifHandler(exc.response.data[0], "warning")
             } else if (exc.response.status === 404) {
@@ -199,7 +202,9 @@ export default function Register() {
                             </Text>
                             <Input
                                 placeholder="Team name"
-                                onChange={(e) => {
+                                onChange={(
+                                    e: ChangeEvent<HTMLInputElement>
+                                ) => {
                                     editTeamName(e.target.value)
                                 }}
                                 suffix={
@@ -250,7 +255,9 @@ export default function Register() {
                             </Text>
                             <Input
                                 placeholder="Team code"
-                                onChange={(e) => {
+                                onChange={(
+                                    e: ChangeEvent<HTMLInputElement>
+                                ) => {
                                     editJoinCode(e.target.value)
                                 }}
                                 suffix={
