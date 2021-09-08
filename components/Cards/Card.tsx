@@ -1,6 +1,14 @@
 import SingleIconButton from "../Buttons/IconsButton"
 
-export default function Card(props) {
+type CardPropTypes = {
+    name: string
+    image: string
+    github: string
+    description: string
+    handle_name: string
+}
+
+export default function Card(props: CardPropTypes) {
     const { name, image, description } = props
     return (
         <>
