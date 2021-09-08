@@ -7,7 +7,21 @@ import { Spinner } from "react-bootstrap"
 import Lottie from "react-lottie"
 import Card from "../components/Cards/Card"
 
+type ContributorSerializer = {
+    handle_name:string
+    name:string
+    handle_url:string
+    image:string
+    github:string
+    description:string[]
+}
 
+type ContriResponseSerializer = {
+    login:string
+    url:string
+    avatar_url:string
+    html_url:string
+}
 
 interface DefOptType {
     loop: boolean;
