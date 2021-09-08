@@ -1,15 +1,15 @@
 import { Text, Tag } from "atomize"
 
-export const Interests = ({ interests}:{interests : string}) => {
-    const skills :JSX.Element[] = interests.length
-        ? interests.split(",").map((skill :string, id: number) => {
-              return ( 
+export const Interests = ({ interests }: { interests: string }) => {
+    const skills: JSX.Element[] = interests.length
+        ? interests.split(",").map((skill: string, id: number) => {
+              return (
                   <Tag
                       bg={`warning700`}
                       textColor="white"
                       p={{ x: "0.75rem", y: "0.25rem" }}
                       m={{ r: "0.5rem", b: "0.5rem" }}
-                      textSize ="body"
+                      textSize="body"
                       rounded="circle"
                       key={id}
                   >
