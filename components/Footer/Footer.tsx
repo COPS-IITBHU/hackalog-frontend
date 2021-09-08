@@ -36,7 +36,15 @@ export default function Footer(): ReactElement {
                             >
                                 🍕
                             </span>
-                            , ☕ and
+                            ,{" "}
+                            <span
+                                role="img"
+                                aria-label="coffee"
+                                area-hidden="false"
+                            >
+                                ☕
+                            </span>{" "}
+                            and
                             <span
                                 role="img"
                                 aria-label="laptop"
