@@ -74,7 +74,7 @@ export default function Register() {
             } else {
                 notifHandler("Some unexpected error in client!", "warning")
             }
-        } catch (exc: AxiosError) {
+        } catch (exc) {
             if (exc.response.status === 400) {
                 notifHandler(
                     `${exc.response.data.non_field_errors[0]}`,
@@ -129,7 +129,7 @@ export default function Register() {
             } else {
                 notifHandler("Some unexpected error in client!", "warning")
             }
-        } catch (exc: AxiosError) {
+        } catch (exc) {
             if (exc.response.status === 400) {
                 notifHandler(exc.response.data[0], "warning")
             } else if (exc.response.status === 404) {
