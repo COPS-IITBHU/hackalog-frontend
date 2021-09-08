@@ -11,7 +11,7 @@ import Head from "next/head"
 
 import { AuthProvider } from "../context/auth"
 import Header from "../components/Header/Header"
-import Footer from "../components/Footer/Footer.tsx"
+import Footer from "../components/Footer/Footer"
 import { ToastContainer } from "react-toastify"
 
 const theme = {
