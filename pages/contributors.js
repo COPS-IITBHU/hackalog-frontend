@@ -5,7 +5,7 @@ import animationData from "../lottie/sad.json"
 import { Text } from "atomize"
 import { Spinner } from "react-bootstrap"
 import Lottie from "react-lottie"
-import Card from "../components/Cards/Card"
+import Card from "../components/Cards/ContributorCard"
 
 const defaultOptions = {
     loop: true,
