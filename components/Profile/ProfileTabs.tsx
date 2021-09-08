@@ -1,8 +1,9 @@
 import { Nav, Tab, Col, Row } from "react-bootstrap"
 import HackathonCard from "../HackathonCard/HackathonCard"
 import TeamCard from "./TeamCard"
+import { TeamSerializer } from "@/types/backend"
 
-export function ProfileTabs({ teams }) {
+export function ProfileTabs({ teams }: { teams: TeamSerializer[] }) {
     return (
         <Tab.Container defaultActiveKey="myProjects">
             <Nav
