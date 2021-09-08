@@ -8,6 +8,7 @@ import Head from "next/head"
 import Lottie from "react-lottie"
 import animationData from "../lottie/sad.json"
 import { HackathonSerializer } from "@/types/backend"
+import { AxiosResponse } from "axios"
 const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -23,7 +24,9 @@ export default function Hackathons() {
     useEffect(() => {
         axiosInstance
             .get("hackathons?query=ongoing")
-            .then((response) => setOngoing(response.data))
+            .then((response: AxiosResponse<HackathonSerializer[]>) =>
+                setOngoing(response.data)
+            )
             .catch((err) => {
                 let arr = error
                 arr[0] = true
@@ -34,7 +37,9 @@ export default function Hackathons() {
     useEffect(() => {
         axiosInstance
             .get("hackathons?query=upcoming")
-            .then((response) => setUpcoming(response.data))
+            .then((response: AxiosResponse<HackathonSerializer[]>) =>
+                setUpcoming(response.data)
+            )
             .catch((err) => {
                 let arr = error
                 arr[1] = true
@@ -42,7 +47,9 @@ export default function Hackathons() {
             })
         axiosInstance
             .get("hackathons?query=completed")
-            .then((response) => setCompleted(response.data))
+            .then((response: AxiosResponse<HackathonSerializer[]>) =>
+                setCompleted(response.data)
+            )
             .catch((err) => {
                 let arr = error
                 arr[2] = true
