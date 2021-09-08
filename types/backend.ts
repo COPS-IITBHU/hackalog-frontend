@@ -7,6 +7,7 @@ export type TeamCreateSerializer = {
 }
 
 export type SubmissionsSerializer = {
+    id: number
     teamName: string
     team: number // id
     hackathon: number //id
