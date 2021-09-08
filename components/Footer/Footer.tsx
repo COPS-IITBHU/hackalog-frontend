@@ -28,13 +28,16 @@ export default function Footer(): ReactElement {
                     </div>
                     <div>
                         <Text {...TextProps}>
-                            Hackalog is made with 🍕, ☕ and 💻
+                            Hackalog is made with 
+                            <span role="img" aria-label="pizza" area-hidden="false">🍕</span> 
+                             , ☕ and 
+                             <span role="img" aria-label="laptop" area-hidden="false">💻</span> 
                         </Text>
                     </div>
                     <div>
                         <Text {...TextProps}>
-                            <Link href="/contributors">
-                                <a rel="noopener noreferrer">✨ CONTRIBUTORS</a>
+                            <Link href="/contributors" passHref>
+                                <a href="/#" rel="noopener noreferrer"><span role="img" aria-label="laptop" area-hidden="false">✨</span> CONTRIBUTORS</a>
                             </Link>
                         </Text>
                     </div>
