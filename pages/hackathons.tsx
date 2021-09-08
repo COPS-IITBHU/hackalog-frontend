@@ -7,6 +7,7 @@ import Head from "next/head"
 
 import Lottie from "react-lottie"
 import animationData from "../lottie/sad.json"
+import { HackathonSerializer } from "@/types/backend"
 const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -14,10 +15,10 @@ const defaultOptions = {
 }
 
 export default function Hackathons() {
-    const [ongoing, setOngoing] = useState()
-    const [upcoming, setUpcoming] = useState()
-    const [completed, setCompleted] = useState()
-    const [error, setError] = useState([false, false, false])
+    const [ongoing, setOngoing] = useState<HackathonSerializer[]>()
+    const [upcoming, setUpcoming] = useState<HackathonSerializer[]>()
+    const [completed, setCompleted] = useState<HackathonSerializer[]>()
+    const [error, setError] = useState<boolean[]>([false, false, false])
 
     useEffect(() => {
         axiosInstance
@@ -243,7 +244,7 @@ export default function Hackathons() {
     )
 }
 
-function HackathonList(props) {
+function HackathonList(props: { hackathons: HackathonSerializer[] }) {
     return (
         <div className="row no-gutters">
             {props.hackathons.map((hackathon, index) => (
