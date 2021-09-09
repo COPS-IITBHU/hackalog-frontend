@@ -7,7 +7,7 @@ import { FaGithub } from "react-icons/fa"
 
 import axios from "../../util/axios"
 import { useAuth } from "../../context/auth"
-import { Interests } from "../../components/Profile/index"
+import { Interests } from "../../components/Profile"
 import TeamCard from "../../components/Profile/TeamCard"
 import HackathonCard from "../../components/HackathonCard/HackathonCard"
 import Head from "next/head"
