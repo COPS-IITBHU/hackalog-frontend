@@ -3,10 +3,11 @@ import Link from "next/link"
 import Date from "../Date/Date"
 import { HackathonSerializer } from "types/backend"
 
-export default function HackathonCard(props: {
+interface HackathonCardProps {
     hackathon: HackathonSerializer
-}) {
-    const { hackathon } = props
+}
+
+export default function HackathonCard({ hackathon }: HackathonCardProps) {
     return (
         <>
             <Div bg="white" shadow="4" rounded="xl" m={{ b: "1rem" }}>
