@@ -37,7 +37,7 @@ export default function SubmissionDetail() {
     const { id } = router.query
     const { token, loading } = useAuth()
     const [submission, setSubmission] =
-        useState<ModSubmissionSerializer | null>(null)
+        useState<ModSubmissionSerializer>({} as ModSubmissionSerializer)
     const [team, setteam] = useState<ModTeamDetailSerializer | null>(null)
     const [status, setStatus] = useState<number>(190)
     const [teamStat, setTeamStat] = useState<number>(190)
@@ -64,7 +64,7 @@ export default function SubmissionDetail() {
     }, [id, token])
 
     useEffect(() => {
-        if (submission) {
+        if (JSON.stringify(submission) !== "{}") {
             axios
                 .get(`/teams/${submission.team.team_id}/`)
                 .then((response: AxiosResponse<ModTeamDetailSerializer>) => {
@@ -72,7 +72,6 @@ export default function SubmissionDetail() {
                 })
                 .catch((err) => {
                     setTeamStat(err.response.status)
-                    console.error(err)
                 })
         }
     }, [submission])
