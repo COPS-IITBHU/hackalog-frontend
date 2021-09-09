@@ -1,8 +1,8 @@
 import { Text, Tag } from "atomize"
 
-export const Interests = ({ interests }) => {
-    const skills = interests.length
-        ? interests.split(",").map((skill, id) => {
+export const Interests = ({ interests }: { interests: string }) => {
+    const skills: JSX.Element[] = interests.length
+        ? interests.split(",").map((skill: string, id: number) => {
               return (
                   <Tag
                       bg={`warning700`}

@@ -1,10 +1,12 @@
 import { Div, Row, Col, Text, Button } from "atomize"
 import Link from "next/link"
 import Date from "../Date/Date"
-import {HackathonSerializer} from "types/backend"
+import { HackathonSerializer } from "types/backend"
 
-export default function HackathonCard(props : { hackathon:HackathonSerializer }) {
-    const {hackathon} = props;
+export default function HackathonCard(props: {
+    hackathon: HackathonSerializer
+}) {
+    const { hackathon } = props
     return (
         <>
             <Div bg="white" shadow="4" rounded="xl" m={{ b: "1rem" }}>
