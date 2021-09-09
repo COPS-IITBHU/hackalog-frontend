@@ -1,12 +1,12 @@
 import React from "react"
 import { loadFirebase, userType } from "./firebase"
 import axios from "../util/axios"
-import { ProfileSerializer } from '../types/backend';
-import { AxiosResponse } from "axios";
+import { ProfileSerializer } from "../types/backend"
+import { AxiosResponse } from "axios"
 
-export type tokenType = string | null;
-export type profileType = ProfileSerializer | null;
-export type loadingType = boolean;
+export type tokenType = string | null
+export type profileType = ProfileSerializer | null
+export type loadingType = boolean
 
 const AuthContext = React.createContext<{
     firebaseUser: userType
@@ -84,18 +84,26 @@ export const AuthProvider: React.FC<{}> = ({ children }) => {
                     .then((idToken) => {
                         axios
                             .post("login/", { id_token: idToken })
-                            .then((response: AxiosResponse<{token: string;}>) => {
-                                let newToken: string = response.data.token;
-                                updateProfile(newToken)
-                                    .then((response: AxiosResponse<ProfileSerializer>) => {
-                                        setToken(newToken)
-                                        setProfile(response.data)
-                                        setLoading(false)
-                                    })
-                                    .catch((error) => {
-                                        setLoading(false)
-                                    })
-                            })
+                            .then(
+                                (
+                                    response: AxiosResponse<{ token: string }>
+                                ) => {
+                                    let newToken: string = response.data.token
+                                    updateProfile(newToken)
+                                        .then(
+                                            (
+                                                response: AxiosResponse<ProfileSerializer>
+                                            ) => {
+                                                setToken(newToken)
+                                                setProfile(response.data)
+                                                setLoading(false)
+                                            }
+                                        )
+                                        .catch((error) => {
+                                            setLoading(false)
+                                        })
+                                }
+                            )
                             .catch((error) => {
                                 setLoading(false)
                             })

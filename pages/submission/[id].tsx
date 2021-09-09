@@ -36,8 +36,9 @@ export default function SubmissionDetail() {
     const router = useRouter()
     const { id } = router.query
     const { token, loading } = useAuth()
-    const [submission, setSubmission] =
-        useState<ModSubmissionSerializer>({} as ModSubmissionSerializer)
+    const [submission, setSubmission] = useState<ModSubmissionSerializer>(
+        {} as ModSubmissionSerializer
+    )
     const [team, setteam] = useState<ModTeamDetailSerializer | null>(null)
     const [status, setStatus] = useState<number>(190)
     const [teamStat, setTeamStat] = useState<number>(190)

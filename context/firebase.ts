@@ -39,4 +39,4 @@ export const getIdToken = async () => {
     })
 }
 
-export type userType = firebase.User | null;
+export type userType = firebase.User | null
