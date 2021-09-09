@@ -7,18 +7,18 @@ import { options } from "./SkillOptions"
 import { useAuth } from "../../context/auth"
 
 type ModalPropTypes = {
-    handle:string,
-    bio:string,
-    interest:string,
-    name:string,
-    url:string,
-    username:string,
-    handleClose:()=>void,
-    show:boolean,
-    closable:boolean,
+    handle: string
+    bio: string
+    interest: string
+    name: string
+    url: string
+    username: string
+    handleClose: () => void
+    show: boolean
+    closable: boolean
 }
 
-const EditProfile :React.FC<ModalPropTypes> = ({
+const EditProfile = ({
     handle,
     bio,
     interest,
@@ -27,10 +27,8 @@ const EditProfile :React.FC<ModalPropTypes> = ({
     handleClose,
     show,
     closable,
-}) => {
-
-
-    const { firebaseUser } :any = useAuth()
+}: ModalPropTypes) => {
+    const { firebaseUser } = useAuth()
     const [err, seterr] = useState("")
     const [wait, setwait] = useState(false)
     const handleChange = (newValue) => setSelectedSkills(newValue)
@@ -42,24 +40,35 @@ const EditProfile :React.FC<ModalPropTypes> = ({
             : []
     )
     const handleSubmit = () => {
-        const name :string = (document.getElementById("name") as HTMLInputElement).value.trim()
-        const handle :string =( document
-            .getElementById("handle") as HTMLInputElement)
-            .value.split(" ").join("")
-            .toLowerCase();
-        (document.getElementById("handle") as HTMLInputElement).value = handle
-        const bio:string = (document.getElementById("bio") as HTMLInputElement).value.trim()
+        const name: string = (
+            document.getElementById("name") as HTMLInputElement
+        ).value.trim()
+        const handle: string = (
+            document.getElementById("handle") as HTMLInputElement
+        ).value
+            .split(" ")
+            .join("")
+            .toLowerCase()
+        ;(document.getElementById("handle") as HTMLInputElement).value = handle
+        const bio: string = (
+            document.getElementById("bio") as HTMLInputElement
+        ).value.trim()
         const interests = selectedSkills
             ? String(selectedSkills.map((s) => s.label))
             : ""
-        const username :string = (document
-            .getElementById("username") as HTMLInputElement)
-            .value.split(" ").join("")
-            .toLowerCase();
-        (document.getElementById("username") as HTMLInputElement).value = username
-        var check :boolean = [name, handle, username, interests, bio].every((elm:string) => {
-            return elm !== ""
-        })
+        const username: string = (
+            document.getElementById("username") as HTMLInputElement
+        ).value
+            .split(" ")
+            .join("")
+            .toLowerCase()
+        ;(document.getElementById("username") as HTMLInputElement).value =
+            username
+        var check: boolean = [name, handle, username, interests, bio].every(
+            (elm: string) => {
+                return elm !== ""
+            }
+        )
         if (check) {
             setwait(true)
             const data = {
@@ -73,6 +82,7 @@ const EditProfile :React.FC<ModalPropTypes> = ({
             }
             axios
                 .patch(`profile/`, data)
+                .catch((e) => setwait(false))
                 .then(
                     () => {
                         setwait(false)
