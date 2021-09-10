@@ -5,4 +5,6 @@ var axiosInstance = axios.create({
     baseURL: API_URL,
 });
 
+export type { AxiosResponse } from 'axios';
+
 export default axiosInstance;

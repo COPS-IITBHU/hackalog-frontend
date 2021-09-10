@@ -2,13 +2,12 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/router"
 import { Spinner, Row, Container, Table, Jumbotron } from "react-bootstrap"
 import { Text, Button, Div, Image } from "atomize"
-import axios from "../../util/axios"
+import axios, { AxiosResponse } from "../../util/axios"
 import { useAuth } from "../../context/auth"
 import Head from "next/head"
 import { BiCodeAlt } from "react-icons/bi"
 import { HiOutlineEmojiSad } from "react-icons/hi"
 import Link from "next/link"
-import { AxiosResponse } from "axios"
 import {
     TeamDetailSerializer,
     SubmissionRUDSerializer,
@@ -38,7 +37,7 @@ export default function SubmissionDetail() {
                     "Authorization"
                 ] = `Token ${token}`
             axios
-                .get(`/submissions/${id}/`)
+                .get<SubmissionRUDSerializer>(`/submissions/${id}/`)
                 .then((response: AxiosResponse<SubmissionRUDSerializer>) => {
                     let sub: SubmissionRUDSerializer = response.data
                     if (!sub.hackathon.image)
@@ -55,7 +54,7 @@ export default function SubmissionDetail() {
     useEffect(() => {
         if (JSON.stringify(submission) !== "{}") {
             axios
-                .get(`/teams/${submission.team.team_id}/`)
+                .get<TeamDetailSerializer>(`/teams/${submission.team.team_id}/`)
                 .then((response: AxiosResponse<TeamDetailSerializer>) => {
                     setteam(response.data)
                 })

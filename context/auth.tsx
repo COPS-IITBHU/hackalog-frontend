@@ -1,44 +1,53 @@
-import React from "react"
+import React, { PropsWithChildren } from "react"
 import { loadFirebase, userType } from "./firebase"
-import axios from "../util/axios"
+import axios, { AxiosResponse } from "../util/axios"
 import { ProfileSerializer } from "../types/backend"
-import { AxiosResponse } from "axios"
 
-export type tokenType = string | null
-export type profileType = ProfileSerializer | null
-export type loadingType = boolean
+type tokenType = string | null
+type profileType = ProfileSerializer | null
+type loadingType = boolean
+type PropTypes = PropsWithChildren<{}>
 
 const AuthContext = React.createContext<{
-    firebaseUser: userType
-    setFirebaseUser: (user: userType) => void
-    token: tokenType
-    setToken: (token: tokenType) => void
-    profile: profileType
-    setProfile: (profile: profileType) => void
-    loading: loadingType
-    handleSignIn: () => void
     handleLogout: () => void
+    handleSignIn: () => void
+    setFirebaseUser: (user: userType) => void
+    setProfile: (profile: profileType) => void
+    setToken: (token: tokenType) => void
+    firebaseUser: userType
+    loading: loadingType
+    profile: profileType
+    token: tokenType
 }>({
-    firebaseUser: null,
-    setFirebaseUser: (user: userType) => {},
-    token: null,
-    setToken: (token: tokenType) => {},
-    profile: null,
-    setProfile: (profile: profileType) => {},
-    loading: true,
-    handleSignIn: () => {},
     handleLogout: () => {},
+    handleSignIn: () => {},
+    setFirebaseUser: (user: userType) => {},
+    setProfile: (profile: profileType) => {},
+    setToken: (token: tokenType) => {},
+    firebaseUser: null,
+    loading: false,
+    profile: null,
+    token: null,
 })
 
-export const AuthProvider: React.FC<{}> = ({ children }) => {
+export const AuthProvider = ({ children }: PropTypes) => {
     const [firebaseUser, setFirebaseUser] = React.useState<userType>(null)
     const [token, setToken] = React.useState<tokenType>(null)
     const [profile, setProfile] = React.useState<profileType>(null)
-    const [loading, setLoading] = React.useState<loadingType>(true)
+    const [loading, setLoading] = React.useState<loadingType>(false)
 
     const updateProfile = (token: string) => {
         axios.defaults.headers.common["Authorization"] = `Token ${token}`
-        return axios.get(`profile/`)
+        axios
+            .get<profileType>(`profile/`)
+            .then((response: AxiosResponse<profileType>) => {
+                setToken(token)
+                setProfile(response.data)
+                setLoading(false)
+            })
+            .catch((error) => {
+                setLoading(false)
+            })
     }
 
     const handleSignIn = async () => {
@@ -83,25 +92,13 @@ export const AuthProvider: React.FC<{}> = ({ children }) => {
                     .getIdToken(true)
                     .then((idToken) => {
                         axios
-                            .post("login/", { id_token: idToken })
+                            .post<{token: string}>("login/", { id_token: idToken })
                             .then(
                                 (
                                     response: AxiosResponse<{ token: string }>
                                 ) => {
                                     let newToken: string = response.data.token
                                     updateProfile(newToken)
-                                        .then(
-                                            (
-                                                response: AxiosResponse<ProfileSerializer>
-                                            ) => {
-                                                setToken(newToken)
-                                                setProfile(response.data)
-                                                setLoading(false)
-                                            }
-                                        )
-                                        .catch((error) => {
-                                            setLoading(false)
-                                        })
                                 }
                             )
                             .catch((error) => {
