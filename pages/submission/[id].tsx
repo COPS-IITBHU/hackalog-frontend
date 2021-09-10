@@ -10,21 +10,9 @@ import { HiOutlineEmojiSad } from "react-icons/hi"
 import Link from "next/link"
 import { AxiosResponse } from "axios"
 import {
-    HackathonSerializer,
     TeamDetailSerializer,
     SubmissionRUDSerializer,
 } from "@/types/backend"
-
-export interface ModTeamDetailSerializer
-    extends Omit<TeamDetailSerializer, "hackathon"> {
-    hackathon: HackathonSerializer
-}
-
-export interface ModSubmissionSerializer
-    extends Omit<SubmissionRUDSerializer, "team"> {
-    description: string
-    team: ModTeamDetailSerializer
-}
 
 export default function SubmissionDetail() {
     /*
@@ -36,10 +24,10 @@ export default function SubmissionDetail() {
     const router = useRouter()
     const { id } = router.query
     const { token, loading } = useAuth()
-    const [submission, setSubmission] = useState<ModSubmissionSerializer>(
-        {} as ModSubmissionSerializer
+    const [submission, setSubmission] = useState<SubmissionRUDSerializer>(
+        {} as SubmissionRUDSerializer
     )
-    const [team, setteam] = useState<ModTeamDetailSerializer | null>(null)
+    const [team, setteam] = useState<TeamDetailSerializer | null>(null)
     const [status, setStatus] = useState<number>(190)
     const [teamStat, setTeamStat] = useState<number>(190)
 
@@ -51,8 +39,8 @@ export default function SubmissionDetail() {
                 ] = `Token ${token}`
             axios
                 .get(`/submissions/${id}/`)
-                .then((response: AxiosResponse<ModSubmissionSerializer>) => {
-                    let sub: ModSubmissionSerializer = response.data
+                .then((response: AxiosResponse<SubmissionRUDSerializer>) => {
+                    let sub: SubmissionRUDSerializer = response.data
                     if (!sub.hackathon.image)
                         sub.hackathon.image = "/images/home-jumbo.jpg"
                     setSubmission(sub)
@@ -68,7 +56,7 @@ export default function SubmissionDetail() {
         if (JSON.stringify(submission) !== "{}") {
             axios
                 .get(`/teams/${submission.team.team_id}/`)
-                .then((response: AxiosResponse<ModTeamDetailSerializer>) => {
+                .then((response: AxiosResponse<TeamDetailSerializer>) => {
                     setteam(response.data)
                 })
                 .catch((err) => {
