@@ -59,5 +59,6 @@ module.exports = {
     },
     globals: {
         React: "writable",
+        JSX: true,
     },
 }
