@@ -1,8 +1,13 @@
 import { Div, Row, Col, Text, Button } from "atomize"
 import Link from "next/link"
 import Date from "../Date/Date"
+import { HackathonSerializer } from "types/backend"
 
-export default function HackathonCard({ hackathon }) {
+interface HackathonCardProps {
+    hackathon: HackathonSerializer
+}
+
+export default function HackathonCard({ hackathon }: HackathonCardProps) {
     return (
         <>
             <Div bg="white" shadow="4" rounded="xl" m={{ b: "1rem" }}>
