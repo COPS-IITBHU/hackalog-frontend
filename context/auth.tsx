@@ -11,9 +11,9 @@ type PropTypes = PropsWithChildren<{}>
 const AuthContext = React.createContext<{
     handleLogout: () => void
     handleSignIn: () => void
-    setFirebaseUser: (user: userType) => void
-    setProfile: (profile: profileType) => void
-    setToken: (token: tokenType) => void
+    setFirebaseUser: React.Dispatch<React.SetStateAction<userType>>
+    setProfile: React.Dispatch<React.SetStateAction<profileType>>
+    setToken: React.Dispatch<React.SetStateAction<tokenType>>
     firebaseUser: userType
     loading: loadingType
     profile: profileType
@@ -21,9 +21,9 @@ const AuthContext = React.createContext<{
 }>({
     handleLogout: () => {},
     handleSignIn: () => {},
-    setFirebaseUser: (user: userType) => {},
-    setProfile: (profile: profileType) => {},
-    setToken: (token: tokenType) => {},
+    setFirebaseUser: () => {},
+    setProfile: () => {},
+    setToken: () => {},
     firebaseUser: null,
     loading: false,
     profile: null,
