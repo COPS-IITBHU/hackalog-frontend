@@ -1,6 +1,6 @@
 import { FiGithub } from "react-icons/fi"
 
-export default function SingleIconButton(props:{children:string}) {
+export default function SingleIconButton(props: { children: string }) {
     return (
         <>
             <button className="btn btn-round">
