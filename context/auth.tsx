@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from "react"
 import { loadFirebase, userType } from "./firebase"
-import axios, { AxiosResponse } from "../util/axios"
+import axios from "../util/axios"
 import { ProfileSerializer } from "../types/backend"
 
 type tokenType = string | null
@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }: PropTypes) => {
         axios.defaults.headers.common["Authorization"] = `Token ${token}`
         axios
             .get<profileType>(`profile/`)
-            .then((response: AxiosResponse<profileType>) => {
+            .then((response) => {
                 setToken(token)
                 setProfile(response.data)
                 setLoading(false)
@@ -94,9 +94,7 @@ export const AuthProvider = ({ children }: PropTypes) => {
                         axios
                             .post<{token: string}>("login/", { id_token: idToken })
                             .then(
-                                (
-                                    response: AxiosResponse<{ token: string }>
-                                ) => {
+                                (response) => {
                                     let newToken: string = response.data.token
                                     updateProfile(newToken)
                                 }
