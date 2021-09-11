@@ -119,15 +119,13 @@ export default function Hackathon() {
         )
     }
 
-    var myTeam: TeamSerializer | TeamSerializer[] | { team_id: string } = {
-        team_id: "#",
-    }
+    var myTeam: { team_id: string } = { team_id: "#" }
     if (profile) {
-        myTeam = profile.teams.filter(
+        var myTeamDetail: TeamSerializer[] = profile.teams.filter(
             (team) => team.hackathon.slug == hackathon.slug
         )
-        if (myTeam.length) myTeam = myTeam[0]
-        else myTeam = { team_id: "#" }
+        if (myTeamDetail.length)
+            myTeam.team_id = myTeamDetail[0].team_id.toString()
     }
     return (
         <>
