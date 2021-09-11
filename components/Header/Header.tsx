@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ReactElement } from "react"
+import { useState, useEffect, ReactElement } from "react"
 import { Button } from "atomize"
 import { Spinner } from "react-bootstrap"
 import { useAuth } from "../../context/auth"
