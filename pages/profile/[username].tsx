@@ -31,7 +31,7 @@ export interface Auth {
 }
 export interface RequestUserType {
     loading?: boolean
-    user?: any | null
+    user?: ProfileSerializer | null
 }
 
 export interface EditSet {
@@ -89,7 +89,7 @@ function Profile() {
                     console.error(err)
                     setUserRequest({
                         loading: false,
-                        user: "NOT FOUND", //dev things, sorry for the changes
+                        user: null, //dev things, sorry for the changes
                     })
                 })
         }
@@ -132,7 +132,7 @@ function Profile() {
                 </Spinner>
             </Container>
         )
-    else if (userRequest.user === "NOT FOUND")
+    else if (userRequest.user === null)
         return <DefaultErrorPage statusCode={404} />
     return (
         <div style={{ background: "#87a3bb17" }}>
