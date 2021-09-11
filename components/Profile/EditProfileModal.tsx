@@ -6,17 +6,28 @@ import axios from "../../util/axios"
 import { options } from "./SkillOptions"
 import { useAuth } from "../../context/auth"
 
+type ModalPropTypes = {
+    handle: string
+    bio: string
+    interest: string
+    name: string
+    url: string
+    username: string
+    handleClose: () => void
+    show: boolean
+    closable: boolean
+}
+
 const EditProfile = ({
     handle,
     bio,
     interest,
     name,
-    url,
     username,
     handleClose,
     show,
     closable,
-}) => {
+}: ModalPropTypes) => {
     const { firebaseUser } = useAuth()
     const [err, seterr] = useState("")
     const [wait, setwait] = useState(false)
@@ -29,26 +40,35 @@ const EditProfile = ({
             : []
     )
     const handleSubmit = () => {
-        const name = document.getElementById("name").value.trim()
-        const handle = document
-            .getElementById("handle")
-            .value.split(" ")
+        const name: string = (
+            document.getElementById("name") as HTMLInputElement
+        ).value.trim()
+        const handle: string = (
+            document.getElementById("handle") as HTMLInputElement
+        ).value
+            .split(" ")
             .join("")
             .toLowerCase()
-        document.getElementById("handle").value = handle
-        const bio = document.getElementById("bio").value.trim()
+        ;(document.getElementById("handle") as HTMLInputElement).value = handle
+        const bio: string = (
+            document.getElementById("bio") as HTMLInputElement
+        ).value.trim()
         const interests = selectedSkills
             ? String(selectedSkills.map((s) => s.label))
             : ""
-        const username = document
-            .getElementById("username")
-            .value.split(" ")
+        const username: string = (
+            document.getElementById("username") as HTMLInputElement
+        ).value
+            .split(" ")
             .join("")
             .toLowerCase()
-        document.getElementById("username").value = username
-        var check = [name, handle, username, interests, bio].every((elm) => {
-            return elm !== ""
-        })
+        ;(document.getElementById("username") as HTMLInputElement).value =
+            username
+        var check: boolean = [name, handle, username, interests, bio].every(
+            (elm: string) => {
+                return elm !== ""
+            }
+        )
         if (check) {
             setwait(true)
             const data = {
@@ -62,9 +82,10 @@ const EditProfile = ({
             }
             axios
                 .patch(`profile/`, data)
-                .then(setwait(false))
+                .catch((e) => setwait(false))
                 .then(
                     () => {
+                        setwait(false)
                         location.replace(`/profile/${username}`)
                     },
                     (err) => {
@@ -85,7 +106,7 @@ const EditProfile = ({
                 backdrop={closable ? true : "static"}
                 keyboard={false}
                 centered={true}
-                size="md"
+                size="lg"
             >
                 <Modal.Body>
                     <div className="text-center mb-3">

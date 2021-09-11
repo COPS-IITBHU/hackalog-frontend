@@ -60,7 +60,7 @@ export type ProfileSerializer = {
 export type TeamDetailSerializer = {
     id: number
     name: number
-    hackathon: number
+    hackathon: HackathonSerializer
     team_id: number
     members: ProfileSerializer[]
     leader: ProfileSerializer
@@ -73,4 +73,5 @@ export type SubmissionRUDSerializer = {
     hackathon: HackathonSerializer
     submission_url: string // URL
     score: number // 0 to 100
+    description: string
 }
