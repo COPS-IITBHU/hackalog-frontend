@@ -32,18 +32,20 @@ const EditProfile = ({
         const name = document.getElementById("name").value.trim()
         const handle = document
             .getElementById("handle")
-            .value.split(" ").join("")
+            .value.split(" ")
+            .join("")
             .toLowerCase()
-            document.getElementById("handle").value = handle
+        document.getElementById("handle").value = handle
         const bio = document.getElementById("bio").value.trim()
         const interests = selectedSkills
             ? String(selectedSkills.map((s) => s.label))
             : ""
         const username = document
             .getElementById("username")
-            .value.split(" ").join("")
+            .value.split(" ")
+            .join("")
             .toLowerCase()
-            document.getElementById("username").value = username
+        document.getElementById("username").value = username
         var check = [name, handle, username, interests, bio].every((elm) => {
             return elm !== ""
         })
