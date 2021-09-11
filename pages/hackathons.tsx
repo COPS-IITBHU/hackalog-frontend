@@ -7,6 +7,8 @@ import Head from "next/head"
 
 import Lottie from "react-lottie"
 import animationData from "../lottie/sad.json"
+import { HackathonSerializer } from "@/types/backend"
+import { AxiosResponse } from "axios"
 const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -14,15 +16,17 @@ const defaultOptions = {
 }
 
 export default function Hackathons() {
-    const [ongoing, setOngoing] = useState()
-    const [upcoming, setUpcoming] = useState()
-    const [completed, setCompleted] = useState()
-    const [error, setError] = useState([false, false, false])
+    const [ongoing, setOngoing] = useState<HackathonSerializer[]>()
+    const [upcoming, setUpcoming] = useState<HackathonSerializer[]>()
+    const [completed, setCompleted] = useState<HackathonSerializer[]>()
+    const [error, setError] = useState<boolean[]>([false, false, false])
 
     useEffect(() => {
         axiosInstance
             .get("hackathons?query=ongoing")
-            .then((response) => setOngoing(response.data))
+            .then((response: AxiosResponse<HackathonSerializer[]>) =>
+                setOngoing(response.data)
+            )
             .catch((err) => {
                 let arr = error
                 arr[0] = true
@@ -33,7 +37,9 @@ export default function Hackathons() {
     useEffect(() => {
         axiosInstance
             .get("hackathons?query=upcoming")
-            .then((response) => setUpcoming(response.data))
+            .then((response: AxiosResponse<HackathonSerializer[]>) =>
+                setUpcoming(response.data)
+            )
             .catch((err) => {
                 let arr = error
                 arr[1] = true
@@ -41,7 +47,9 @@ export default function Hackathons() {
             })
         axiosInstance
             .get("hackathons?query=completed")
-            .then((response) => setCompleted(response.data))
+            .then((response: AxiosResponse<HackathonSerializer[]>) =>
+                setCompleted(response.data)
+            )
             .catch((err) => {
                 let arr = error
                 arr[2] = true
@@ -243,7 +251,7 @@ export default function Hackathons() {
     )
 }
 
-function HackathonList(props) {
+function HackathonList(props: { hackathons: HackathonSerializer[] }) {
     return (
         <div className="row no-gutters">
             {props.hackathons.map((hackathon, index) => (
