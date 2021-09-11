@@ -1,18 +1,53 @@
-import React from "react"
-import { loadFirebase } from "./firebase"
+import React, { PropsWithChildren } from "react"
+import { loadFirebase, userType } from "./firebase"
 import axios from "../util/axios"
+import { ProfileSerializer } from "../types/backend"
 
-const AuthContext = React.createContext({})
+type tokenType = string | null
+type profileType = ProfileSerializer | null
+type loadingType = boolean
+type PropTypes = PropsWithChildren<{}>
 
-export const AuthProvider = ({ children }) => {
-    const [firebaseUser, setFirebaseUser] = React.useState(null)
-    const [token, setToken] = React.useState(null)
-    const [profile, setProfile] = React.useState(null)
-    const [loading, setLoading] = React.useState(true)
+const AuthContext = React.createContext<{
+    handleLogout: () => void
+    handleSignIn: () => void
+    setFirebaseUser: React.Dispatch<React.SetStateAction<userType>>
+    setProfile: React.Dispatch<React.SetStateAction<profileType>>
+    setToken: React.Dispatch<React.SetStateAction<tokenType>>
+    firebaseUser: userType
+    loading: loadingType
+    profile: profileType
+    token: tokenType
+}>({
+    handleLogout: () => {},
+    handleSignIn: () => {},
+    setFirebaseUser: () => {},
+    setProfile: () => {},
+    setToken: () => {},
+    firebaseUser: null,
+    loading: false,
+    profile: null,
+    token: null,
+})
 
-    const updateProfile = (token) => {
+export const AuthProvider = ({ children }: PropTypes) => {
+    const [firebaseUser, setFirebaseUser] = React.useState<userType>(null)
+    const [token, setToken] = React.useState<tokenType>(null)
+    const [profile, setProfile] = React.useState<profileType>(null)
+    const [loading, setLoading] = React.useState<loadingType>(false)
+
+    const updateProfile = (token: string) => {
         axios.defaults.headers.common["Authorization"] = `Token ${token}`
-        return axios.get(`profile/`)
+        axios
+            .get<profileType>(`profile/`)
+            .then((response) => {
+                setToken(token)
+                setProfile(response.data)
+                setLoading(false)
+            })
+            .catch((error) => {
+                setLoading(false)
+            })
     }
 
     const handleSignIn = async () => {
@@ -57,19 +92,13 @@ export const AuthProvider = ({ children }) => {
                     .getIdToken(true)
                     .then((idToken) => {
                         axios
-                            .post("login/", { id_token: idToken })
-                            .then((response) => {
-                                let newToken = response.data.token
-                                updateProfile(newToken)
-                                    .then((response) => {
-                                        setToken(newToken)
-                                        setProfile(response.data)
-                                        setLoading(false)
-                                    })
-                                    .catch((error) => {
-                                        setLoading(false)
-                                    })
-                            })
+                            .post<{token: string}>("login/", { id_token: idToken })
+                            .then(
+                                (response) => {
+                                    let newToken: string = response.data.token
+                                    updateProfile(newToken)
+                                }
+                            )
                             .catch((error) => {
                                 setLoading(false)
                             })
