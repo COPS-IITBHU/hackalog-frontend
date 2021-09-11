@@ -24,11 +24,7 @@ const defaultOptions = {
     // 	preserveAspectRatio: 'xMidYMid slice'
     // }
 }
-export interface Auth {
-    token?: string | null
-    profile?: any | null
-    loading?: boolean
-}
+
 export interface RequestUserType {
     loading?: boolean
     user?: ProfileSerializer | null
@@ -46,7 +42,7 @@ const EditProfile = lazy(
 function Profile() {
     const router = useRouter()
     const { username } = router.query
-    const { token, profile, loading }: Auth = useAuth()
+    const { token, profile, loading } = useAuth()
 
     const [userRequest, setUserRequest] = useState<RequestUserType>({
         loading: false,
