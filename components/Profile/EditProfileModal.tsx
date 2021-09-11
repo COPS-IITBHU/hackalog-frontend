@@ -28,7 +28,7 @@ const EditProfile = ({
     show,
     closable,
 }: ModalPropTypes) => {
-    const { firebaseUser }: any = useAuth()
+    const { firebaseUser } = useAuth()
     const [err, seterr] = useState("")
     const [wait, setwait] = useState(false)
     const handleChange = (newValue) => setSelectedSkills(newValue)
