@@ -19,11 +19,11 @@ import gfm from "remark-gfm"
 import highlight from "remark-highlight.js"
 import codeformatter from "remark-code-frontmatter"
 import Head from "next/head"
-import { 
-    HackathonDetailSerializer, 
-    SubmissionsSerializer, 
-    TeamDetailSerializer, 
-    TeamSerializer 
+import {
+    HackathonDetailSerializer,
+    SubmissionsSerializer,
+    TeamDetailSerializer,
+    TeamSerializer,
 } from "@/types/backend"
 
 export default function Hackathon() {
@@ -32,7 +32,9 @@ export default function Hackathon() {
 
     const { token, profile, loading } = useAuth()
     const [localLoading, setLocalLoading] = useState<boolean>(true)
-    const [hackathon, setHackathon] = useState<HackathonDetailSerializer>({} as HackathonDetailSerializer)
+    const [hackathon, setHackathon] = useState<HackathonDetailSerializer>(
+        {} as HackathonDetailSerializer
+    )
     const [error, setError] = useState<number>(0)
 
     useEffect(() => {
@@ -72,7 +74,9 @@ export default function Hackathon() {
                     "Authorization"
                 ] = `Token ${token}`
             axios
-                .get<SubmissionsSerializer[]>(`/hackathons/${slug}/submissions/`)
+                .get<SubmissionsSerializer[]>(
+                    `/hackathons/${slug}/submissions/`
+                )
                 .then((response) => {
                     setSubmisssions(response.data)
                 })
@@ -115,7 +119,9 @@ export default function Hackathon() {
         )
     }
 
-    var myTeam: TeamSerializer | TeamSerializer[] | { team_id: string } = { team_id: "#" }
+    var myTeam: TeamSerializer | TeamSerializer[] | { team_id: string } = {
+        team_id: "#",
+    }
     if (profile) {
         myTeam = profile.teams.filter(
             (team) => team.hackathon.slug == hackathon.slug
@@ -450,7 +456,9 @@ export default function Hackathon() {
     )
 }
 
-type OverviewPropTypes = PropsWithChildren<{hackathon: HackathonDetailSerializer}>
+type OverviewPropTypes = PropsWithChildren<{
+    hackathon: HackathonDetailSerializer
+}>
 function Overview({ hackathon }: OverviewPropTypes) {
     return (
         <div className="overview_body">
@@ -680,10 +688,10 @@ function Participants({ slug }: ParticipantsPropTypes) {
     )
 }
 
-type LeaderboardPropTypes = PropsWithChildren<{ 
-    status: string 
+type LeaderboardPropTypes = PropsWithChildren<{
+    status: string
     submissions: SubmissionsSerializer[]
-    loading: boolean 
+    loading: boolean
 }>
 function Leaderboard({ status, submissions, loading }: LeaderboardPropTypes) {
     const submissionList = submissions
