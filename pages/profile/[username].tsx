@@ -34,7 +34,7 @@ export interface RequestUserType {
     user?: ProfileSerializer | null
 }
 
-export interface EditSet {
+export interface EditDialogOptions {
     show: boolean
     closable: boolean
 }
@@ -52,7 +52,7 @@ function Profile() {
         loading: false,
     })
     const [currentUser, setCurrentUser] = useState<boolean>(false)
-    const [editDialog, setEdit] = useState<EditSet>({
+    const [editDialog, setEdit] = useState<EditDialogOptions>({
         show: false,
         closable: true,
     })
