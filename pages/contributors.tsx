@@ -19,7 +19,11 @@ type Contributor = {
 
 // These are few of the fields received from GITHUB APIs
 // Only these field have been used, so rest have been left out
+<<<<<<< HEAD:pages/contributors.tsx
 type ContributorsGithubAPIResponse = {
+=======
+type ContriResponseSerializer = {
+>>>>>>> 59cbde30c41e27b99a57406d65d7ef61f8c5871f:pages/contributors.js
     login: string
     url: string
     avatar_url: string
@@ -40,16 +44,26 @@ const defaultLottieOptions: DefaultOptionType = {
 
 export default function Contributors() {
     const [contriFrontend, setContributorsFront] =
+<<<<<<< HEAD:pages/contributors.tsx
         useState<ContributorsGithubAPIResponse[]>(null)
     const [contriBackend, setContributorsBack] =
         useState<ContributorsGithubAPIResponse[]>(null)
+=======
+        useState<ContriResponseSerializer[]>(null)
+    const [contriBackend, setContributorsBack] =
+        useState<ContriResponseSerializer[]>(null)
+>>>>>>> 59cbde30c41e27b99a57406d65d7ef61f8c5871f:pages/contributors.js
     const [fullname, setFullName] = useState<Object[]>([{}] as Object[])
     const [contributors, setContributors] = useState<Contributor[]>(null)
     const [error, setError] = useState<boolean>(false)
 
     useEffect(() => {
         axios
+<<<<<<< HEAD:pages/contributors.tsx
             .get<ContributorsGithubAPIResponse[]>(
+=======
+            .get<ContriResponseSerializer[]>(
+>>>>>>> 59cbde30c41e27b99a57406d65d7ef61f8c5871f:pages/contributors.js
                 "https://api.github.com/repos/COPS-IITBHU/hackalog-frontend/contributors"
             )
             .then((res) => setContributorsFront(res.data))
@@ -57,7 +71,11 @@ export default function Contributors() {
                 setError(true)
             })
         axios
+<<<<<<< HEAD:pages/contributors.tsx
             .get<ContributorsGithubAPIResponse[]>(
+=======
+            .get<ContriResponseSerializer[]>(
+>>>>>>> 59cbde30c41e27b99a57406d65d7ef61f8c5871f:pages/contributors.js
                 "https://api.github.com/repos/COPS-IITBHU/hackalog-backend/contributors"
             )
             .then((res) => setContributorsBack(res.data))
