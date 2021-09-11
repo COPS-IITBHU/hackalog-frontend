@@ -6,7 +6,7 @@ import { Text, Image, Button, Div } from "atomize"
 import { FaGithub } from "react-icons/fa"
 
 import axios from "../../util/axios"
-import { AxiosResponse } from "axios"
+
 import { useAuth } from "../../context/auth"
 import { Interests } from "../../components/Profile"
 import TeamCard from "../../components/Profile/TeamCard"
@@ -15,12 +15,8 @@ import Head from "next/head"
 
 import Lottie from "react-lottie"
 import animationData from "../../lottie/sad.json"
-import {ProfileSerializer} from "types/backend"
-const defaultOptions: {
-    loop: boolean
-    autoplay: boolean
-    animationData: any | null
-} = {
+import { ProfileSerializer } from "types/backend"
+const defaultOptions = {
     loop: true,
     autoplay: true,
     animationData: animationData,
@@ -33,51 +29,48 @@ export interface Auth {
     profile?: any | null
     loading?: boolean
 }
-export interface RUser {
+export interface RequestUserType {
     loading?: boolean
     user?: any | null
 }
-export interface Edit {
-    (e: any): void
-}
+
 export interface EditSet {
     show: boolean
     closable: boolean
 }
 
-
 const EditProfile = lazy(
     () => import("../../components/Profile/EditProfileModal")
 )
 
-function Profile(): JSX.Element {
+function Profile() {
     const router = useRouter()
     const { username } = router.query
     const { token, profile, loading }: Auth = useAuth()
 
-    const [userRequest, setUserRequest] = useState<RUser>({ loading: false })
+    const [userRequest, setUserRequest] = useState<RequestUserType>({
+        loading: false,
+    })
     const [currentUser, setCurrentUser] = useState<boolean>(false)
     const [editDialog, setEdit] = useState<EditSet>({
         show: false,
         closable: true,
     })
 
-    const editProfile: Edit = (): void =>
-        setEdit({ show: true, closable: true })
-    const handleClose: Edit = (): void =>
-        setEdit({ show: false, closable: false })
+    const editProfile = () => setEdit({ show: true, closable: true })
+    const handleClose = () => setEdit({ show: false, closable: false })
 
     useEffect(() => {
         if (username) {
             setUserRequest({ loading: true })
             axios
-                .get<ProfileSerializer[]>(`profile/${username}/`)
-                .then((res: AxiosResponse) => {
+                .get<ProfileSerializer>(`profile/${username}/`)
+                .then((res) => {
                     setUserRequest({
                         loading: false,
                         user: res.data,
                     })
-                    const arr: ProfileSerializer[] = [
+                    const arr: string[] = [
                         res.data.name,
                         res.data.username,
                         res.data.interests,
@@ -85,9 +78,7 @@ function Profile(): JSX.Element {
                         res.data.github_handle,
                     ]
                     // Check for null fields
-                    if (
-                        !arr.every((elm:any) => elm !== "" && elm !== null)
-                    ) {
+                    if (!arr.every((elm) => elm !== "" && elm !== null)) {
                         setEdit({
                             show: true,
                             closable: false,
