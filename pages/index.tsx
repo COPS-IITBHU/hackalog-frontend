@@ -22,7 +22,7 @@ const defaultLottieOptions: DefaultOptionType = {
 }
 
 function useOnScreen(options) {
-    const ref = React.useRef()
+    const ref = React.useRef<HTMLDivElement>(null)
     const [visible, setVisible] = React.useState<boolean>(false)
 
     React.useEffect(() => {
@@ -40,7 +40,7 @@ function useOnScreen(options) {
                 observer.unobserve(current)
             }
         }
-    }, [ref.options, options])
+    }, [ref.current, options])
     return [ref, visible]
 }
 
