@@ -6,10 +6,16 @@ import axiosInstance from "../util/axios"
 import React from "react"
 import Link from "next/link"
 import Head from "next/head"
-
+import { HackathonSerializer } from "../types/backend"
 import Lottie from "react-lottie"
 import animationData from "../lottie/sad.json"
-const defaultOptions = {
+
+interface DefaultOptionType {
+    loop: boolean
+    autoplay: boolean
+    animationData: any
+}
+const defaultLottieOptions: DefaultOptionType = {
     loop: true,
     autoplay: true,
     animationData: animationData,
@@ -17,7 +23,7 @@ const defaultOptions = {
 
 function useOnScreen(options) {
     const ref = React.useRef()
-    const [visible, setVisible] = React.useState(false)
+    const [visible, setVisible] = React.useState<boolean>(false)
 
     React.useEffect(() => {
         const observer = new IntersectionObserver(([entry]) => {
@@ -39,13 +45,15 @@ function useOnScreen(options) {
 }
 
 export default function Home() {
-    const [hackathons, setHackathons] = React.useState([])
+    const [hackathons, setHackathons] = React.useState<HackathonSerializer[]>(
+        []
+    )
     const [ref, visible] = useOnScreen({
         rootMargin: "-100px",
     })
     React.useEffect(() => {
         axiosInstance
-            .get("hackathons")
+            .get<HackathonSerializer[]>("hackathons")
             .then((response) => {
                 setHackathons(response.data)
             })
@@ -54,14 +62,14 @@ export default function Home() {
             })
     }, [])
 
-    var previousHackathons = false
+    var previousHackathons: HackathonSerializer[] = []
     if (hackathons.length) {
         previousHackathons = hackathons
             .filter((hackathon) => hackathon.status == "Completed")
             .slice(0, 3)
     }
 
-    var currentAndUpcomingHackathons = false
+    var currentAndUpcomingHackathons: HackathonSerializer[] = []
     if (hackathons.length) {
         currentAndUpcomingHackathons = hackathons
             .filter(
@@ -238,7 +246,7 @@ export default function Home() {
                     </div>
                 </div>
                 <div className="py-3 py-md-5">
-                    {currentAndUpcomingHackathons ? (
+                    {currentAndUpcomingHackathons !== [] ? (
                         <>
                             {currentAndUpcomingHackathons.length ? (
                                 <div className="row no-gutters align-items-stretch justify-content-start">
@@ -258,7 +266,7 @@ export default function Home() {
                             ) : (
                                 <div className="text-center">
                                     <Lottie
-                                        options={defaultOptions}
+                                        options={defaultLottieOptions}
                                         height={300}
                                     />
                                     <Text
@@ -314,7 +322,7 @@ export default function Home() {
                     </div>
                 </div>
                 <div className="py-3 py-md-5">
-                    {!previousHackathons ? (
+                    {previousHackathons === [] ? (
                         <Spinner
                             style={{
                                 position: "absolute",
@@ -338,7 +346,10 @@ export default function Home() {
                         </div>
                     ) : (
                         <div className="text-center">
-                            <Lottie options={defaultOptions} height={300} />
+                            <Lottie
+                                options={defaultLottieOptions}
+                                height={300}
+                            />
                             <Text
                                 tag="h6"
                                 textSize="subheader"
