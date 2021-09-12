@@ -1,7 +1,20 @@
 import SingleIconButton from "../Buttons/IconsButton"
 
-export default function Card(props) {
-    const { name, image, description } = props
+type CardPropTypes = {
+    name: string
+    image: string
+    github: string
+    description: string[]
+    handle_name: string
+}
+
+export default function ContributorCard({
+    name,
+    image,
+    description,
+    github,
+    handle_name,
+}: CardPropTypes) {
     return (
         <>
             <div className="item-shadow h-100 d-flex flex-column justify-content-between card-lift">
@@ -35,8 +48,8 @@ export default function Card(props) {
                     </div>
                 </div>
                 <div className="text-center py-3">
-                    <a href={props.github} target="_blank" rel="noreferrer">
-                        <SingleIconButton>{props.handle_name}</SingleIconButton>
+                    <a href={github} target="_blank" rel="noreferrer">
+                        <SingleIconButton>{handle_name}</SingleIconButton>
                     </a>
                 </div>
             </div>

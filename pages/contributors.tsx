@@ -5,43 +5,71 @@ import animationData from "../lottie/sad.json"
 import { Text } from "atomize"
 import { Spinner } from "react-bootstrap"
 import Lottie from "react-lottie"
-import Card from "../components/Cards/Card"
+import Card from "../components/Cards/ContributorCard"
 
-const defaultOptions = {
+// Created for Contributors props using the data received from GITHUB APIs
+type Contributor = {
+    handle_name: string
+    name: string
+    handle_url: string
+    image: string
+    github: string
+    description: string[]
+}
+
+// These are few of the fields received from GITHUB APIs
+// Only these field have been used, so rest have been left out
+type ContriResponseSerializer = {
+    login: string
+    url: string
+    avatar_url: string
+    html_url: string
+}
+
+interface DefaultOptionType {
+    loop: boolean
+    autoplay: boolean
+    animationData: any
+}
+
+const defaultLottieOptions: DefaultOptionType = {
     loop: true,
     autoplay: true,
     animationData: animationData,
 }
 
 export default function Contributors() {
-    const [contriFrontend, setContributorsFront] = useState()
-    const [contriBackend, setContributorsBack] = useState()
-    const [fullname, setFullName] = useState([{}])
-    const [contributors, setContributors] = useState()
-    const [error, setError] = useState(false)
+    const [contriFrontend, setContributorsFront] =
+        useState<ContriResponseSerializer[]>(null)
+    const [contriBackend, setContributorsBack] =
+        useState<ContriResponseSerializer[]>(null)
+    const [fullname, setFullName] = useState<Object[]>([{}] as Object[])
+    const [contributors, setContributors] = useState<Contributor[]>(null)
+    const [error, setError] = useState<boolean>(false)
 
     useEffect(() => {
         axios
-            .get(
+            .get<ContriResponseSerializer[]>(
                 "https://api.github.com/repos/COPS-IITBHU/hackalog-frontend/contributors"
             )
             .then((res) => setContributorsFront(res.data))
-            .catch((err) => {
+            .catch(() => {
                 setError(true)
             })
         axios
-            .get(
+            .get<ContriResponseSerializer[]>(
                 "https://api.github.com/repos/COPS-IITBHU/hackalog-backend/contributors"
             )
             .then((res) => setContributorsBack(res.data))
-            .catch((err) => {
+            .catch(() => {
                 setError(true)
             })
     }, [error])
     useEffect(() => {
         if (contriFrontend && contriBackend) {
-            let repoTracker = {}
-            let arr = []
+            let repoTracker: Object = {}
+            let arr: Contributor[] = []
+
             for (let x of contriFrontend) {
                 repoTracker[x.login] = 1
             }
@@ -50,7 +78,7 @@ export default function Contributors() {
             }
 
             for (let x of contriFrontend) {
-                let repos = ["hackalog-frontend"]
+                let repos: string[] = ["hackalog-frontend"]
                 if (repoTracker[x.login] === 0)
                     repos = ["hackalog-frontend", "hackalog-backend"]
                 arr.push({
@@ -78,18 +106,18 @@ export default function Contributors() {
     }, [contriFrontend, contriBackend])
     useEffect(() => {
         if (contributors) {
-            let arr = contributors
+            let arr: Contributor[] = contributors
             for (let x of arr) {
-                let url = x.handle_url
+                let url: string = x.handle_url
                 axios
-                    .get(url)
+                    .get<{ login: string; name: string }>(url)
                     .then((res) =>
                         setFullName([
                             ...fullname,
                             (fullname[0][res.data.login] = res.data.name),
                         ])
                     )
-                    .catch((e) => setError(true))
+                    .catch(() => setError(true))
             }
         }
     }, [contributors])
@@ -155,7 +183,10 @@ export default function Contributors() {
                         </div>
                     ) : contributors ? (
                         <div className="text-center">
-                            <Lottie options={defaultOptions} height={300} />
+                            <Lottie
+                                options={defaultLottieOptions}
+                                height={300}
+                            />
                             <Text
                                 tag="h6"
                                 textSize="subheader"

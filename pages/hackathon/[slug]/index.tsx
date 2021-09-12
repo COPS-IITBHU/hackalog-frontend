@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { PropsWithChildren, useEffect, useState } from "react"
 import axios from "../../../util/axios"
 import { useAuth } from "../../../context/auth"
 import {
@@ -19,15 +19,23 @@ import gfm from "remark-gfm"
 import highlight from "remark-highlight.js"
 import codeformatter from "remark-code-frontmatter"
 import Head from "next/head"
+import {
+    HackathonDetailSerializer,
+    SubmissionsSerializer,
+    TeamDetailSerializer,
+    TeamSerializer,
+} from "@/types/backend"
 
 export default function Hackathon() {
     const router = useRouter()
     const slug = router.query.slug
 
     const { token, profile, loading } = useAuth()
-    const [localLoading, setLocalLoading] = useState(true)
-    const [hackathon, setHackathon] = useState({})
-    const [error, setError] = useState(0)
+    const [localLoading, setLocalLoading] = useState<boolean>(true)
+    const [hackathon, setHackathon] = useState<HackathonDetailSerializer>(
+        {} as HackathonDetailSerializer
+    )
+    const [error, setError] = useState<number>(0)
 
     useEffect(() => {
         if (slug) {
@@ -37,7 +45,7 @@ export default function Hackathon() {
                     "Authorization"
                 ] = `Token ${token}`
             axios
-                .get(`/hackathons/${slug}/`)
+                .get<HackathonDetailSerializer>(`/hackathons/${slug}/`)
                 .then((response) => {
                     let hackathon = response.data
                     if (!hackathon.image)
@@ -50,11 +58,13 @@ export default function Hackathon() {
                 })
                 .finally(() => setLocalLoading(false))
         }
-        return () => delete axios.defaults.headers.common["Authorization"]
+        return () => {
+            delete axios.defaults.headers.common["Authorization"]
+        }
     }, [slug, token])
 
-    const [submissions, setSubmisssions] = useState([])
-    const [leaderboardLoading, setLeaderboardLoading] = useState(true)
+    const [submissions, setSubmisssions] = useState<SubmissionsSerializer[]>([])
+    const [leaderboardLoading, setLeaderboardLoading] = useState<boolean>(true)
 
     useEffect(() => {
         if (slug && hackathon) {
@@ -64,7 +74,9 @@ export default function Hackathon() {
                     "Authorization"
                 ] = `Token ${token}`
             axios
-                .get(`/hackathons/${slug}/submissions/`)
+                .get<SubmissionsSerializer[]>(
+                    `/hackathons/${slug}/submissions/`
+                )
                 .then((response) => {
                     setSubmisssions(response.data)
                 })
@@ -107,13 +119,13 @@ export default function Hackathon() {
         )
     }
 
-    var myTeam = { team_id: "#" }
+    var myTeam: { team_id: string } = { team_id: "#" }
     if (profile) {
-        myTeam = profile.teams.filter(
+        var myTeamDetail: TeamSerializer[] = profile.teams.filter(
             (team) => team.hackathon.slug == hackathon.slug
         )
-        if (myTeam.length) myTeam = myTeam[0]
-        else myTeam = { team_id: "#" }
+        if (myTeamDetail.length)
+            myTeam.team_id = myTeamDetail[0].team_id.toString()
     }
     return (
         <>
@@ -276,20 +288,16 @@ export default function Hackathon() {
                                                             ></div>
                                                             {submissions.length ? (
                                                                 <Link
-                                                                    className="pt-3"
                                                                     href={`/submission/${submissions[0].id}`}
                                                                 >
-                                                                    <a className="btn btn-success w-100">
+                                                                    <a className="btn btn-success w-100 pt-3">
                                                                         Your
                                                                         Submission
                                                                     </a>
                                                                 </Link>
                                                             ) : (
-                                                                <Link
-                                                                    className="pt-3"
-                                                                    href="#"
-                                                                >
-                                                                    <a className="btn btn-success w-100">
+                                                                <Link href="#">
+                                                                    <a className="btn btn-success w-100 pt-3">
                                                                         <Spinner
                                                                             animation="border"
                                                                             role="status"
@@ -445,7 +453,11 @@ export default function Hackathon() {
         </>
     )
 }
-function Overview({ hackathon }) {
+
+type OverviewPropTypes = PropsWithChildren<{
+    hackathon: HackathonDetailSerializer
+}>
+function Overview({ hackathon }: OverviewPropTypes) {
     return (
         <div className="overview_body">
             <div className="p-3">
@@ -532,15 +544,16 @@ function Overview({ hackathon }) {
     )
 }
 
-function Participants({ slug }) {
-    const [teams, setTeams] = useState([])
-    const [loading, setLoading] = useState(true)
+type ParticipantsPropTypes = PropsWithChildren<{ slug: string }>
+function Participants({ slug }: ParticipantsPropTypes) {
+    const [teams, setTeams] = useState<TeamDetailSerializer[]>([])
+    const [loading, setLoading] = useState<boolean>(true)
 
     useEffect(() => {
         setLoading(true)
         if (slug) {
             axios
-                .get(`/hackathons/${slug}/teams/`)
+                .get<TeamDetailSerializer[]>(`/hackathons/${slug}/teams/`)
                 .then((response) => {
                     setTeams(response.data)
                 })
@@ -673,7 +686,12 @@ function Participants({ slug }) {
     )
 }
 
-function Leaderboard({ status, submissions, loading }) {
+type LeaderboardPropTypes = PropsWithChildren<{
+    status: string
+    submissions: SubmissionsSerializer[]
+    loading: boolean
+}>
+function Leaderboard({ status, submissions, loading }: LeaderboardPropTypes) {
     const submissionList = submissions
         .sort((a, b) => b.score - a.score)
         .map((submission, index) => (
