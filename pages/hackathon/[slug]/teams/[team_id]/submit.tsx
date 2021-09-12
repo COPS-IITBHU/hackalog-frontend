@@ -30,8 +30,9 @@ export default function Submit() {
     const [description, setDescription] = useState<string>("")
     const [url, setURL] = useState<string>("")
     const [hackathonLoading, setHackathonLoading] = useState<boolean>(true)
-    const [hackathon, setHackathon] =
-        useState<HackathonDetailSerializer | null>(null)
+    const [hackathon, setHackathon] = useState<HackathonDetailSerializer>(
+        {} as HackathonDetailSerializer
+    )
     const [err, setError] = useState<number>(0)
 
     const validateForm = () => {
