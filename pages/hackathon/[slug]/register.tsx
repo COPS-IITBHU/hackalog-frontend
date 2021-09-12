@@ -1,6 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useRouter } from "next/router"
-import axios, { AxiosError, AxiosResponse } from "axios"
+// import axios, { AxiosError, AxiosResponse } from "axios"
+import { default as axios } from "util/axios"
 import { Div, Row, Col, Text, Button, Input } from "atomize"
 import { useAuth } from "../../../context/auth"
 import React, { ChangeEvent, useState } from "react"
@@ -53,10 +54,12 @@ export default function Register() {
     const doRegister = async (name: string) => {
         try {
             axios.defaults.headers.common["Authorization"] = `Token ${token}`
-            const response: AxiosResponse<TeamCreateSerializer> =
-                await axios.post(`${API_URL}hackathons/${hackathonId}/teams/`, {
+            const response = await axios.post<TeamCreateSerializer>(
+                `${API_URL}hackathons/${hackathonId}/teams/`,
+                {
                     name: name,
-                })
+                }
+            )
             // const response = await axios.post(
             //     `http://127.0.0.1:8000/hackathons/${Number.parseInt(
             //         hackathonId
@@ -112,7 +115,7 @@ export default function Register() {
     const doJoin = async (joinCode: string) => {
         try {
             axios.defaults.headers.common["Authorization"] = `Token ${token}`
-            const response: AxiosResponse<{}> = await axios.patch(
+            const response = await axios.patch<{}>(
                 `${API_URL}hackathons/${hackathonId}/teams/join/${joinCode}/`,
                 {}
             )
