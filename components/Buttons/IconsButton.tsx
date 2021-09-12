@@ -1,9 +1,9 @@
 import { FiGithub } from "react-icons/fi"
 
-export default function SingleIconButton(props) {
+export default function SingleIconButton(props: { children: string }) {
     return (
         <>
-            <button className="btn btn-round" disabled={props.disabled}>
+            <button className="btn btn-round">
                 <div className="d-flex align-items-center">
                     <div className="text-content">{props.children}</div>
                     <div className="arrow pl-2">
