@@ -21,36 +21,11 @@ const defaultLottieOptions: DefaultOptionType = {
     animationData: animationData,
 }
 
-function useOnScreen(options) {
-    const ref = React.useRef<HTMLDivElement>(null)
-    const [visible, setVisible] = React.useState<boolean>(false)
-
-    React.useEffect(() => {
-        const observer = new IntersectionObserver(([entry]) => {
-            setVisible(entry.isIntersecting)
-        }, options)
-
-        if (ref.current) {
-            observer.observe(ref.current)
-        }
-        const current = ref.current
-
-        return () => {
-            if (current) {
-                observer.unobserve(current)
-            }
-        }
-    }, [ref.current, options])
-    return [ref, visible]
-}
 
 export default function Home() {
     const [hackathons, setHackathons] = React.useState<HackathonSerializer[]>(
         []
     )
-    const [ref, visible] = useOnScreen({
-        rootMargin: "-100px",
-    })
     React.useEffect(() => {
         axiosInstance
             .get<HackathonSerializer[]>("hackathons")
@@ -128,9 +103,6 @@ export default function Home() {
                 <meta name="author" content="COPS IITBHU" />
                 <meta name="application-name" content="COPS Hackalog" />
             </Head>
-            <div className={visible ? "" : "d-none"} ref={ref}>
-                {visible ? <Header /> : ""}
-            </div>
             <div
                 style={{
                     background: "url(/images/home-jumbo.jpg) no-repeat",
