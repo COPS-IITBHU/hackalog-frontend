@@ -92,13 +92,13 @@ export const AuthProvider = ({ children }: PropTypes) => {
                     .getIdToken(true)
                     .then((idToken) => {
                         axios
-                            .post<{token: string}>("login/", { id_token: idToken })
-                            .then(
-                                (response) => {
-                                    let newToken: string = response.data.token
-                                    updateProfile(newToken)
-                                }
-                            )
+                            .post<{ token: string }>("login/", {
+                                id_token: idToken,
+                            })
+                            .then((response) => {
+                                let newToken: string = response.data.token
+                                updateProfile(newToken)
+                            })
                             .catch((error) => {
                                 setLoading(false)
                             })

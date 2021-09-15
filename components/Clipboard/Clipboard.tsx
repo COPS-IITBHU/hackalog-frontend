@@ -9,7 +9,7 @@ const Clipboard = (props: {
     buttonBg: string
     iconName: string
 }) => {
-    const copyClipboard = ():void => {
+    const copyClipboard = (): void => {
         copy(props.code)
         props.notify()
     }
