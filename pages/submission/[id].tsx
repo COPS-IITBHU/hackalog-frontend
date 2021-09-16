@@ -8,10 +8,7 @@ import Head from "next/head"
 import { BiCodeAlt } from "react-icons/bi"
 import { HiOutlineEmojiSad } from "react-icons/hi"
 import Link from "next/link"
-import {
-    TeamDetailSerializer,
-    SubmissionRUDSerializer,
-} from "@/types/backend"
+import { TeamDetailSerializer, SubmissionRUDSerializer } from "@/types/backend"
 
 export default function SubmissionDetail() {
     /*
