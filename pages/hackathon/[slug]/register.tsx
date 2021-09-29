@@ -9,7 +9,7 @@ import { API_URL } from "../../../util/constants"
 import Clipboard from "../../../components/Clipboard/Clipboard"
 import Head from "next/head"
 import { toast, ToastOptions } from "react-toastify"
-import { TeamCreateSerializer } from "@/types/backend"
+import { TeamCreateSerializer, TeamSerializer } from "@/types/backend"
 
 export default function Register() {
     const { token } = useAuth()
@@ -54,7 +54,7 @@ export default function Register() {
     const doRegister = async (name: string) => {
         try {
             axios.defaults.headers.common["Authorization"] = `Token ${token}`
-            const response = await axios.post<TeamCreateSerializer>(
+            const response = await axios.post<TeamSerializer>(
                 `${API_URL}hackathons/${hackathonId}/teams/`,
                 {
                     name: name,
@@ -68,7 +68,7 @@ export default function Register() {
             // )
             if (response.status === 201) {
                 notifHandler("Team creation successful", "success")
-                editCode({ code: response.data.team_id, show: true })
+                editCode({ code: response.data.team_id.toString(), show: true })
                 setTimeout(() => {
                     // router.push(`http://localhost:3000/hackathon/${hackathonId}/teams/${code.code}`)
                     let team_id = response.data.team_id
