@@ -6,6 +6,7 @@ import { Text, Image, Button, Div } from "atomize"
 import { FaGithub } from "react-icons/fa"
 
 import axios from "../../util/axios"
+
 import { useAuth } from "../../context/auth"
 import { Interests } from "../../components/Profile"
 import TeamCard from "../../components/Profile/TeamCard"
@@ -14,6 +15,7 @@ import Head from "next/head"
 
 import Lottie from "react-lottie"
 import animationData from "../../lottie/sad.json"
+import { ProfileSerializer } from "types/backend"
 const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -23,8 +25,18 @@ const defaultOptions = {
     // }
 }
 
-const EditProfile = lazy(() =>
-    import("../../components/Profile/EditProfileModal")
+export interface RequestUserType {
+    loading?: boolean
+    user?: ProfileSerializer | null
+}
+
+export interface EditDialogOptions {
+    show: boolean
+    closable: boolean
+}
+
+const EditProfile = lazy(
+    () => import("../../components/Profile/EditProfileModal")
 )
 
 function Profile() {
@@ -32,9 +44,14 @@ function Profile() {
     const { username } = router.query
     const { token, profile, loading } = useAuth()
 
-    const [userRequest, setUserRequest] = useState({ loading: false })
-    const [currentUser, setCurrentUser] = useState(false)
-    const [editDialog, setEdit] = useState({ show: false, closable: true })
+    const [userRequest, setUserRequest] = useState<RequestUserType>({
+        loading: false,
+    })
+    const [currentUser, setCurrentUser] = useState<boolean>(false)
+    const [editDialog, setEdit] = useState<EditDialogOptions>({
+        show: false,
+        closable: true,
+    })
 
     const editProfile = () => setEdit({ show: true, closable: true })
     const handleClose = () => setEdit({ show: false, closable: false })
@@ -43,13 +60,13 @@ function Profile() {
         if (username) {
             setUserRequest({ loading: true })
             axios
-                .get(`profile/${username}/`)
+                .get<ProfileSerializer>(`profile/${username}/`)
                 .then((res) => {
                     setUserRequest({
                         loading: false,
                         user: res.data,
                     })
-                    const arr = [
+                    const arr: string[] = [
                         res.data.name,
                         res.data.username,
                         res.data.interests,
@@ -68,7 +85,7 @@ function Profile() {
                     console.error(err)
                     setUserRequest({
                         loading: false,
-                        user: "NOT FOUND", //dev things, sorry for the changes
+                        user: null, //dev things, sorry for the changes
                     })
                 })
         }
@@ -111,7 +128,7 @@ function Profile() {
                 </Spinner>
             </Container>
         )
-    else if (userRequest.user === "NOT FOUND")
+    else if (userRequest.user === null)
         return <DefaultErrorPage statusCode={404} />
     return (
         <div style={{ background: "#87a3bb17" }}>

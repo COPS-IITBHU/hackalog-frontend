@@ -53,7 +53,7 @@ export type ProfileSerializer = {
     college: string
     github_handle: string
     bio: string
-    interests: string[]
+    interests: string
     photoURL: string // URL
     teams: TeamSerializer[]
     email: string
