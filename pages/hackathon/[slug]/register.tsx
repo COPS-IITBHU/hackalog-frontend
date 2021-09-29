@@ -1,6 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useRouter } from "next/router"
-// import axios, { AxiosError, AxiosResponse } from "axios"
 import { default as axios } from "util/axios"
 import { Div, Row, Col, Text, Button, Input } from "atomize"
 import { useAuth } from "../../../context/auth"
