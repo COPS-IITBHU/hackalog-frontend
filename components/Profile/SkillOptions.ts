@@ -1,4 +1,4 @@
-const skillsList = [
+const skillsList: string[] = [
     "AWS",
     "Angular",
     "C#",
@@ -21,6 +21,6 @@ const skillsList = [
     "Deno",
 ]
 
-export const options = skillsList.sort().map((s) => {
+export const options = skillsList.sort().map((s: string) => {
     return { label: s.trim(), value: s.trim() }
 })

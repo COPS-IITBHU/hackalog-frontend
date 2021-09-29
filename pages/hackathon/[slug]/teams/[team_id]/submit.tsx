@@ -6,29 +6,41 @@ import {
     Row,
     Form,
     Jumbotron,
+    FormControlProps,
 } from "react-bootstrap"
 import { Button, Container, Text } from "atomize"
-import { useEffect, useState } from "react"
+import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import { useRouter } from "next/router"
-import { toast } from "react-toastify"
+import { toast, ToastOptions } from "react-toastify"
 import { useAuth } from "../../../../../context/auth"
 import axios from "../../../../../util/axios"
 import Head from "next/head"
 import Link from "next/link"
+import {
+    HackathonDetailSerializer,
+    SubmissionsSerializer,
+} from "@/types/backend"
+import { AxiosError, AxiosResponse } from "axios"
 
 export default function Submit() {
     const router = useRouter()
     const { token, profile, loading } = useAuth()
 
-    const [title, setTitle] = useState("")
-    const [description, setDescription] = useState("")
-    const [url, setURL] = useState("")
-    const [hackathonLoading, setHackathonLoading] = useState(true)
-    const [hackathon, setHackathon] = useState({})
-    const [err, setError] = useState(0)
+    const [title, setTitle] = useState<string>("")
+    const [description, setDescription] = useState<string>("")
+    const [url, setURL] = useState<string>("")
+    const [hackathonLoading, setHackathonLoading] = useState<boolean>(true)
+    const [hackathon, setHackathon] = useState<HackathonDetailSerializer>(
+        {} as HackathonDetailSerializer
+    )
+    const [err, setError] = useState<number>(0)
 
     const validateForm = () => {
         return title.length > 0 && description.length > 0 && url.length > 0
+    }
+
+    const cleanUp = () => {
+        delete axios.defaults.headers.common["Authorization"]
     }
 
     useEffect(() => {
@@ -41,7 +53,7 @@ export default function Submit() {
                 ] = `Token ${token}`
             axios
                 .get(`/hackathons/${router.query.slug}/`)
-                .then((response) => {
+                .then((response: AxiosResponse<HackathonDetailSerializer>) => {
                     let hackathon = response.data
                     if (!hackathon.image)
                         hackathon.image = "/images/home-jumbo.jpg"
@@ -53,15 +65,14 @@ export default function Submit() {
                 })
                 .finally(() => setHackathonLoading(false))
         }
-        return () => delete axios.defaults.headers.common["Authorization"]
+        return cleanUp
     }, [router.query.slug])
 
-    const notifHandler = (message, type) => {
-        const config = {
+    const notifHandler = (message: string, type: string) => {
+        const config: ToastOptions = {
             position: "top-center",
             autoClose: 5000,
             hideProgressBar: false,
-            newestOnTop: false,
             closeOnClick: true,
             rtl: false,
             pauseOnFocusLoss: true,
@@ -86,7 +97,7 @@ export default function Submit() {
         }
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         if (token) {
             axios.defaults.headers.common["Authorization"] = `Token ${token}`
@@ -98,7 +109,7 @@ export default function Submit() {
                     submission_url: url,
                 })
                 .then(
-                    (res) => {
+                    (res: AxiosResponse<SubmissionsSerializer>) => {
                         notifHandler(
                             "Successfully submitted your project! Redirecting...",
                             "success"
@@ -233,7 +244,7 @@ export default function Submit() {
                                 submitted.
                             </Alert>
                             <Form onSubmit={handleSubmit}>
-                                <Form.Group size="sm" controlId="title">
+                                <Form.Group controlId="title">
                                     <Form.Label>Title*</Form.Label>
                                     <Form.Control
                                         autoFocus
@@ -244,7 +255,7 @@ export default function Submit() {
                                         }
                                     />
                                 </Form.Group>
-                                <Form.Group size="lg" controlId="description">
+                                <Form.Group controlId="description">
                                     <Form.Label>Description*</Form.Label>
                                     <Form.Control
                                         autoFocus
@@ -256,7 +267,7 @@ export default function Submit() {
                                         }
                                     />
                                 </Form.Group>
-                                <Form.Group size="lg" controlId="url">
+                                <Form.Group controlId="url">
                                     <Form.Label>URL*</Form.Label>
                                     <Form.Control
                                         autoFocus
@@ -288,7 +299,15 @@ export default function Submit() {
     )
 }
 
-const MessageModal = ({ title, body, buttonLink }) => {
+const MessageModal = ({
+    title,
+    body,
+    buttonLink,
+}: {
+    title: string
+    body: string
+    buttonLink: string
+}) => {
     return (
         <Modal show={true} onHide={() => {}}>
             <Modal.Header closeButton>
