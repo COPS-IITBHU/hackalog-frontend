@@ -53,7 +53,7 @@ export default function Register() {
     const doRegister = async (name: string) => {
         try {
             axios.defaults.headers.common["Authorization"] = `Token ${token}`
-            const response = await axios.post<TeamSerializer>(
+            const response = await axios.post<TeamCreateSerializer>(
                 `${API_URL}hackathons/${hackathonId}/teams/`,
                 {
                     name: name,

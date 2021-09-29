@@ -3,7 +3,7 @@ export type LoginSerializer = {
 }
 
 export type TeamCreateSerializer = {
-    name: string
+    team_id: string
 }
 
 export type SubmissionsSerializer = {
