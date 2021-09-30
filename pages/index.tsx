@@ -21,16 +21,17 @@ const defaultLottieOptions: DefaultOptionType = {
     animationData: animationData,
 }
 
-
 export default function Home() {
     const [hackathons, setHackathons] = React.useState<HackathonSerializer[]>(
         []
     )
+    const [loading, setLoading] = React.useState<Boolean>(true)
     React.useEffect(() => {
         axiosInstance
             .get<HackathonSerializer[]>("hackathons")
             .then((response) => {
                 setHackathons(response.data)
+                setLoading(false)
             })
             .catch((err) => {
                 console.error(err)
@@ -218,7 +219,7 @@ export default function Home() {
                     </div>
                 </div>
                 <div className="py-3 py-md-5">
-                    {currentAndUpcomingHackathons !== [] ? (
+                    {!loading ? (
                         <>
                             {currentAndUpcomingHackathons.length ? (
                                 <div className="row no-gutters align-items-stretch justify-content-start">
@@ -294,7 +295,7 @@ export default function Home() {
                     </div>
                 </div>
                 <div className="py-3 py-md-5">
-                    {previousHackathons === [] ? (
+                    {loading ? (
                         <Spinner
                             style={{
                                 position: "absolute",
