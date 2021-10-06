@@ -35,6 +35,11 @@ class MyDocument extends Document {
                         href="/favicon/favicon-16x16.png"
                     />
                     <link rel="manifest" href="/favicon/site.webmanifest" />
+
+                    <link
+                        href="https://use.fontawesome.com/releases/v5.0.10/css/all.css"
+                        rel="stylesheet"
+                    />
                 </Head>
                 <body>
                     <Main />
