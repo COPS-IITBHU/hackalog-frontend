@@ -82,7 +82,7 @@ const EditProfile = ({
             }
             axios
                 .patch(`profile/`, data)
-                .catch((e) => setwait(false))
+                .catch(() => setwait(false))
                 .then(
                     () => {
                         setwait(false)

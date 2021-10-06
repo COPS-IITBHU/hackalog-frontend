@@ -112,7 +112,7 @@ export default function Contributors() {
                 axios
                     .get<{ login: string; name: string }>(url)
                     .then((res) =>
-                        setFullName([
+                        setFullName((fullname) => [
                             ...fullname,
                             (fullname[0][res.data.login] = res.data.name),
                         ])
@@ -162,7 +162,7 @@ export default function Contributors() {
                     {contributors && contributors.length ? (
                         <div className="container py-4">
                             <div className="row no-gutters mt-2">
-                                {contributors.map((item, index) => (
+                                {contributors.map((item) => (
                                     <div
                                         className="col-12 col-md-6 col-lg-3 p-3"
                                         key={item.handle_name}
