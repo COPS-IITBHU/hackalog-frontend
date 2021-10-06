@@ -4,10 +4,10 @@ import copy from "copy-to-clipboard"
 const Clipboard = (props: {
     code: string
     notify: () => void
-    titleColor: string
-    codeColor: string
-    buttonBg: string
-    iconName: string
+    titleColor?: string
+    codeColor?: string
+    buttonBg?: string
+    iconName?: string
 }) => {
     const copyClipboard = (): void => {
         copy(props.code)
