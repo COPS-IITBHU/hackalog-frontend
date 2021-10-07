@@ -92,12 +92,16 @@ export default function Footer(): ReactElement {
                                 <b>Quick Links</b>
                                 <Text m={{ t: "0.5rem" }}>
                                     <Link href="/" passHref>
-                                        <p>Home</p>
+                                        <a href="/#">
+                                            <p>Home</p>
+                                        </a>
                                     </Link>
                                 </Text>
                                 <Text>
                                     <Link href="/hackathons" passHref>
-                                        <p>Hackathons</p>
+                                        <a href="/#">
+                                            <p>Hackathons</p>
+                                        </a>
                                     </Link>
                                 </Text>
                                 {token && profile && (
@@ -106,7 +110,9 @@ export default function Footer(): ReactElement {
                                             href={`/profile/${profile.username}`}
                                             passHref
                                         >
-                                            <p>Profile</p>
+                                            <a href="/#">
+                                                <p>Profile</p>
+                                            </a>
                                         </Link>
                                     </Text>
                                 )}
@@ -115,7 +121,9 @@ export default function Footer(): ReactElement {
                                         href="https://copsiitbhu.co.in"
                                         passHref
                                     >
-                                        <p>COPS</p>
+                                        <a href="/#">
+                                            <p>COPS</p>
+                                        </a>
                                     </Link>
                                 </Text>
                             </Div>
@@ -132,28 +140,34 @@ export default function Footer(): ReactElement {
                                     href="https://www.linkedin.com/company/cops-iitbhu/mycompany/"
                                     passHref
                                 >
-                                    <i
-                                        className="fab fa-linkedin fa-2x"
-                                        style={{ margin: "10px 5px" }}
-                                    />
+                                    <a href="/#">
+                                        <i
+                                            className="fab fa-linkedin fa-2x"
+                                            style={{ margin: "10px 5px" }}
+                                        />
+                                    </a>
                                 </Link>
                                 <Link
                                     href="https://github.com/COPS-IITBHU"
                                     passHref
                                 >
-                                    <i
-                                        className="fab fa-github fa-2x"
-                                        style={{ margin: "10px 5px" }}
-                                    />
+                                    <a href="/#">
+                                        <i
+                                            className="fab fa-github fa-2x"
+                                            style={{ margin: "10px 5px" }}
+                                        />
+                                    </a>
                                 </Link>
                                 <Link
                                     href="https://www.facebook.com/cops.iitbhu/"
                                     passHref
                                 >
-                                    <i
-                                        className="fab fa-facebook fa-2x"
-                                        style={{ margin: "10px 5px" }}
-                                    />
+                                    <a href="/#">
+                                        <i
+                                            className="fab fa-facebook fa-2x"
+                                            style={{ margin: "10px 5px" }}
+                                        />
+                                    </a>
                                 </Link>
                             </Text>
                         </Col>
