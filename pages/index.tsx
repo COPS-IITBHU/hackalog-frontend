@@ -163,7 +163,7 @@ export default function Home() {
                             <div className="p-4 bs-light h-100">
                                 <div className="icon-container">
                                     <img
-                                        src="/images/icon2.jpg"
+                                        src="/images/icon2.png"
                                         alt="Learn Icon"
                                         loading="lazy"
                                     />
