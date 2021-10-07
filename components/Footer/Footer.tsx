@@ -68,22 +68,24 @@ export default function Footer(): ReactElement {
                                     </Link>
                                 </Text>
                                 <Text>
-                                    &copy;{new Date().getFullYear()}
-                                    {"  "}
                                     <a
                                         href="https://copsiitbhu.co.in/"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                     >
-                                        COPS
+                                        {" "}
+                                        &copy;{new Date().getFullYear()}
+                                        {"  "}
+                                        COPS IIT BHU
                                     </a>
                                 </Text>
                             </Div>
                         </Col>
+                        <Col size={{ lg: 2 }} order={{ xs: 4, lg: 3 }}></Col>
                         <Col
-                            size={{ xs: 12, sm: 6, lg: 4 }}
-                            textAlign={{ xs: "center", lg: "center" }}
-                            order={{ xs: 2, lg: 3 }}
+                            size={{ xs: 12, sm: 6, lg: 2 }}
+                            textAlign={{ xs: "center", lg: "left" }}
+                            order={{ xs: 2, lg: 4 }}
                         >
                             <Div
                                 textSize={{ xs: "body", md: "1rem" }}
