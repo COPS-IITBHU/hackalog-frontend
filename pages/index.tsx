@@ -148,6 +148,7 @@ export default function Home() {
                                 <div className="icon-container">
                                     <img
                                         src="/images/icon1.png"
+                                        alt="Collaborate Icon"
                                         loading="lazy"
                                     />
                                 </div>
@@ -163,6 +164,7 @@ export default function Home() {
                                 <div className="icon-container">
                                     <img
                                         src="/images/icon2.jpg"
+                                        alt="Learn Icon"
                                         loading="lazy"
                                     />
                                 </div>
@@ -178,6 +180,7 @@ export default function Home() {
                                 <div className="icon-container">
                                     <img
                                         src="/images/icon3.png"
+                                        alt="Share Icon"
                                         loading="lazy"
                                     />
                                 </div>
