@@ -95,14 +95,14 @@ export default function Footer(): ReactElement {
                                 <Text m={{ t: "0.5rem" }}>
                                     <Link href="/" passHref>
                                         <a href="/#">
-                                            <p>Home</p>
+                                            <span>Home</span>
                                         </a>
                                     </Link>
                                 </Text>
                                 <Text>
                                     <Link href="/hackathons" passHref>
                                         <a href="/#">
-                                            <p>Hackathons</p>
+                                            <span>Hackathons</span>
                                         </a>
                                     </Link>
                                 </Text>
@@ -113,7 +113,7 @@ export default function Footer(): ReactElement {
                                             passHref
                                         >
                                             <a href="/#">
-                                                <p>Profile</p>
+                                                <span>Profile</span>
                                             </a>
                                         </Link>
                                     </Text>
@@ -124,7 +124,7 @@ export default function Footer(): ReactElement {
                                         passHref
                                     >
                                         <a href="/#">
-                                            <p>COPS</p>
+                                            <span>COPS</span>
                                         </a>
                                     </Link>
                                 </Text>
@@ -171,6 +171,17 @@ export default function Footer(): ReactElement {
                                         />
                                     </a>
                                 </Link>
+                                <Link
+                                    href="https://cops-discord-freshers.herokuapp.com/"
+                                    passHref
+                                >
+                                    <a href="/#">
+                                        <i
+                                            className="fab fa-discord fa-2x"
+                                            style={{ margin: "10px 5px" }}
+                                        />
+                                    </a>
+                                </Link>
                             </Text>
                         </Col>
                     </Row>
@@ -191,10 +202,10 @@ export default function Footer(): ReactElement {
                     cursor: pointer;
                     transform: scale(1.2);
                 }
-                p {
+                span {
                     color: #a1eafb;
                 }
-                p:hover {
+                span:hover {
                     cursor: pointer;
                     color: #cbf1f5;
                     transform: scale(1.1);
