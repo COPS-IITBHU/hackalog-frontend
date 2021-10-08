@@ -242,13 +242,17 @@ export default function Hackathon() {
                                                         <div>
                                                             <Link
                                                                 href={`/hackathon/${slug}/teams/${myTeam.team_id}`}
+                                                                passHref
                                                             >
-                                                                <Button
-                                                                    variant="success"
-                                                                    className="w-100"
-                                                                >
-                                                                    Your Team
-                                                                </Button>
+                                                                <a href="/#">
+                                                                    <Button
+                                                                        variant="success"
+                                                                        className="w-100"
+                                                                    >
+                                                                        Your
+                                                                        Team
+                                                                    </Button>
+                                                                </a>
                                                             </Link>
 
                                                             <div
@@ -258,14 +262,18 @@ export default function Hackathon() {
                                                             ></div>
                                                             <Link
                                                                 href={`/hackathon/${slug}/teams/${myTeam.team_id}/submit`}
+                                                                passHref
                                                             >
-                                                                <Button
-                                                                    variant="success"
-                                                                    className="w-100"
-                                                                >
-                                                                    Submit Your
-                                                                    Project
-                                                                </Button>
+                                                                <a href="/#">
+                                                                    <Button
+                                                                        variant="success"
+                                                                        className="w-100"
+                                                                    >
+                                                                        Submit
+                                                                        Your
+                                                                        Project
+                                                                    </Button>
+                                                                </a>
                                                             </Link>
                                                         </div>
                                                     </>
@@ -286,13 +294,17 @@ export default function Hackathon() {
                                                         <div>
                                                             <Link
                                                                 href={`/hackathon/${slug}/teams/${myTeam.team_id}`}
+                                                                passHref
                                                             >
-                                                                <Button
-                                                                    variant="success"
-                                                                    className="w-100"
-                                                                >
-                                                                    Your Team
-                                                                </Button>
+                                                                <a href="/#">
+                                                                    <Button
+                                                                        variant="success"
+                                                                        className="w-100"
+                                                                    >
+                                                                        Your
+                                                                        Team
+                                                                    </Button>
+                                                                </a>
                                                             </Link>
                                                             <div
                                                                 style={{
@@ -302,32 +314,40 @@ export default function Hackathon() {
                                                             {submissions.length ? (
                                                                 <Link
                                                                     href={`/submission/${submissions[0].id}`}
+                                                                    passHref
                                                                 >
-                                                                    <Button
-                                                                        variant="success"
-                                                                        className="w-100 pt-3"
-                                                                    >
-                                                                        Your
-                                                                        Submission
-                                                                    </Button>
+                                                                    <a href="/#">
+                                                                        <Button
+                                                                            variant="success"
+                                                                            className="w-100 pt-3"
+                                                                        >
+                                                                            Your
+                                                                            Submission
+                                                                        </Button>
+                                                                    </a>
                                                                 </Link>
                                                             ) : (
-                                                                <Link href="#">
-                                                                    <Button
-                                                                        variant="success"
-                                                                        className="w-100 pt-3"
-                                                                    >
-                                                                        <Spinner
-                                                                            animation="border"
-                                                                            role="status"
+                                                                <Link
+                                                                    href="#"
+                                                                    passHref
+                                                                >
+                                                                    <a href="/#">
+                                                                        <Button
+                                                                            variant="success"
+                                                                            className="w-100 pt-3"
                                                                         >
-                                                                            <span className="sr-only">
-                                                                                Loading
-                                                                                Submission
-                                                                                Link...
-                                                                            </span>
-                                                                        </Spinner>
-                                                                    </Button>
+                                                                            <Spinner
+                                                                                animation="border"
+                                                                                role="status"
+                                                                            >
+                                                                                <span className="sr-only">
+                                                                                    Loading
+                                                                                    Submission
+                                                                                    Link...
+                                                                                </span>
+                                                                            </Spinner>
+                                                                        </Button>
+                                                                    </a>
                                                                 </Link>
                                                             )}
                                                         </div>
@@ -343,14 +363,17 @@ export default function Hackathon() {
                                                         <div>
                                                             <Link
                                                                 href={`/hackathon/${slug}/register`}
+                                                                passHref
                                                             >
-                                                                <Button
-                                                                    variant="success"
-                                                                    className="w-100"
-                                                                >
-                                                                    Join
-                                                                    Hackathon
-                                                                </Button>
+                                                                <a href="/#">
+                                                                    <Button
+                                                                        variant="success"
+                                                                        className="w-100"
+                                                                    >
+                                                                        Join
+                                                                        Hackathon
+                                                                    </Button>
+                                                                </a>
                                                             </Link>
                                                         </div>
                                                     </>
@@ -365,15 +388,18 @@ export default function Hackathon() {
                                                         <div>
                                                             <Link
                                                                 href={`/hackathon/${slug}/register`}
+                                                                passHref
                                                             >
-                                                                <Button
-                                                                    className="w-100"
-                                                                    variant="success"
-                                                                    disabled
-                                                                >
-                                                                    Login to
-                                                                    Join
-                                                                </Button>
+                                                                <a href="/#">
+                                                                    <Button
+                                                                        className="w-100"
+                                                                        variant="success"
+                                                                        disabled
+                                                                    >
+                                                                        Login to
+                                                                        Join
+                                                                    </Button>
+                                                                </a>
                                                             </Link>
                                                         </div>
                                                     </>
@@ -423,20 +449,26 @@ export default function Hackathon() {
                                                       "not registered" ? (
                                                         <Link
                                                             href={`/hackathon/${slug}/register`}
+                                                            passHref
                                                         >
-                                                            <Button variant="success">
-                                                                Register
-                                                            </Button>
+                                                            <a href="/#">
+                                                                <Button variant="success">
+                                                                    Register
+                                                                </Button>
+                                                            </a>
                                                         </Link>
                                                     ) : hackathon.userStatus ==
                                                           "registered" &&
                                                       token ? (
                                                         <Link
                                                             href={`/hackathon/${slug}/teams/${myTeam.team_id}`}
+                                                            passHref
                                                         >
-                                                            <Button variant="success">
-                                                                Your Team
-                                                            </Button>
+                                                            <a href="/#">
+                                                                <Button variant="success">
+                                                                    Your Team
+                                                                </Button>
+                                                            </a>
                                                         </Link>
                                                     ) : null}
                                                 </div>
@@ -642,8 +674,11 @@ function Participants({ slug }: ParticipantsPropTypes) {
                                         <td>
                                             <Link
                                                 href={`/profile/${team.leader.username}`}
+                                                passHref
                                             >
-                                                {team.leader.username}
+                                                <a href="/#">
+                                                    {team.leader.username}
+                                                </a>
                                             </Link>
                                         </td>
                                     </tr>
@@ -667,11 +702,14 @@ function Participants({ slug }: ParticipantsPropTypes) {
                                                 <td>
                                                     <Link
                                                         href={`/profile/${team.members[i].username}`}
+                                                        passHref
                                                     >
-                                                        {
-                                                            team.members[i]
-                                                                .username
-                                                        }
+                                                        <a href="/#">
+                                                            {
+                                                                team.members[i]
+                                                                    .username
+                                                            }
+                                                        </a>
                                                     </Link>
                                                 </td>
                                             </tr>
@@ -716,7 +754,7 @@ function Leaderboard({ status, submissions, loading }: LeaderboardPropTypes) {
                 <td> {submission.score}</td>
                 <td>
                     <Link href={`/submission/${submission.id}`}>
-                        {submission.title}
+                        <a href="/#">{submission.title}</a>
                     </Link>
                 </td>
             </tr>
