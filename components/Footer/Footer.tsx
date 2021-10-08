@@ -5,12 +5,7 @@ import { useAuth } from "../../context/auth"
 
 export default function Footer(): ReactElement {
     const { token, profile } = useAuth()
-    const TextProps = {
-        tag: "h6",
-        textSize: "paragraph",
-        textColor: "#003e54c9",
-        fontFamily: "madetommy-light",
-    }
+
     return (
         <div>
             <Div
