@@ -81,8 +81,7 @@ function Profile() {
                         })
                     }
                 })
-                .catch((err) => {
-                    console.error(err)
+                .catch(() => {
                     setUserRequest({
                         loading: false,
                         user: null, //dev things, sorry for the changes
