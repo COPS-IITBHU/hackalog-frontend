@@ -8,7 +8,7 @@ import { API_URL } from "../../../util/constants"
 import Clipboard from "../../../components/Clipboard/Clipboard"
 import Head from "next/head"
 import { toast, ToastOptions } from "react-toastify"
-import { TeamCreateSerializer, TeamSerializer } from "@/types/backend"
+import { TeamCreateSerializer } from "@/types/backend"
 
 export default function Register() {
     const { token } = useAuth()

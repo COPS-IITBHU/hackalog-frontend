@@ -80,12 +80,12 @@ export default function Hackathon() {
                 .then((response) => {
                     setSubmisssions(response.data)
                 })
-                .catch((err) => {
+                .catch(() => {
                     //Notify to user by the error
                 })
             setLeaderboardLoading(false)
         }
-    }, [token, slug])
+    }, [token, slug, hackathon])
 
     if (error != 0) {
         return (
@@ -557,7 +557,7 @@ function Participants({ slug }: ParticipantsPropTypes) {
                 .then((response) => {
                     setTeams(response.data)
                 })
-                .catch((err) => {})
+                .catch(() => {})
                 .finally(() => setLoading(false))
         }
     }, [slug])
