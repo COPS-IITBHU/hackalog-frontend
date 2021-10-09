@@ -27,7 +27,7 @@ export default function Hackathons() {
             .then((response: AxiosResponse<HackathonSerializer[]>) =>
                 setOngoing(response.data)
             )
-            .catch((err) => {
+            .catch(() => {
                 let arr = error
                 arr[0] = true
                 setError(arr)
@@ -40,7 +40,7 @@ export default function Hackathons() {
             .then((response: AxiosResponse<HackathonSerializer[]>) =>
                 setUpcoming(response.data)
             )
-            .catch((err) => {
+            .catch(() => {
                 let arr = error
                 arr[1] = true
                 setError(arr)
@@ -50,7 +50,7 @@ export default function Hackathons() {
             .then((response: AxiosResponse<HackathonSerializer[]>) =>
                 setCompleted(response.data)
             )
-            .catch((err) => {
+            .catch(() => {
                 let arr = error
                 arr[2] = true
                 setError(arr)

@@ -1,7 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { Div, Text, Icon, Row, Col, Button, Input, Tag } from "atomize"
 import axios, { AxiosError, AxiosResponse } from "axios"
-import Router, { useRouter } from "next/router"
+import { useRouter } from "next/router"
 import { Container, Spinner } from "react-bootstrap"
 import { useEffect, useState, ChangeEvent } from "react"
 import { toast, ToastOptions } from "react-toastify"
@@ -52,7 +52,7 @@ export default function ManageTeam() {
             } catch (exc) {
                 //setSpinner(false)
                 if (exc.response && exc.response.status === 404) {
-                    Router.push("/404")
+                    router.push("/404")
                 }
             }
         }
