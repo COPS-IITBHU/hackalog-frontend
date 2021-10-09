@@ -49,7 +49,6 @@ export default function HackathonCard({ hackathon }: HackathonCardProps) {
                         </Col>
                         <Col size="6">
                             <Link href={`/hackathon/${hackathon.slug}`}>
-                                <a>
                                     <Button
                                         m={{ l: "auto" }}
                                         textSize={{
@@ -61,7 +60,6 @@ export default function HackathonCard({ hackathon }: HackathonCardProps) {
                                     >
                                         See more...
                                     </Button>
-                                </a>
                             </Link>
                         </Col>
                     </Row>
