@@ -3,10 +3,11 @@ export type LoginSerializer = {
 }
 
 export type TeamCreateSerializer = {
-    name: string
+    team_id: string
 }
 
 export type SubmissionsSerializer = {
+    id: number
     teamName: string
     team: number // id
     hackathon: number //id
@@ -34,14 +35,15 @@ export type HackathonSerializer = {
 }
 
 export interface HackathonDetailSerializer extends HackathonSerializer {
-    userStatus: string //'not registered', 'registered, 'submitted'
+    userStatus: string | boolean //'not registered', 'registered, 'submitted'
+    // userStatus is boolean (false) in case user is not logged in
 }
 
 export type TeamSerializer = {
     id: number
     name: string
     hackathon: HackathonSerializer
-    team_id: number
+    team_id: string
 }
 
 export type ProfileSerializer = {
@@ -51,7 +53,7 @@ export type ProfileSerializer = {
     college: string
     github_handle: string
     bio: string
-    interests: string[]
+    interests: string
     photoURL: string // URL
     teams: TeamSerializer[]
     email: string
@@ -60,8 +62,8 @@ export type ProfileSerializer = {
 export type TeamDetailSerializer = {
     id: number
     name: number
-    hackathon: number
-    team_id: number
+    hackathon: HackathonSerializer
+    team_id: string
     members: ProfileSerializer[]
     leader: ProfileSerializer
 }
@@ -73,4 +75,5 @@ export type SubmissionRUDSerializer = {
     hackathon: HackathonSerializer
     submission_url: string // URL
     score: number // 0 to 100
+    description: string
 }

@@ -1,13 +1,19 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/react-in-jsx-scope */
 import { Row, Text, Button, Icon } from "atomize"
 import copy from "copy-to-clipboard"
 
-const Clipboard = (props) => {
-    const copyClipboard = () => {
+const Clipboard = (props: {
+    code: string
+    notify: () => void
+    titleColor?: string
+    codeColor?: string
+    buttonBg?: string
+    iconName?: string
+}) => {
+    const copyClipboard = (): void => {
         copy(props.code)
         props.notify()
     }
+
     return (
         <Row align="center">
             <Text

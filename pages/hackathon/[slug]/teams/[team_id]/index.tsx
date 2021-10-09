@@ -1,34 +1,42 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { Div, Text, Icon, Row, Col, Button, Input, Tag } from "atomize"
-import axios from "axios"
-import Router, { useRouter } from "next/router"
+import axios, { AxiosError, AxiosResponse } from "axios"
+import { useRouter } from "next/router"
 import { Container, Spinner } from "react-bootstrap"
-import { useEffect, useState } from "react"
-import { toast } from "react-toastify"
-import { useAuth } from "../../../../../context/auth"
+import { useEffect, useState, ChangeEvent } from "react"
+import { toast, ToastOptions } from "react-toastify"
+import { useAuth } from "@/context/auth"
 import { API_URL } from "../../../../../util/constants"
-import Clipboard from "../../../../../components/Clipboard/Clipboard"
+import Clipboard from "@/components/Clipboard/Clipboard"
 import Head from "next/head"
+import { ProfileSerializer, TeamDetailSerializer } from "@/types/backend"
 
 // team management
 export default function ManageTeam() {
-    const { token, loading } = useAuth()
-    const [teamData, setTeamData] = useState({})
+    const { token, loading }: { token: string; loading: boolean } = useAuth()
+    const [teamData, setTeamData] = useState<TeamDetailSerializer>(
+        {} as TeamDetailSerializer
+    )
     const router = useRouter()
-    const [localLoading, setLocalLoading] = useState(true) //During initial fetch on page loading.
-    const [showSpinner, setSpinner] = useState(true) // while data is loading
-    const [nameEdit, setNameEdit] = useState(false) // if name editing is in progress
-    const [bufferTeamName, setBufferTeamName] = useState("") // buffer team name to handle editing of team name.
-    const [members, editMembers] = useState([]) // for team members
-    const [clientUser, editClientUser] = useState({}) // user who is logged in.
+    const [localLoading, setLocalLoading] = useState<boolean>(true) //During initial fetch on page loading.
+    const [showSpinner, setSpinner] = useState<boolean>(true) // while data is loading
+    const [nameEdit, setNameEdit] = useState<boolean>(false) // if name editing is in progress
+    const [bufferTeamName, setBufferTeamName] = useState<string>("") // buffer team name to handle editing of team name.
+    const [members, editMembers] = useState<Array<ProfileSerializer>>([]) // for team members
+    const [clientUser, editClientUser] = useState<ProfileSerializer>(
+        {} as ProfileSerializer
+    ) // user who is logged in.
 
-    useEffect(() => {
+    useEffect((): void => {
         async function getData() {
             try {
                 axios.defaults.headers.common[
                     "Authorization"
                 ] = `Token ${token}`
-                const [responseTeam, responseUser] = await Promise.all([
+                const [responseTeam, responseUser]: [
+                    AxiosResponse<TeamDetailSerializer>,
+                    AxiosResponse<ProfileSerializer>
+                ] = await Promise.all([
                     axios.get(`${API_URL}teams/${router.query.team_id}/`),
                     axios.get(`${API_URL}profile/`),
                 ])
@@ -44,7 +52,7 @@ export default function ManageTeam() {
             } catch (exc) {
                 //setSpinner(false)
                 if (exc.response && exc.response.status === 404) {
-                    Router.push("/404")
+                    router.push("/404")
                 }
             }
         }
@@ -58,12 +66,11 @@ export default function ManageTeam() {
         }
     }, [token, router.query.team_id, loading, router])
 
-    const notifHandler = (message, type) => {
-        const config = {
+    const notifHandler = (message: string, type: string): void => {
+        const config: ToastOptions = {
             position: "top-center",
             autoClose: 5000,
             hideProgressBar: false,
-            newestOnTop: false,
             closeOnClick: true,
             rtl: false,
             pauseOnFocusLoss: true,
@@ -88,7 +95,7 @@ export default function ManageTeam() {
         }
     }
 
-    const checkToken = () => {
+    const checkToken = (): boolean => {
         if (token) {
             return true
         } else {
@@ -104,9 +111,10 @@ export default function ManageTeam() {
         checkToken()
         if (clientUser.username === teamData.leader.username) {
             try {
-                const response = await axios.delete(
-                    `${API_URL}teams/${router.query.team_id}/`
-                )
+                const response: AxiosResponse<TeamDetailSerializer> =
+                    await axios.delete(
+                        `${API_URL}teams/${router.query.team_id}/`
+                    )
                 if (response.status === 204) {
                     notifHandler("Deleted Successfully!", "success")
                     setTimeout(() => {
@@ -133,15 +141,16 @@ export default function ManageTeam() {
         }
     }
 
-    const memberExit = async (name, isLeader) => {
+    const memberExit = async (name: string, isLeader: boolean) => {
         if (!checkToken()) {
             return
         }
         try {
             axios.defaults.headers.common["Authorization"] = `Token ${token}`
-            const response = await axios.patch(
-                `${API_URL}teams/${router.query.team_id}/member-exit/${name}`
-            )
+            const response: AxiosResponse<TeamDetailSerializer> =
+                await axios.patch(
+                    `${API_URL}teams/${router.query.team_id}/member-exit/${name}`
+                )
             if (response.status === 200) {
                 if (isLeader) {
                     notifHandler("Removed Successfully!", "success")
@@ -190,7 +199,7 @@ export default function ManageTeam() {
             Leader
         </Tag>
     )
-    const handleMemberExitUI = (name) => {
+    const handleMemberExitUI = (name: string): JSX.Element => {
         // return remove for every name except leader if client
         // is leader else return remove only for client
         if (
@@ -236,7 +245,7 @@ export default function ManageTeam() {
         }
     }
 
-    const membersUI = members.map((el, index) => {
+    const membersUI = members.map((el: ProfileSerializer, index: number) => {
         return (
             <Row key={el.username} justify="space-between" align="center">
                 <div className="d-flex align-items-center py-3">
@@ -292,10 +301,10 @@ export default function ManageTeam() {
             return
         }
         try {
-            const response = await axios.patch(
-                `${API_URL}teams/${router.query.team_id}/`,
-                { name: bufferTeamName }
-            )
+            const response: AxiosResponse<TeamDetailSerializer> =
+                await axios.patch(`${API_URL}teams/${router.query.team_id}/`, {
+                    name: bufferTeamName,
+                })
             if (response.status === 200) {
                 normalizeState()
                 notifHandler("Update successfull!", "success")
@@ -366,7 +375,7 @@ export default function ManageTeam() {
                                     <div className="px-2">
                                         <Clipboard
                                             code={teamData.team_id}
-                                            notify={() => {
+                                            notify={(): void => {
                                                 notifHandler(
                                                     "Code copied!",
                                                     "success"
@@ -400,7 +409,7 @@ export default function ManageTeam() {
                                                     w="2rem"
                                                     rounded="circle"
                                                     m={{ r: "1rem" }}
-                                                    onClick={() => {
+                                                    onClick={(): void => {
                                                         setNameEdit(true)
                                                     }}
                                                     bg="#178a80"
@@ -429,14 +438,16 @@ export default function ManageTeam() {
                                                 </Text>
                                                 <Input
                                                     placeholder={teamData.name}
-                                                    onChange={(e) => {
+                                                    onChange={(
+                                                        e: ChangeEvent<HTMLFormElement>
+                                                    ): void => {
                                                         setBufferTeamName(
                                                             e.target.value
                                                         )
                                                     }}
                                                 ></Input>
                                                 <Button
-                                                    onClick={() => {
+                                                    onClick={(): void => {
                                                         setSpinner(true)
                                                         changeName()
                                                     }}
@@ -456,7 +467,7 @@ export default function ManageTeam() {
                                                 </Button>
                                                 <Button
                                                     disabled={showSpinner}
-                                                    onClick={() => {
+                                                    onClick={(): void => {
                                                         setNameEdit(false)
                                                         setBufferTeamName("")
                                                     }}

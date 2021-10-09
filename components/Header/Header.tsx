@@ -1,15 +1,15 @@
-import React from "react"
+import { useState, useEffect, ReactElement } from "react"
 import { Button } from "atomize"
 import { Spinner } from "react-bootstrap"
 import { useAuth } from "../../context/auth"
 import Link from "next/link"
 import { HamburgerSpin } from "react-animated-burgers"
 
-export default function Header() {
+export default function Header(): ReactElement {
     const { handleSignIn, handleLogout, token, profile, loading } = useAuth()
-    const [menu, setMenu] = React.useState(false)
+    const [menu, setMenu] = useState<boolean>(false)
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (profile && location.pathname != `/profile/${profile.username}`) {
             const arr = [
                 profile.name,
@@ -29,13 +29,13 @@ export default function Header() {
     return (
         <div
             className="position-fixed w-100 bg-white"
-            style={{ zIndex: "10", height: "88px" }}
+            style={{ zIndex: 10, height: "88px" }}
         >
             <div
                 className={`d-flex align-items-center justify-content-between w-100 h-100 p-3`}
             >
-                <Link href="/">
-                    <a className="text-dark">
+                <Link href="/" passHref>
+                    <a href="/#" className="text-dark">
                         <div>
                             <span
                                 style={{
@@ -82,6 +82,7 @@ export default function Header() {
                                     hoverShadow="4"
                                     m={{ r: { xs: "0rem", md: "1rem" } }}
                                     p="1rem"
+                                    onClick={() => setMenu(!menu)}
                                 >
                                     Home
                                 </Button>
@@ -94,6 +95,7 @@ export default function Header() {
                                     hoverShadow="4"
                                     m={{ r: { xs: "0rem", md: "1rem" } }}
                                     p="1rem"
+                                    onClick={() => setMenu(!menu)}
                                 >
                                     Hackathons
                                 </Button>
@@ -126,6 +128,9 @@ export default function Header() {
                                                         },
                                                     }}
                                                     p="1rem"
+                                                    onClick={() =>
+                                                        setMenu(!menu)
+                                                    }
                                                 >
                                                     Profile
                                                 </Button>
@@ -142,7 +147,10 @@ export default function Header() {
                                                     },
                                                 }}
                                                 p="1rem"
-                                                onClick={() => handleLogout()}
+                                                onClick={() => {
+                                                    handleLogout()
+                                                    setMenu(!menu)
+                                                }}
                                             >
                                                 Logout
                                             </Button>
@@ -157,7 +165,10 @@ export default function Header() {
                                                 r: { xs: "0rem", md: "1rem" },
                                             }}
                                             p="1rem"
-                                            onClick={() => handleSignIn()}
+                                            onClick={() => {
+                                                handleSignIn()
+                                                setMenu(!menu)
+                                            }}
                                         >
                                             Login with Google
                                         </Button>
