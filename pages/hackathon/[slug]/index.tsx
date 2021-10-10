@@ -753,7 +753,7 @@ function Leaderboard({ status, submissions, loading }: LeaderboardPropTypes) {
                 <td>{submission.teamName} </td>
                 <td> {submission.score}</td>
                 <td>
-                    <Link href={`/submission/${submission.id}`}>
+                    <Link href={`/submission/${submission.id}`} passHref>
                         <a href="/#">{submission.title}</a>
                     </Link>
                 </td>
