@@ -1,11 +1,6 @@
-import firebase from "firebase/app"
-import "firebase/auth"
-import "firebase/analytics"
-// import 'firebase/firestore'
-// import 'firebase/database'
-// import 'firebase/storage'
+import firebase, { analytics, apps, initializeApp } from "firebase"
 
-var firebaseConfig = {
+const firebaseConfig = {
     apiKey: "AIzaSyBtYUl9ALa59RcR09bPptI7hj-JxExTaEg",
     authDomain: "cops-hackalog.firebaseapp.com",
     databaseURL: "https://cops-hackalog.firebaseio.com",
@@ -17,26 +12,11 @@ var firebaseConfig = {
 }
 
 export const loadFirebase = () => {
-    if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig)
-        firebase.analytics()
+    if (!apps.length) {
+        initializeApp(firebaseConfig)
+        analytics()
     }
     return firebase
-}
-
-export const getIdToken = async () => {
-    let firebase = loadFirebase()
-    return new Promise((resolve) => {
-        firebase
-            .auth()
-            .currentUser.getIdToken(true)
-            .then((idToken) => {
-                resolve(idToken)
-            })
-            .catch((err) => {
-                resolve(null)
-            })
-    })
 }
 
 export type userType = firebase.User | null
