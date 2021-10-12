@@ -91,7 +91,7 @@ export const AuthProvider = ({ children }: PropTypes) => {
     }
 
     useEffect(() => {
-        let firebase = loadFirebase()
+        const firebase = loadFirebase()
         setLoading(true)
         firebase.auth().onAuthStateChanged(async (authUser) => {
             try {
@@ -102,7 +102,7 @@ export const AuthProvider = ({ children }: PropTypes) => {
                         "login/",
                         { id_token }
                     )
-                    let newToken: string = response.data.token
+                    const newToken: string = response.data.token
                     updateProfile(newToken)
                 }
             } catch (err) {
