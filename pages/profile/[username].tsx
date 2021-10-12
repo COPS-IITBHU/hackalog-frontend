@@ -232,7 +232,10 @@ function Profile() {
                                     </Nav>
                                 </div>
                             </div>
-                            <div className="col-12 col-md-8 px-2 px-md-3" style={{paddingTop: '4em'}}>
+                            <div
+                                className="col-12 col-md-8 px-2 px-md-3"
+                                style={{ paddingTop: "4em" }}
+                            >
                                 <Tab.Content>
                                     <Tab.Pane eventKey="profile">
                                         <div>
@@ -283,7 +286,7 @@ function Profile() {
                                                     hoverShadow="4"
                                                     m={{ r: "1rem", b: "2rem" }}
                                                     p="1rem"
-                                                    style={{marginTop: '4em'}}
+                                                    style={{ marginTop: "4em" }}
                                                     onClick={editProfile}
                                                 >
                                                     Edit Profile
@@ -420,9 +423,6 @@ function Profile() {
                     padding: 15px 0px;
                     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
                 }
-				// a {
-				// 	color: #003e54;
-				// }
 			`}</style>
         </div>
     )
