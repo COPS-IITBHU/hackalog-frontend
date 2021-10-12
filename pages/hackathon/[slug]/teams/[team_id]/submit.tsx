@@ -245,7 +245,6 @@ export default function Submit() {
                                 <Form.Group controlId="title">
                                     <Form.Label>Title*</Form.Label>
                                     <Form.Control
-                                        autoFocus
                                         type="text"
                                         value={title}
                                         onChange={(e) =>
@@ -256,7 +255,6 @@ export default function Submit() {
                                 <Form.Group controlId="description">
                                     <Form.Label>Description*</Form.Label>
                                     <Form.Control
-                                        autoFocus
                                         as="textarea"
                                         type="text"
                                         value={description}
@@ -268,7 +266,6 @@ export default function Submit() {
                                 <Form.Group controlId="url">
                                     <Form.Label>URL*</Form.Label>
                                     <Form.Control
-                                        autoFocus
                                         type="url"
                                         value={url}
                                         onChange={(e) => setURL(e.target.value)}
