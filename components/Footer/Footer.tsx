@@ -33,20 +33,22 @@ export default function Footer(): ReactElement {
             </Div>
             <footer style={{ backgroundColor: "#393E46" }}>
                 <Div
+                    textAlign="center"
                     m={{ x: { xs: "5rem", lg: "10rem" } }}
                     p={{ b: "1rem" }}
                     textColor="white"
                 >
-                    <Row>
+                    <Row style={{display : "flex", flex : "wrap", justifyContent : "center"}}>
                         <Col
-                            size={{ xs: 12, md: 12, lg: 4 }}
-                            align="center"
+                            size={{ xs: 12, sm: 6, lg: 2 }}
+                            textAlign={{ xs: "center", lg: "left" }}
                             order={{ xs: 3, lg: 1 }}
                         >
                             <Div
                                 textAlign={{ xs: "center", lg: "left" }}
-                                m={{ xs: "1rem", lg: "0.5rem" }}
-                                p={{ x: { lg: "7rem" } }}
+                                
+                                // m={{ xs: "1rem", lg: "0.5rem" }}
+                                // p={{ x: { lg: "7rem" } }}
                             >
                                 <Text m={{ y: "0.5rem" }} textColor="white">
                                     <Link href="/contributors" passHref>
@@ -76,55 +78,7 @@ export default function Footer(): ReactElement {
                                 </Text>
                             </Div>
                         </Col>
-                        <Col size={{ lg: 2 }} order={{ xs: 4, lg: 3 }}></Col>
-                        <Col
-                            size={{ xs: 12, sm: 6, lg: 2 }}
-                            textAlign={{ xs: "center", lg: "left" }}
-                            order={{ xs: 2, lg: 4 }}
-                        >
-                            <Div
-                                textSize={{ xs: "body", md: "1rem" }}
-                                m={{ b: { xs: "1rem", lg: 0 } }}
-                            >
-                                <b>Quick Links</b>
-                                <Text m={{ t: "0.5rem" }}>
-                                    <Link href="/" passHref>
-                                        <a href="/#">
-                                            <span>Home</span>
-                                        </a>
-                                    </Link>
-                                </Text>
-                                <Text>
-                                    <Link href="/hackathons" passHref>
-                                        <a href="/#">
-                                            <span>Hackathons</span>
-                                        </a>
-                                    </Link>
-                                </Text>
-                                {token && profile && (
-                                    <Text>
-                                        <Link
-                                            href={`/profile/${profile.username}`}
-                                            passHref
-                                        >
-                                            <a href="/#">
-                                                <span>Profile</span>
-                                            </a>
-                                        </Link>
-                                    </Text>
-                                )}
-                                <Text>
-                                    <Link
-                                        href="https://copsiitbhu.co.in"
-                                        passHref
-                                    >
-                                        <a href="/#">
-                                            <span>COPS</span>
-                                        </a>
-                                    </Link>
-                                </Text>
-                            </Div>
-                        </Col>
+                        {/* <Col size={{ lg: 2 }} order={{ xs: 4, lg: 3 }}></Col> */}
                         <Col
                             size={{ xs: 12, sm: 6, lg: 4 }}
                             textAlign="center"
@@ -179,6 +133,55 @@ export default function Footer(): ReactElement {
                                 </Link>
                             </Text>
                         </Col>
+                        <Col
+                            size={{ xs: 12, sm: 6, lg: 2 }}
+                            textAlign={{ xs: "center", lg: "left" }}
+                            order={{ xs: 2, lg: 4 }}
+                        >
+                            <Div
+                                textSize={{ xs: "body", md: "1rem" }}
+                                m={{ b: { xs: "1rem", lg: 0 } }}
+                            >
+                                <b>Quick Links</b>
+                                <Text m={{ t: "0.5rem" }}>
+                                    <Link href="/" passHref>
+                                        <a href="/#">
+                                            <span>Home</span>
+                                        </a>
+                                    </Link>
+                                </Text>
+                                <Text>
+                                    <Link href="/hackathons" passHref>
+                                        <a href="/#">
+                                            <span>Hackathons</span>
+                                        </a>
+                                    </Link>
+                                </Text>
+                                {token && profile && (
+                                    <Text>
+                                        <Link
+                                            href={`/profile/${profile.username}`}
+                                            passHref
+                                        >
+                                            <a href="/#">
+                                                <span>Profile</span>
+                                            </a>
+                                        </Link>
+                                    </Text>
+                                )}
+                                <Text>
+                                    <Link
+                                        href="https://copsiitbhu.co.in"
+                                        passHref
+                                    >
+                                        <a href="/#">
+                                            <span>COPS</span>
+                                        </a>
+                                    </Link>
+                                </Text>
+                            </Div>
+                        </Col>
+                        
                     </Row>
                 </Div>
             </footer>
