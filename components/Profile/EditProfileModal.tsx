@@ -48,7 +48,6 @@ const EditProfile = ({
         ).value
             .split(" ")
             .join("")
-            .toLowerCase()
         ;(document.getElementById("handle") as HTMLInputElement).value = handle
         const bio: string = (
             document.getElementById("bio") as HTMLInputElement
