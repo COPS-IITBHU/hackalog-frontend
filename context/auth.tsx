@@ -1,19 +1,27 @@
-import React, { PropsWithChildren } from "react"
+import {
+    PropsWithChildren,
+    createContext,
+    useContext,
+    useEffect,
+    useState,
+    Dispatch,
+    SetStateAction,
+} from "react"
 import { loadFirebase, userType } from "./firebase"
 import axios from "../util/axios"
-import { ProfileSerializer } from "../types/backend"
+import { ProfileSerializer } from "@/types/backend"
 
 type tokenType = string | null
 type profileType = ProfileSerializer | null
 type loadingType = boolean
 type PropTypes = PropsWithChildren<{}>
 
-const AuthContext = React.createContext<{
+const AuthContext = createContext<{
     handleLogout: () => void
     handleSignIn: () => void
-    setFirebaseUser: React.Dispatch<React.SetStateAction<userType>>
-    setProfile: React.Dispatch<React.SetStateAction<profileType>>
-    setToken: React.Dispatch<React.SetStateAction<tokenType>>
+    setFirebaseUser: Dispatch<SetStateAction<userType>>
+    setProfile: Dispatch<SetStateAction<profileType>>
+    setToken: Dispatch<SetStateAction<tokenType>>
     firebaseUser: userType
     loading: loadingType
     profile: profileType
@@ -31,10 +39,10 @@ const AuthContext = React.createContext<{
 })
 
 export const AuthProvider = ({ children }: PropTypes) => {
-    const [firebaseUser, setFirebaseUser] = React.useState<userType>(null)
-    const [token, setToken] = React.useState<tokenType>(null)
-    const [profile, setProfile] = React.useState<profileType>(null)
-    const [loading, setLoading] = React.useState<loadingType>(false)
+    const [firebaseUser, setFirebaseUser] = useState<userType>(null)
+    const [token, setToken] = useState<tokenType>(null)
+    const [profile, setProfile] = useState<profileType>(null)
+    const [loading, setLoading] = useState<loadingType>(false)
 
     const updateProfile = (token: string) => {
         axios.defaults.headers.common["Authorization"] = `Token ${token}`
@@ -45,29 +53,29 @@ export const AuthProvider = ({ children }: PropTypes) => {
                 setProfile(response.data)
                 setLoading(false)
             })
-            .catch((error) => {
+            .catch(() => {
                 setLoading(false)
             })
     }
 
     const handleSignIn = async () => {
-        var firebase = await loadFirebase()
-        var provider = new firebase.auth.GoogleAuthProvider()
+        const firebase = loadFirebase()
+        const provider = new firebase.auth.GoogleAuthProvider()
         provider.addScope("email")
         provider.addScope("profile")
         firebase
             .auth()
             .signInWithPopup(provider)
             .then(() => {
-                //Notify to user by succes login
+                //Notify to user by success login
             })
-            .catch((err) => {
+            .catch(() => {
                 alert("Error Processing request, try again.")
             })
     }
 
     const handleLogout = async () => {
-        var firebase = await loadFirebase()
+        const firebase = loadFirebase()
         firebase
             .auth()
             .signOut()
@@ -77,41 +85,33 @@ export const AuthProvider = ({ children }: PropTypes) => {
                 setProfile(null)
                 delete axios.defaults.headers.common["Authentication"]
             })
-            .catch(function (err) {
+            .catch(function () {
                 alert("Error Processing request, try again.")
             })
     }
 
-    const checkAuth = async () => {
+    useEffect(() => {
+        const firebase = loadFirebase()
         setLoading(true)
-        let firebase = await loadFirebase()
-        firebase.auth().onAuthStateChanged((authUser) => {
-            setFirebaseUser(authUser)
-            if (authUser) {
-                authUser
-                    .getIdToken(true)
-                    .then((idToken) => {
-                        axios
-                            .post<{ token: string }>("login/", {
-                                id_token: idToken,
-                            })
-                            .then((response) => {
-                                let newToken: string = response.data.token
-                                updateProfile(newToken)
-                            })
-                            .catch((error) => {
-                                setLoading(false)
-                            })
-                    })
-                    .catch((error) => {
-                        setLoading(false)
-                    })
-            } else setLoading(false)
+        firebase.auth().onAuthStateChanged(async (authUser) => {
+            try {
+                setFirebaseUser(authUser)
+                if (authUser) {
+                    const id_token = await authUser.getIdToken(true)
+                    const response = await axios.post<{ token: string }>(
+                        "login/",
+                        { id_token }
+                    )
+                    const newToken: string = response.data.token
+                    updateProfile(newToken)
+                }
+            } catch (err) {
+                // TODO: Add error handling to this part
+                // To be done later when error boundary is implemented
+            } finally {
+                setLoading(false)
+            }
         })
-    }
-
-    React.useEffect(() => {
-        checkAuth()
     }, [])
 
     return (
@@ -133,4 +133,4 @@ export const AuthProvider = ({ children }: PropTypes) => {
     )
 }
 
-export const useAuth = () => React.useContext(AuthContext)
+export const useAuth = () => useContext(AuthContext)

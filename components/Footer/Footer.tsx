@@ -38,18 +38,19 @@ export default function Footer(): ReactElement {
                     p={{ b: "1rem" }}
                     textColor="white"
                 >
-                    <Row style={{display : "flex", flex : "wrap", justifyContent : "center"}}>
+                    <Row
+                        style={{
+                            display: "flex",
+                            flex: "wrap",
+                            justifyContent: "center",
+                        }}
+                    >
                         <Col
                             size={{ xs: 12, sm: 6, lg: 2 }}
                             textAlign={{ xs: "center", lg: "left" }}
                             order={{ xs: 3, lg: 1 }}
                         >
-                            <Div
-                                textAlign={{ xs: "center", lg: "left" }}
-                                
-                                // m={{ xs: "1rem", lg: "0.5rem" }}
-                                // p={{ x: { lg: "7rem" } }}
-                            >
+                            <Div textAlign={{ xs: "center", lg: "left" }}>
                                 <Text m={{ y: "0.5rem" }} textColor="white">
                                     <Link href="/contributors" passHref>
                                         <a href="/#" rel="noopener noreferrer">
@@ -78,7 +79,6 @@ export default function Footer(): ReactElement {
                                 </Text>
                             </Div>
                         </Col>
-                        {/* <Col size={{ lg: 2 }} order={{ xs: 4, lg: 3 }}></Col> */}
                         <Col
                             size={{ xs: 12, sm: 6, lg: 4 }}
                             textAlign="center"
@@ -181,7 +181,6 @@ export default function Footer(): ReactElement {
                                 </Text>
                             </Div>
                         </Col>
-                        
                     </Row>
                 </Div>
             </footer>
