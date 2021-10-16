@@ -207,6 +207,7 @@ export default function Home() {
                             <Button
                                 shadow="3"
                                 hoverShadow="4"
+                                hoverBg="black300"
                                 m={{ r: "1rem" }}
                                 p="1rem"
                                 textSize={{ xs: "tiny", md: "body" }}
@@ -283,6 +284,7 @@ export default function Home() {
                             <Button
                                 shadow="3"
                                 hoverShadow="4"
+                                hoverBg="black300"
                                 m={{ r: "1rem" }}
                                 p="1rem"
                                 textSize={{ xs: "tiny", md: "body" }}
