@@ -187,8 +187,9 @@ export default function SubmissionDetail() {
                                                     <td>
                                                         <Link
                                                             href={`/profile/${team.leader.username}`}
+                                                            passHref
                                                         >
-                                                            <a>
+                                                            <a href="#/">
                                                                 @
                                                                 {
                                                                     team.leader
@@ -206,8 +207,9 @@ export default function SubmissionDetail() {
                                                             <td>
                                                                 <Link
                                                                     href={`/profile/${elm.username}`}
+                                                                    passHref
                                                                 >
-                                                                    <a>
+                                                                    <a href="/#">
                                                                         @
                                                                         {
                                                                             elm.username
@@ -327,8 +329,11 @@ export default function SubmissionDetail() {
                             </Container>
                         </Div>
                     </Row>
-                    <Link href={`/hackathon/${submission!.hackathon.slug}`}>
-                        <a>
+                    <Link 
+                      href={`/hackathon/${submission!.hackathon.slug}`}
+                      passHref
+                    >
+                        <a href="/#">
                             <Button className="mb-3" bg="purple">
                                 View Other Submissions
                             </Button>

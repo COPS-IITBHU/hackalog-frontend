@@ -1,6 +1,5 @@
-# COPS Hackalog
+# COPS Hackalog [![Netlify Status](https://api.netlify.com/api/v1/badges/984a296a-70af-4c2a-9e3f-97924d0a507c/deploy-status)](https://app.netlify.com/sites/cops-hackalog/deploys)
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/984a296a-70af-4c2a-9e3f-97924d0a507c/deploy-status)](https://app.netlify.com/sites/cops-hackalog/deploys)
 The home for hackathons organized under COPS IIT (BHU), built on Next.js.
 
 ## Getting Started
@@ -18,16 +17,16 @@ git clone https://github.com/<username>/hackalog-frontend.git
 cd hackalog-frontend
 ```
 
-2. Install the required packages using npm. If npm isn't installed, refer [here](https://www.npmjs.com/get-npm).
+2. Install the required packages using yarn. If yarn isn't installed, refer [here](https://classic.yarnpkg.com/lang/en/docs/install/#debian-stable).
 
 ```bash
-npm install
+yarn
 ```
 
 3. Run the development server.
 
 ```bash
-npm run dev
+yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
