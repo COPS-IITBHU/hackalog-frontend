@@ -1,6 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { Div, Text, Icon, Row, Col, Button, Input, Tag } from "atomize"
-import axios, { AxiosError, AxiosResponse } from "axios"
+import axios, { AxiosResponse } from "axios"
 import { useRouter } from "next/router"
 import { Container, Spinner } from "react-bootstrap"
 import { useEffect, useState, ChangeEvent } from "react"

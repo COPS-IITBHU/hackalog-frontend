@@ -245,7 +245,6 @@ export default function Submit() {
                                 <Form.Group controlId="title">
                                     <Form.Label>Title*</Form.Label>
                                     <Form.Control
-                                        autoFocus
                                         type="text"
                                         value={title}
                                         onChange={(e) =>
@@ -256,7 +255,6 @@ export default function Submit() {
                                 <Form.Group controlId="description">
                                     <Form.Label>Description*</Form.Label>
                                     <Form.Control
-                                        autoFocus
                                         as="textarea"
                                         type="text"
                                         value={description}
@@ -268,7 +266,6 @@ export default function Submit() {
                                 <Form.Group controlId="url">
                                     <Form.Label>URL*</Form.Label>
                                     <Form.Control
-                                        autoFocus
                                         type="url"
                                         value={url}
                                         onChange={(e) => setURL(e.target.value)}
@@ -313,9 +310,9 @@ const MessageModal = ({
             </Modal.Header>
             <Modal.Body>{body}</Modal.Body>
             <Modal.Footer>
-                <Link href={buttonLink}>
+                <Link href={buttonLink} passHref>
                     <Button>
-                        <a>Okay</a>
+                        <a href="/#">Okay</a>
                     </Button>
                 </Link>
             </Modal.Footer>
