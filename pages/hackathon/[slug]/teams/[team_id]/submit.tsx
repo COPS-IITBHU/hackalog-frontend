@@ -310,9 +310,9 @@ const MessageModal = ({
             </Modal.Header>
             <Modal.Body>{body}</Modal.Body>
             <Modal.Footer>
-                <Link href={buttonLink}>
+                <Link href={buttonLink} passHref>
                     <Button>
-                        <a>Okay</a>
+                        <a href="/#">Okay</a>
                     </Button>
                 </Link>
             </Modal.Footer>
