@@ -329,9 +329,9 @@ export default function SubmissionDetail() {
                             </Container>
                         </Div>
                     </Row>
-                    <Link
-                        href={`/hackathon/${submission!.hackathon.slug}`}
-                        passHref
+                    <Link 
+                      href={`/hackathon/${submission!.hackathon.slug}`}
+                      passHref
                     >
                         <a href="/#">
                             <Button className="mb-3" bg="purple">
