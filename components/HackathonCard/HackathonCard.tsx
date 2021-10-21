@@ -48,9 +48,9 @@ export default function HackathonCard({ hackathon }: HackathonCardProps) {
                             </Text>
                         </Col>
                         <Col size="6">
-                            <Link 
-                            href={`/hackathon/${hackathon.slug}`}
-                            passHref
+                            <Link
+                                href={`/hackathon/${hackathon.slug}`}
+                                passHref
                             >
                                 <a href="/#">
                                     <Button
