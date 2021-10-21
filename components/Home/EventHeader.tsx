@@ -1,5 +1,6 @@
 import { Text, Button } from "atomize"
 import Link from "next/link"
+import EventText from "../Headline/EventText"
 
 export default function EventHeader({headerText}:{headerText:string}){
     return(
@@ -8,14 +9,7 @@ export default function EventHeader({headerText}:{headerText:string}){
             style={{ flexWrap: "nowrap" }}
         >
             <div className="pl-3">
-                <Text
-                    tag="h3"
-                    textSize={{ xs: "subheader", md: "title" }}
-                    textColor="#003e54"
-                    fontFamily="madetommy-bold"
-                >
-                    {headerText}
-                </Text>
+                <EventText text={headerText} tag='h3' textSizeXs='subheader' textSizeMd='title'  />
             </div>
             <div className="pr-3">
                 <Link href="/hackathons">
