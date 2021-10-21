@@ -13,7 +13,7 @@ import { AuthProvider } from "../context/auth"
 import Header from "../components/Header/Header"
 import Footer from "../components/Footer/Footer"
 import { ToastContainer } from "react-toastify"
-import { AppProps } from "next/dist/next-server/lib/router/router"
+import { AppProps } from "next/app"
 
 const theme = {
     fontFamily: {
