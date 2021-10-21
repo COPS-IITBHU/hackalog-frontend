@@ -81,8 +81,7 @@ function Profile() {
                         })
                     }
                 })
-                .catch((err) => {
-                    console.error(err)
+                .catch(() => {
                     setUserRequest({
                         loading: false,
                         user: null, //dev things, sorry for the changes
@@ -184,29 +183,32 @@ function Profile() {
                                     />
                                 </div>
                                 <div className="p-3 p-md-5">
-                                    <Text
-                                        tag="h3"
-                                        textSize="title"
-                                        textColor="#003e54"
-                                        fontFamily="madetommy-bold"
-                                        m={{ b: "0.5rem" }}
-                                    >
-                                        {userRequest.user.name}
-                                    </Text>
-                                    <p className="text-muted">
-                                        @{userRequest.user.username}
-                                    </p>
-                                    {userRequest.user.github_handle && (
-                                        <a
-                                            href={`https://github.com/${userRequest.user.github_handle}`}
-                                            target="_blank"
-                                            className="d-flex align-items-center text-muted"
-                                            rel="noopener noreferrer"
+                                    <div className="profile-info">
+                                        <Text
+                                            tag="h3"
+                                            textSize="title"
+                                            textColor="#003e54"
+                                            textAlign="center"
+                                            fontFamily="madetommy-bold"
+                                            m={{ b: "0.5rem" }}
                                         >
-                                            <FaGithub className="mr-1" />{" "}
-                                            {userRequest.user.github_handle}
-                                        </a>
-                                    )}
+                                            {userRequest.user.name}
+                                        </Text>
+                                        <p className="d-flex justify-content-center text-muted">
+                                            @{userRequest.user.username}
+                                        </p>
+                                        {userRequest.user.github_handle && (
+                                            <a
+                                                href={`https://github.com/${userRequest.user.github_handle}`}
+                                                target="_blank"
+                                                className="d-flex justify-content-center align-items-center text-muted"
+                                                rel="noopener noreferrer"
+                                            >
+                                                <FaGithub className="mr-1" />{" "}
+                                                {userRequest.user.github_handle}
+                                            </a>
+                                        )}
+                                    </div>
                                     {/* <p className="text-muted"><MdLocationOn /> IIT BHU Varanasi</p> */}
                                     <Nav
                                         variant="pills"
@@ -230,21 +232,13 @@ function Profile() {
                                     </Nav>
                                 </div>
                             </div>
-                            <div className="col-12 col-md-8 px-2 px-md-3">
+                            <div
+                                className="col-12 col-md-8 px-2 px-md-3"
+                                style={{ paddingTop: "4em" }}
+                            >
                                 <Tab.Content>
                                     <Tab.Pane eventKey="profile">
                                         <div>
-                                            {currentUser && (
-                                                <Button
-                                                    shadow="3"
-                                                    hoverShadow="4"
-                                                    m={{ r: "1rem", b: "2rem" }}
-                                                    p="1rem"
-                                                    onClick={editProfile}
-                                                >
-                                                    Edit Profile
-                                                </Button>
-                                            )}
                                             <div>
                                                 <Text
                                                     tag="h4"
@@ -286,6 +280,18 @@ function Profile() {
                                                     userRequest.user.interests
                                                 }
                                             />
+                                            {currentUser && (
+                                                <Button
+                                                    shadow="3"
+                                                    hoverShadow="4"
+                                                    m={{ r: "1rem", b: "2rem" }}
+                                                    p="1rem"
+                                                    style={{ marginTop: "4em" }}
+                                                    onClick={editProfile}
+                                                >
+                                                    Edit Profile
+                                                </Button>
+                                            )}
                                         </div>
                                     </Tab.Pane>
                                     <Tab.Pane eventKey="teams">
@@ -408,11 +414,15 @@ function Profile() {
 					color: #003e54 !important;
 					font-size: 1rem;
 					padding: 1rem 1rem;
+                    box-shadow: rgba(149, 157, 165, 0.2) 0px 3px 24px;
 					//font-family: madetommy-bold;
 				}
-				// a {
-				// 	color: #003e54;
-				// }
+                .profile-info {
+                    background-color: white;
+                    border-radius: 20px;
+                    padding: 15px 0px;
+                    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+                }
 			`}</style>
         </div>
     )

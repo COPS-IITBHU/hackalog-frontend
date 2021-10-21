@@ -6,10 +6,9 @@ import {
     Row,
     Form,
     Jumbotron,
-    FormControlProps,
 } from "react-bootstrap"
 import { Button, Container, Text } from "atomize"
-import { ChangeEvent, FormEvent, useEffect, useState } from "react"
+import { FormEvent, useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { toast, ToastOptions } from "react-toastify"
 import { useAuth } from "../../../../../context/auth"
@@ -20,7 +19,7 @@ import {
     HackathonDetailSerializer,
     SubmissionsSerializer,
 } from "@/types/backend"
-import { AxiosError, AxiosResponse } from "axios"
+import { AxiosResponse } from "axios"
 
 export default function Submit() {
     const router = useRouter()
@@ -61,12 +60,11 @@ export default function Submit() {
                 })
                 .catch((err) => {
                     setError(err.response.status)
-                    console.error(err)
                 })
                 .finally(() => setHackathonLoading(false))
         }
         return cleanUp
-    }, [router.query.slug])
+    }, [router.query.slug, token])
 
     const notifHandler = (message: string, type: string) => {
         const config: ToastOptions = {
@@ -247,7 +245,6 @@ export default function Submit() {
                                 <Form.Group controlId="title">
                                     <Form.Label>Title*</Form.Label>
                                     <Form.Control
-                                        autoFocus
                                         type="text"
                                         value={title}
                                         onChange={(e) =>
@@ -258,7 +255,6 @@ export default function Submit() {
                                 <Form.Group controlId="description">
                                     <Form.Label>Description*</Form.Label>
                                     <Form.Control
-                                        autoFocus
                                         as="textarea"
                                         type="text"
                                         value={description}
@@ -270,7 +266,6 @@ export default function Submit() {
                                 <Form.Group controlId="url">
                                     <Form.Label>URL*</Form.Label>
                                     <Form.Control
-                                        autoFocus
                                         type="url"
                                         value={url}
                                         onChange={(e) => setURL(e.target.value)}
@@ -315,9 +310,9 @@ const MessageModal = ({
             </Modal.Header>
             <Modal.Body>{body}</Modal.Body>
             <Modal.Footer>
-                <Link href={buttonLink}>
+                <Link href={buttonLink} passHref>
                     <Button>
-                        <a>Okay</a>
+                        <a href="/#">Okay</a>
                     </Button>
                 </Link>
             </Modal.Footer>

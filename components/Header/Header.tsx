@@ -82,6 +82,7 @@ export default function Header(): ReactElement {
                                     hoverShadow="4"
                                     m={{ r: { xs: "0rem", md: "1rem" } }}
                                     p="1rem"
+                                    onClick={() => setMenu(!menu)}
                                 >
                                     Home
                                 </Button>
@@ -94,6 +95,7 @@ export default function Header(): ReactElement {
                                     hoverShadow="4"
                                     m={{ r: { xs: "0rem", md: "1rem" } }}
                                     p="1rem"
+                                    onClick={() => setMenu(!menu)}
                                 >
                                     Hackathons
                                 </Button>
@@ -126,6 +128,9 @@ export default function Header(): ReactElement {
                                                         },
                                                     }}
                                                     p="1rem"
+                                                    onClick={() =>
+                                                        setMenu(!menu)
+                                                    }
                                                 >
                                                     Profile
                                                 </Button>
@@ -142,7 +147,10 @@ export default function Header(): ReactElement {
                                                     },
                                                 }}
                                                 p="1rem"
-                                                onClick={() => handleLogout()}
+                                                onClick={() => {
+                                                    handleLogout()
+                                                    setMenu(!menu)
+                                                }}
                                             >
                                                 Logout
                                             </Button>
@@ -157,7 +165,10 @@ export default function Header(): ReactElement {
                                                 r: { xs: "0rem", md: "1rem" },
                                             }}
                                             p="1rem"
-                                            onClick={() => handleSignIn()}
+                                            onClick={() => {
+                                                handleSignIn()
+                                                setMenu(!menu)
+                                            }}
                                         >
                                             Login with Google
                                         </Button>

@@ -3,7 +3,7 @@ export type LoginSerializer = {
 }
 
 export type TeamCreateSerializer = {
-    name: string
+    team_id: string
 }
 
 export type SubmissionsSerializer = {
@@ -43,7 +43,7 @@ export type TeamSerializer = {
     id: number
     name: string
     hackathon: HackathonSerializer
-    team_id: number
+    team_id: string
 }
 
 export type ProfileSerializer = {
@@ -63,7 +63,7 @@ export type TeamDetailSerializer = {
     id: number
     name: number
     hackathon: HackathonSerializer
-    team_id: number
+    team_id: string
     members: ProfileSerializer[]
     leader: ProfileSerializer
 }

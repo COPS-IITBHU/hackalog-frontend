@@ -1,9 +1,8 @@
 import HackathonCard from "../components/HackathonCard/HackathonCard"
-import Header from "../components/Header/Header"
 import { Text, Button } from "atomize"
 import { Spinner } from "react-bootstrap"
 import axiosInstance from "../util/axios"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import Link from "next/link"
 import Head from "next/head"
 import { HackathonSerializer } from "../types/backend"
@@ -22,20 +21,16 @@ const defaultLottieOptions: DefaultOptionType = {
 }
 
 export default function Home() {
-    const [hackathons, setHackathons] = React.useState<HackathonSerializer[]>(
-        []
-    )
-    const [loading, setLoading] = React.useState<Boolean>(true)
-    React.useEffect(() => {
+    const [hackathons, setHackathons] = useState<HackathonSerializer[]>([])
+    const [loading, setLoading] = useState<Boolean>(true)
+    useEffect(() => {
         axiosInstance
             .get<HackathonSerializer[]>("hackathons")
             .then((response) => {
                 setHackathons(response.data)
                 setLoading(false)
             })
-            .catch((err) => {
-                console.error(err)
-            })
+            .catch(() => {})
     }, [])
 
     var previousHackathons: HackathonSerializer[] = []
@@ -148,6 +143,7 @@ export default function Home() {
                                 <div className="icon-container">
                                     <img
                                         src="/images/icon1.png"
+                                        alt="Collaborate Icon"
                                         loading="lazy"
                                     />
                                 </div>
@@ -162,7 +158,8 @@ export default function Home() {
                             <div className="p-4 bs-light h-100">
                                 <div className="icon-container">
                                     <img
-                                        src="/images/icon2.jpg"
+                                        src="/images/icon2.png"
+                                        alt="Learn Icon"
                                         loading="lazy"
                                     />
                                 </div>
@@ -178,6 +175,7 @@ export default function Home() {
                                 <div className="icon-container">
                                     <img
                                         src="/images/icon3.png"
+                                        alt="Share Icon"
                                         loading="lazy"
                                     />
                                 </div>

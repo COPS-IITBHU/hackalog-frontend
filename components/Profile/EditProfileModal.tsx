@@ -48,7 +48,6 @@ const EditProfile = ({
         ).value
             .split(" ")
             .join("")
-            .toLowerCase()
         ;(document.getElementById("handle") as HTMLInputElement).value = handle
         const bio: string = (
             document.getElementById("bio") as HTMLInputElement
@@ -82,7 +81,7 @@ const EditProfile = ({
             }
             axios
                 .patch(`profile/`, data)
-                .catch((e) => setwait(false))
+                .catch(() => setwait(false))
                 .then(
                     () => {
                         setwait(false)
