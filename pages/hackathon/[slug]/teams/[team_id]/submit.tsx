@@ -216,10 +216,20 @@ export default function Submit() {
                                 color: "white",
                             }}
                         >
-                            <EventText text='Ready to Submit?' tag='h1' textSizeXs='title' textSizeMd='display1' />
+                            <EventText
+                                text="Ready to Submit?"
+                                tag="h1"
+                                textSizeXs="title"
+                                textSizeMd="display1"
+                            />
                         </Row>
                         <Row>
-                            <EventText text='Enter Submission details below' tag='h2' textSizeXs='body' textSizeMd='subheader' />
+                            <EventText
+                                text="Enter Submission details below"
+                                tag="h2"
+                                textSizeXs="body"
+                                textSizeMd="subheader"
+                            />
                         </Row>
                     </Container>
                     <Container p={{ y: { xs: "1rem", md: "2rem" }, x: "1rem" }}>

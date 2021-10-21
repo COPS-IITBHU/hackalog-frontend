@@ -2,14 +2,19 @@ import { Text, Button } from "atomize"
 import Link from "next/link"
 import EventText from "../Headline/EventText"
 
-export default function EventHeader({headerText}:{headerText:string}){
-    return(
+export default function EventHeader({ headerText }: { headerText: string }) {
+    return (
         <div
             className="row justify-content-between align-items-center py-2"
             style={{ flexWrap: "nowrap" }}
         >
             <div className="pl-3">
-                <EventText text={headerText} tag='h3' textSizeXs='subheader' textSizeMd='title'  />
+                <EventText
+                    text={headerText}
+                    tag="h3"
+                    textSizeXs="subheader"
+                    textSizeMd="title"
+                />
             </div>
             <div className="pr-3">
                 <Link href="/hackathons">
@@ -28,5 +33,3 @@ export default function EventHeader({headerText}:{headerText:string}){
         </div>
     )
 }
-
-

@@ -1,7 +1,21 @@
 import { Text } from "atomize"
+import { PropsWithChildren } from "react"
 
-export default function EventText({text,tag,textSizeXs,textSizeMd}){
-    return(
+interface TextProps {
+    tag: string
+    textSizeXs: string
+    textSizeMd: string
+    text: string
+}
+
+export default function EventText({
+    tag,
+    text,
+    children,
+    textSizeXs,
+    textSizeMd,
+}: PropsWithChildren<TextProps>) {
+    return (
         <Text
             tag={tag}
             textSize={{ xs: textSizeXs, md: textSizeMd }}
