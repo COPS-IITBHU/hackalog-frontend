@@ -9,6 +9,7 @@ import { HackathonSerializer } from "../types/backend"
 import Lottie from "react-lottie"
 import animationData from "../lottie/sad.json"
 import EventHeader from "../components/Home/EventHeader"
+import EventText from '../components/Headline/EventText'
 
 interface DefaultOptionType {
     loop: boolean
@@ -130,14 +131,7 @@ export default function Home() {
                 <div className="py-3 py-md-5">
                     <div className="row no-gutters align-items-stretch justify-content-center">
                         <div className="col-12 py-2 py-md-4">
-                            <Text
-                                tag="h3"
-                                textSize={{ xs: "subheader", md: "title" }}
-                                textColor="#003e54"
-                                fontFamily="madetommy-bold"
-                            >
-                                Built for you to:
-                            </Text>
+                            <EventText text='Built for you to:' tag='h3' textSizeXs='subheader' textSizeMd='title' />
                         </div>
                         <div className="col-12 col-md-4 p-3">
                             <div className="p-4 bs-light h-100">

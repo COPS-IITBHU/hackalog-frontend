@@ -15,6 +15,7 @@ import { useAuth } from "../../../../../context/auth"
 import axios from "../../../../../util/axios"
 import Head from "next/head"
 import Link from "next/link"
+import EventText from "../../../../../components/Headline/EventText"
 import {
     HackathonDetailSerializer,
     SubmissionsSerializer,
@@ -215,24 +216,10 @@ export default function Submit() {
                                 color: "white",
                             }}
                         >
-                            <Text
-                                tag="h1"
-                                textSize={{ xs: "title", md: "display1" }}
-                                textColor="#003e54"
-                                fontFamily="madetommy-bold"
-                            >
-                                Ready to Submit?
-                            </Text>
+                            <EventText text='Ready to Submit?' tag='h1' textSizeXs='title' textSizeMd='display1' />
                         </Row>
                         <Row>
-                            <Text
-                                tag="h2"
-                                textSize={{ xs: "body", md: "subheader" }}
-                                textColor="#003e54"
-                                fontFamily="madetommy-regular"
-                            >
-                                Enter Submission details below
-                            </Text>
+                            <EventText text='Enter Submission details below' tag='h2' textSizeXs='body' textSizeMd='subheader' />
                         </Row>
                     </Container>
                     <Container p={{ y: { xs: "1rem", md: "2rem" }, x: "1rem" }}>
