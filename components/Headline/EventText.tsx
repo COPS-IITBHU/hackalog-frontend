@@ -11,7 +11,6 @@ interface TextProps {
 export default function EventText({
     tag,
     text,
-    children,
     textSizeXs,
     textSizeMd,
 }: PropsWithChildren<TextProps>) {

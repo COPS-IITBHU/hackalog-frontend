@@ -6,7 +6,7 @@ export default function TeamCard({ team }: { team: TeamSerializer }) {
     const date: Date = new Date(team.hackathon.end)
     const currentDate: Date = new Date()
     return (
-        <Link href={`/hackathon/${team.hackathon.slug}/`}>
+        <Link href={`/hackathon/${team.hackathon.slug}/`} passHref>
             <Div bg="white" shadow="4" rounded="xl" m={{ b: "1rem" }}>
                 <Div>
                     <Image

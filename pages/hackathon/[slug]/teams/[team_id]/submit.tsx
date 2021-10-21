@@ -309,7 +309,7 @@ const MessageModal = ({
             <Modal.Footer>
                 <Link href={buttonLink} passHref>
                     <Button>
-                        <a href="/#">Okay</a>
+                        <a>Okay</a>
                     </Button>
                 </Link>
             </Modal.Footer>

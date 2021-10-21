@@ -1,4 +1,4 @@
-import { Text, Button } from "atomize"
+import { Button } from "atomize"
 import Link from "next/link"
 import EventText from "../Headline/EventText"
 
@@ -17,7 +17,7 @@ export default function EventHeader({ headerText }: { headerText: string }) {
                 />
             </div>
             <div className="pr-3">
-                <Link href="/hackathons">
+                <Link href="/hackathons" passHref>
                     <Button
                         shadow="3"
                         hoverShadow="4"

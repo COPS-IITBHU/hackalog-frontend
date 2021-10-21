@@ -235,7 +235,7 @@ export default function Hackathon() {
                                                                 href={`/hackathon/${slug}/teams/${myTeam.team_id}`}
                                                                 passHref
                                                             >
-                                                                <a href="/#">
+                                                                <a>
                                                                     <Button
                                                                         variant="success"
                                                                         className="w-100"
@@ -255,7 +255,7 @@ export default function Hackathon() {
                                                                 href={`/hackathon/${slug}/teams/${myTeam.team_id}/submit`}
                                                                 passHref
                                                             >
-                                                                <a href="/#">
+                                                                <a>
                                                                     <Button
                                                                         variant="success"
                                                                         className="w-100"
@@ -287,7 +287,7 @@ export default function Hackathon() {
                                                                 href={`/hackathon/${slug}/teams/${myTeam.team_id}`}
                                                                 passHref
                                                             >
-                                                                <a href="/#">
+                                                                <a>
                                                                     <Button
                                                                         variant="success"
                                                                         className="w-100"
@@ -307,7 +307,7 @@ export default function Hackathon() {
                                                                     href={`/submission/${submissions[0].id}`}
                                                                     passHref
                                                                 >
-                                                                    <a href="/#">
+                                                                    <a>
                                                                         <Button
                                                                             variant="success"
                                                                             className="w-100 pt-3"
@@ -322,7 +322,7 @@ export default function Hackathon() {
                                                                     href="#"
                                                                     passHref
                                                                 >
-                                                                    <a href="/#">
+                                                                    <a>
                                                                         <Button
                                                                             variant="success"
                                                                             className="w-100 pt-3"
@@ -356,7 +356,7 @@ export default function Hackathon() {
                                                                 href={`/hackathon/${slug}/register`}
                                                                 passHref
                                                             >
-                                                                <a href="/#">
+                                                                <a>
                                                                     <Button
                                                                         variant="success"
                                                                         className="w-100"
@@ -381,7 +381,7 @@ export default function Hackathon() {
                                                                 href={`/hackathon/${slug}/register`}
                                                                 passHref
                                                             >
-                                                                <a href="/#">
+                                                                <a>
                                                                     <Button
                                                                         className="w-100"
                                                                         variant="success"
@@ -442,7 +442,7 @@ export default function Hackathon() {
                                                             href={`/hackathon/${slug}/register`}
                                                             passHref
                                                         >
-                                                            <a href="/#">
+                                                            <a>
                                                                 <Button variant="success">
                                                                     Register
                                                                 </Button>
@@ -455,7 +455,7 @@ export default function Hackathon() {
                                                             href={`/hackathon/${slug}/teams/${myTeam.team_id}`}
                                                             passHref
                                                         >
-                                                            <a href="/#">
+                                                            <a>
                                                                 <Button variant="success">
                                                                     Your Team
                                                                 </Button>

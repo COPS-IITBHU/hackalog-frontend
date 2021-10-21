@@ -36,7 +36,7 @@ export default function Header(): ReactElement {
                 className={`d-flex align-items-center justify-content-between w-100 h-100 p-3`}
             >
                 <Link href="/" passHref>
-                    <a href="/#" className="text-dark">
+                    <a className="text-dark">
                         <div>
                             <span
                                 style={{
@@ -77,7 +77,7 @@ export default function Header(): ReactElement {
                         className={`d-flex flex-column flex-md-row justify-content-center align-items-center`}
                     >
                         <div className="py-2">
-                            <Link href="/">
+                            <Link href="/" passHref>
                                 <Button
                                     shadow="3"
                                     hoverShadow="4"
@@ -91,7 +91,7 @@ export default function Header(): ReactElement {
                             </Link>
                         </div>
                         <div className="py-2">
-                            <Link href="/hackathons">
+                            <Link href="/hackathons" passHref>
                                 <Button
                                     shadow="3"
                                     hoverShadow="4"
@@ -120,6 +120,7 @@ export default function Header(): ReactElement {
                                         <div className="py-2">
                                             <Link
                                                 href={`/profile/${profile.username}`}
+                                                passHref
                                             >
                                                 <Button
                                                     shadow="3"

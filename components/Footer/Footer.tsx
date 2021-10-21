@@ -50,7 +50,7 @@ export default function Footer(): ReactElement {
                             >
                                 <Text m={{ y: "0.5rem" }} textColor="white">
                                     <Link href="/contributors" passHref>
-                                        <a href="/#" rel="noopener noreferrer">
+                                        <a rel="noopener noreferrer">
                                             <span
                                                 role="img"
                                                 aria-label="laptop"
@@ -89,14 +89,14 @@ export default function Footer(): ReactElement {
                                 <b>Quick Links</b>
                                 <Text m={{ t: "0.5rem" }}>
                                     <Link href="/" passHref>
-                                        <a href="/#">
+                                        <a>
                                             <span>Home</span>
                                         </a>
                                     </Link>
                                 </Text>
                                 <Text>
                                     <Link href="/hackathons" passHref>
-                                        <a href="/#">
+                                        <a>
                                             <span>Hackathons</span>
                                         </a>
                                     </Link>
@@ -107,7 +107,7 @@ export default function Footer(): ReactElement {
                                             href={`/profile/${profile.username}`}
                                             passHref
                                         >
-                                            <a href="/#">
+                                            <a>
                                                 <span>Profile</span>
                                             </a>
                                         </Link>
@@ -118,7 +118,7 @@ export default function Footer(): ReactElement {
                                         href="https://copsiitbhu.co.in"
                                         passHref
                                     >
-                                        <a href="/#">
+                                        <a>
                                             <span>COPS</span>
                                         </a>
                                     </Link>
@@ -137,7 +137,7 @@ export default function Footer(): ReactElement {
                                     href="https://www.linkedin.com/company/cops-iitbhu/mycompany/"
                                     passHref
                                 >
-                                    <a href="/#">
+                                    <a>
                                         <i
                                             className="fab fa-linkedin fa-2x"
                                             style={{ margin: "10px 5px" }}
@@ -148,7 +148,7 @@ export default function Footer(): ReactElement {
                                     href="https://github.com/COPS-IITBHU"
                                     passHref
                                 >
-                                    <a href="/#">
+                                    <a>
                                         <i
                                             className="fab fa-github fa-2x"
                                             style={{ margin: "10px 5px" }}
@@ -159,7 +159,7 @@ export default function Footer(): ReactElement {
                                     href="https://www.facebook.com/cops.iitbhu/"
                                     passHref
                                 >
-                                    <a href="/#">
+                                    <a>
                                         <i
                                             className="fab fa-facebook fa-2x"
                                             style={{ margin: "10px 5px" }}
@@ -170,7 +170,7 @@ export default function Footer(): ReactElement {
                                     href="https://cops-discord-freshers.herokuapp.com/"
                                     passHref
                                 >
-                                    <a href="/#">
+                                    <a>
                                         <i
                                             className="fab fa-discord fa-2x"
                                             style={{ margin: "10px 5px" }}
