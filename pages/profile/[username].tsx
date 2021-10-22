@@ -327,7 +327,7 @@ function Profile() {
                                                             textColor="003e54bd"
                                                             fontFamily="madetommy-bold"
                                                         >
-                                                            No Projects to Show
+                                                            No Teams to Show
                                                         </Text>
                                                     </div>
                                                 )}
