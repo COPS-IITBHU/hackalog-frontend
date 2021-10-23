@@ -11,6 +11,13 @@ a:hover {
 button:focus {
     outline: none;
 }
+button{
+    transition: all .2s ease-in-out; 
+}
+button:hover {
+    background-color: rgb(65, 65, 65);
+    transform: scale(1.1); 
+}
 
 h1,
 h2,
