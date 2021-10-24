@@ -8,6 +8,8 @@ import Head from "next/head"
 import { HackathonSerializer } from "../types/backend"
 import Lottie from "react-lottie"
 import animationData from "../lottie/sad.json"
+import EventHeader from "../components/Home/EventHeader"
+import EventText from "../components/Headline/EventText"
 
 interface DefaultOptionType {
     loop: boolean
@@ -129,14 +131,12 @@ export default function Home() {
                 <div className="py-3 py-md-5">
                     <div className="row no-gutters align-items-stretch justify-content-center">
                         <div className="col-12 py-2 py-md-4">
-                            <Text
+                            <EventText
+                                text="Built for you to:"
                                 tag="h3"
-                                textSize={{ xs: "subheader", md: "title" }}
-                                textColor="#003e54"
-                                fontFamily="madetommy-bold"
-                            >
-                                Built for you to:
-                            </Text>
+                                textSizeXs="subheader"
+                                textSizeMd="title"
+                            />
                         </div>
                         <div className="col-12 col-md-4 p-3">
                             <div className="p-4 bs-light h-100">
@@ -188,34 +188,7 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-                <div
-                    className="row justify-content-between align-items-center py-2"
-                    style={{ flexWrap: "nowrap" }}
-                >
-                    <div className="pl-3">
-                        <Text
-                            tag="h3"
-                            textSize={{ xs: "subheader", md: "title" }}
-                            textColor="#003e54"
-                            fontFamily="madetommy-bold"
-                        >
-                            Ongoing and Upcoming Hackathons:
-                        </Text>
-                    </div>
-                    <div className="pr-3">
-                        <Link href="/hackathons">
-                            <Button
-                                shadow="3"
-                                hoverShadow="4"
-                                m={{ r: "1rem" }}
-                                p="1rem"
-                                textSize={{ xs: "tiny", md: "body" }}
-                            >
-                                View More
-                            </Button>
-                        </Link>
-                    </div>
-                </div>
+                <EventHeader headerText="Ongoing and Upcoming Hackathons:" />
                 <div className="py-3 py-md-5">
                     {!loading ? (
                         <>
@@ -264,34 +237,7 @@ export default function Home() {
                         </Spinner>
                     )}
                 </div>
-                <div
-                    className="row justify-content-between align-items-center py-2"
-                    style={{ flexWrap: "nowrap" }}
-                >
-                    <div className="pl-3">
-                        <Text
-                            tag="h3"
-                            textSize={{ xs: "subheader", md: "title" }}
-                            textColor="#003e54"
-                            fontFamily="madetommy-bold"
-                        >
-                            Hackathons and Events Archive:
-                        </Text>
-                    </div>
-                    <div className="pr-3">
-                        <Link href="/hackathons">
-                            <Button
-                                shadow="3"
-                                hoverShadow="4"
-                                m={{ r: "1rem" }}
-                                p="1rem"
-                                textSize={{ xs: "tiny", md: "body" }}
-                            >
-                                View More
-                            </Button>
-                        </Link>
-                    </div>
-                </div>
+                <EventHeader headerText="Hackathons and Events Archive:" />
                 <div className="py-3 py-md-5">
                     {loading ? (
                         <Spinner

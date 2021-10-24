@@ -54,6 +54,7 @@ export default function HackathonCard({ hackathon }: HackathonCardProps) {
                             >
                                 <a href="/#">
                                     <Button
+                                        hoverBg="black300"
                                         m={{ l: "auto" }}
                                         textSize={{
                                             xs: "tiny",
