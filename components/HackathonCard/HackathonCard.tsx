@@ -48,12 +48,13 @@ export default function HackathonCard({ hackathon }: HackathonCardProps) {
                             </Text>
                         </Col>
                         <Col size="6">
-                            <Link 
-                            href={`/hackathon/${hackathon.slug}`}
-                            passHref
+                            <Link
+                                href={`/hackathon/${hackathon.slug}`}
+                                passHref
                             >
                                 <a href="/#">
                                     <Button
+                                        hoverBg="black300"
                                         m={{ l: "auto" }}
                                         textSize={{
                                             xs: "tiny",
