@@ -80,6 +80,7 @@ export default function Header(): ReactElement {
                                 <Button
                                     shadow="3"
                                     hoverShadow="4"
+                                    className="nav-btn"
                                     m={{ r: { xs: "0rem", md: "1rem" } }}
                                     p="1rem"
                                     onClick={() => setMenu(!menu)}
@@ -96,6 +97,7 @@ export default function Header(): ReactElement {
                                     m={{ r: { xs: "0rem", md: "1rem" } }}
                                     p="1rem"
                                     onClick={() => setMenu(!menu)}
+                                    className="nav-btn"
                                 >
                                     Hackathons
                                 </Button>
@@ -121,6 +123,7 @@ export default function Header(): ReactElement {
                                                 <Button
                                                     shadow="3"
                                                     hoverShadow="4"
+                                                    className="nav-btn"
                                                     m={{
                                                         r: {
                                                             xs: "0rem",
@@ -140,6 +143,7 @@ export default function Header(): ReactElement {
                                             <Button
                                                 shadow="3"
                                                 hoverShadow="4"
+                                                className="nav-btn"
                                                 m={{
                                                     r: {
                                                         xs: "0rem",
@@ -161,6 +165,7 @@ export default function Header(): ReactElement {
                                         <Button
                                             shadow="3"
                                             hoverShadow="4"
+                                            className="nav-btn"
                                             m={{
                                                 r: { xs: "0rem", md: "1rem" },
                                             }}

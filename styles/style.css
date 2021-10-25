@@ -11,10 +11,12 @@ a:hover {
 button:focus {
     outline: none;
 }
-button{
+
+.nav-btn{
     transition: all .2s ease-in-out; 
 }
-button:hover {
+
+.nav-btn:hover {
     background-color: rgb(65, 65, 65);
     transform: scale(1.1); 
 }
