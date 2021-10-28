@@ -141,7 +141,7 @@ export default function Hackathon() {
                 )}
                 <meta
                     name="description"
-                    content="Register for Hackathons and Dev-Sprints at COPS Hackalog"
+                    content={`"Register for ${hackathon.title} at COPS Hackalog,`}
                 />
             </Head>
             {loading || localLoading ? (

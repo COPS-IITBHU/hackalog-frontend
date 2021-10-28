@@ -141,7 +141,7 @@ function Profile() {
                     name="description"
                     content={
                         userRequest.user
-                            ? `${userRequest.user.name}'s Profile on COPS Hackalog, a platform for organising hackathons`
+                            ? `${userRequest.user.bio}`
                             : `${username}'s Profile on COPS Hackalog, a platform for organising hackathons`
                     }
                 />
