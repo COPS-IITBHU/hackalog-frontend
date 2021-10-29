@@ -140,7 +140,7 @@ function Profile() {
                 <meta
                     name="description"
                     content={
-                        userRequest.user
+                        userRequest.user && userRequest.user.bio
                             ? `${userRequest.user.bio}`
                             : `${username}'s Profile on COPS Hackalog, a platform for organising hackathons`
                     }

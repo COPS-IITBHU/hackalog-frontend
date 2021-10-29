@@ -9,23 +9,24 @@ import Lottie from "react-lottie"
 import animationData from "../lottie/sad.json"
 import { HackathonSerializer } from "@/types/backend"
 import { AxiosResponse } from "axios"
+import { table } from "console"
 const defaultOptions = {
     loop: true,
     autoplay: true,
     animationData: animationData,
 }
 
-export default function Hackathons() {
+Hackathons.getInitialProps = ({ query: { tab } }) => {
+    return { tab }
+}
+
+export default function Hackathons({ tab }) {
     const [ongoing, setOngoing] = useState<HackathonSerializer[]>()
     const [upcoming, setUpcoming] = useState<HackathonSerializer[]>()
     const [completed, setCompleted] = useState<HackathonSerializer[]>()
     const [error, setError] = useState<boolean[]>([false, false, false])
 
-    const [selectedTab, setSelectedtab] = useState("Ongoing")
-
-    useEffect(() => {
-        router.push(`/hackathons/?tab=ongoing`)
-    }, [])
+    const router = useRouter()
 
     useEffect(() => {
         axiosInstance
@@ -62,11 +63,14 @@ export default function Hackathons() {
                 setError(arr)
             })
     }, [error])
-    const router = useRouter()
+    const [selectedTab, setSelectedTab] = useState(tab)
+    const handleSelect = (eventKey) => {
+        setSelectedTab(eventKey)
+        router.push(`?tab=${eventKey}`, undefined, { shallow: true })
+    }
 
     return (
         <div style={{ background: "#87a3bb17", minHeight: "100vh" }}>
-            {/* {router.push(`/hackathons/?tab=completed`)} */}
             <Head>
                 <title>{`${selectedTab} Hackathons | COPS Hackalog`}</title>
                 <meta name="title" content="Hackathons" />
@@ -98,46 +102,26 @@ export default function Hackathons() {
                 </div>
             </div>
             <div className="container py-5">
-                <Tab.Container defaultActiveKey="ongoing">
+                <Tab.Container defaultActiveKey={selectedTab}>
                     <Row>
                         <Col sm={3}>
-                            <Nav variant="pills" className="flex-column">
+                            <Nav
+                                variant="pills"
+                                className="flex-column"
+                                onSelect={handleSelect}
+                            >
                                 <Nav.Item>
-                                    <Nav.Link
-                                        eventKey="ongoing"
-                                        onClick={() => {
-                                            setSelectedtab("Ongoing")
-                                            router.push(
-                                                `/hackathons/?tab=ongoing`
-                                            )
-                                        }}
-                                    >
+                                    <Nav.Link eventKey="ongoing">
                                         Ongoing
                                     </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link
-                                        eventKey="upcoming"
-                                        onClick={() => {
-                                            setSelectedtab("Upcoming")
-                                            router.push(
-                                                `/hackathons/?tab=upcoming`
-                                            )
-                                        }}
-                                    >
+                                    <Nav.Link eventKey="upcoming">
                                         Upcoming
                                     </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link
-                                        eventKey="completed"
-                                        onClick={() => {
-                                            setSelectedtab("Completed")
-                                            router.push(
-                                                `/hackathons/?tab=completed`
-                                            )
-                                        }}
-                                    >
+                                    <Nav.Link eventKey="completed">
                                         Completed
                                     </Nav.Link>
                                 </Nav.Item>
