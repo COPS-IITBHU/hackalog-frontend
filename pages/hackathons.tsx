@@ -4,7 +4,7 @@ import { Tab, Col, Row, Nav, Spinner } from "react-bootstrap"
 import { Text } from "atomize"
 import { useEffect, useState } from "react"
 import Head from "next/head"
-
+import { useRouter } from "next/router"
 import Lottie from "react-lottie"
 import animationData from "../lottie/sad.json"
 import { HackathonSerializer } from "@/types/backend"
@@ -15,11 +15,17 @@ const defaultOptions = {
     animationData: animationData,
 }
 
-export default function Hackathons() {
+Hackathons.getInitialProps = ({ query: { tab } }) => {
+    return { tab: tab ?? "Ongoing" }
+}
+
+export default function Hackathons({ tab }) {
     const [ongoing, setOngoing] = useState<HackathonSerializer[]>()
     const [upcoming, setUpcoming] = useState<HackathonSerializer[]>()
     const [completed, setCompleted] = useState<HackathonSerializer[]>()
     const [error, setError] = useState<boolean[]>([false, false, false])
+
+    const router = useRouter()
 
     useEffect(() => {
         axiosInstance
@@ -56,11 +62,16 @@ export default function Hackathons() {
                 setError(arr)
             })
     }, [error])
+    const [selectedTab, setSelectedTab] = useState(tab)
+    const handleSelect = (eventKey) => {
+        setSelectedTab(eventKey)
+        router.push(`?tab=${eventKey}`, undefined, { shallow: true })
+    }
 
     return (
         <div style={{ background: "#87a3bb17", minHeight: "100vh" }}>
             <Head>
-                <title>Hackathons | COPS Hackalog</title>
+                <title>{`${selectedTab} Hackathons | COPS Hackalog`}</title>
                 <meta name="title" content="Hackathons" />
                 <meta
                     name="description"
@@ -90,22 +101,26 @@ export default function Hackathons() {
                 </div>
             </div>
             <div className="container py-5">
-                <Tab.Container defaultActiveKey="ongoing">
+                <Tab.Container defaultActiveKey={selectedTab}>
                     <Row>
                         <Col sm={3}>
-                            <Nav variant="pills" className="flex-column">
+                            <Nav
+                                variant="pills"
+                                className="flex-column"
+                                onSelect={handleSelect}
+                            >
                                 <Nav.Item>
-                                    <Nav.Link eventKey="ongoing">
+                                    <Nav.Link eventKey="Ongoing">
                                         Ongoing
                                     </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="upcoming">
+                                    <Nav.Link eventKey="Upcoming">
                                         Upcoming
                                     </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="completed">
+                                    <Nav.Link eventKey="Completed">
                                         Completed
                                     </Nav.Link>
                                 </Nav.Item>
@@ -113,7 +128,7 @@ export default function Hackathons() {
                         </Col>
                         <Col sm={9}>
                             <Tab.Content>
-                                <Tab.Pane eventKey="ongoing">
+                                <Tab.Pane eventKey="Ongoing">
                                     {error[0] ? (
                                         <div className="text-center">
                                             Unable to fetch data, please try
@@ -156,7 +171,7 @@ export default function Hackathons() {
                                         </>
                                     )}
                                 </Tab.Pane>
-                                <Tab.Pane eventKey="upcoming">
+                                <Tab.Pane eventKey="Upcoming">
                                     {error[1] ? (
                                         <div className="text-center">
                                             Unable to fetch data, please try
@@ -199,7 +214,7 @@ export default function Hackathons() {
                                         </>
                                     )}
                                 </Tab.Pane>
-                                <Tab.Pane eventKey="completed">
+                                <Tab.Pane eventKey="Completed">
                                     {error[2] ? (
                                         <div className="text-center">
                                             Unable to fetch data, please try

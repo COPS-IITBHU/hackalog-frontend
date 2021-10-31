@@ -12,6 +12,18 @@ button:focus {
     outline: none;
 }
 
+.nav-btn{
+    transition: all .2s ease-in-out; 
+}
+
+.nav-btn:hover {
+    background-color: rgb(65, 65, 65);
+    transform: scale(1.1); 
+}
+.sign-in-btn:hover{
+    background: none;
+}
+
 h1,
 h2,
 h3,

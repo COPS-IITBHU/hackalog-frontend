@@ -102,6 +102,18 @@ export default function SubmissionDetail() {
                     ) : (
                         <title>Submission Details</title>
                     )}
+                    <meta
+                        name="title"
+                        content={team?`Team ${team.name + "'s"} Submission`:'Submission Details'}
+                    />
+                    <meta
+                        name="description"
+                        content={
+                            submission!
+                                ? submission!.description
+                                : "Submission Details"
+                        }
+                    />
                 </Head>
                 <Jumbotron
                     fluid
