@@ -9,7 +9,6 @@ import Lottie from "react-lottie"
 import animationData from "../lottie/sad.json"
 import { HackathonSerializer } from "@/types/backend"
 import { AxiosResponse } from "axios"
-import { table } from "console"
 const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -17,7 +16,7 @@ const defaultOptions = {
 }
 
 Hackathons.getInitialProps = ({ query: { tab } }) => {
-    return { tab }
+    return { tab: tab ?? "Ongoing" }
 }
 
 export default function Hackathons({ tab }) {
@@ -111,17 +110,17 @@ export default function Hackathons({ tab }) {
                                 onSelect={handleSelect}
                             >
                                 <Nav.Item>
-                                    <Nav.Link eventKey="ongoing">
+                                    <Nav.Link eventKey="Ongoing">
                                         Ongoing
                                     </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="upcoming">
+                                    <Nav.Link eventKey="Upcoming">
                                         Upcoming
                                     </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="completed">
+                                    <Nav.Link eventKey="Completed">
                                         Completed
                                     </Nav.Link>
                                 </Nav.Item>
@@ -129,7 +128,7 @@ export default function Hackathons({ tab }) {
                         </Col>
                         <Col sm={9}>
                             <Tab.Content>
-                                <Tab.Pane eventKey="ongoing">
+                                <Tab.Pane eventKey="Ongoing">
                                     {error[0] ? (
                                         <div className="text-center">
                                             Unable to fetch data, please try
@@ -172,7 +171,7 @@ export default function Hackathons({ tab }) {
                                         </>
                                     )}
                                 </Tab.Pane>
-                                <Tab.Pane eventKey="upcoming">
+                                <Tab.Pane eventKey="Upcoming">
                                     {error[1] ? (
                                         <div className="text-center">
                                             Unable to fetch data, please try
@@ -215,7 +214,7 @@ export default function Hackathons({ tab }) {
                                         </>
                                     )}
                                 </Tab.Pane>
-                                <Tab.Pane eventKey="completed">
+                                <Tab.Pane eventKey="Completed">
                                     {error[2] ? (
                                         <div className="text-center">
                                             Unable to fetch data, please try

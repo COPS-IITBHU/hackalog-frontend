@@ -90,7 +90,7 @@ export default function Header(): ReactElement {
                             </Link>
                         </div>
                         <div className="py-2">
-                            <Link href="/hackathons?tab=ongoing">
+                            <Link href="/hackathons">
                                 <Button
                                     shadow="3"
                                     hoverShadow="4"
