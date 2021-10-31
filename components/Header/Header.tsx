@@ -4,6 +4,7 @@ import { Spinner } from "react-bootstrap"
 import { useAuth } from "../../context/auth"
 import Link from "next/link"
 import { HamburgerSpin } from "react-animated-burgers"
+import SignInButton from "../Buttons/signInButton"
 
 export default function Header(): ReactElement {
     const { handleSignIn, handleLogout, token, profile, loading } = useAuth()
@@ -80,7 +81,6 @@ export default function Header(): ReactElement {
                                 <Button
                                     shadow="3"
                                     hoverShadow="4"
-                                    className="nav-btn"
                                     m={{ r: { xs: "0rem", md: "1rem" } }}
                                     p="1rem"
                                     onClick={() => setMenu(!menu)}
@@ -97,7 +97,6 @@ export default function Header(): ReactElement {
                                     m={{ r: { xs: "0rem", md: "1rem" } }}
                                     p="1rem"
                                     onClick={() => setMenu(!menu)}
-                                    className="nav-btn"
                                 >
                                     Hackathons
                                 </Button>
@@ -123,7 +122,6 @@ export default function Header(): ReactElement {
                                                 <Button
                                                     shadow="3"
                                                     hoverShadow="4"
-                                                    className="nav-btn"
                                                     m={{
                                                         r: {
                                                             xs: "0rem",
@@ -143,7 +141,6 @@ export default function Header(): ReactElement {
                                             <Button
                                                 shadow="3"
                                                 hoverShadow="4"
-                                                className="nav-btn"
                                                 m={{
                                                     r: {
                                                         xs: "0rem",
@@ -162,21 +159,22 @@ export default function Header(): ReactElement {
                                     </>
                                 ) : (
                                     <div className="py-2">
-                                        <Button
-                                            shadow="3"
-                                            hoverShadow="4"
-                                            className="nav-btn"
-                                            m={{
-                                                r: { xs: "0rem", md: "1rem" },
-                                            }}
-                                            p="1rem"
+                                        <div
+                                            role="button"
+                                            tabIndex={0}
                                             onClick={() => {
                                                 handleSignIn()
                                                 setMenu(!menu)
                                             }}
+                                            onKeyDown={(event) => {
+                                                if (event.key == "13") {
+                                                    handleSignIn()
+                                                    setMenu(!menu)
+                                                }
+                                            }}
                                         >
-                                            Login with Google
-                                        </Button>
+                                            <SignInButton />
+                                        </div>
                                     </div>
                                 )}
                             </>
