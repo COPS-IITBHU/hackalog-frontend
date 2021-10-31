@@ -81,6 +81,7 @@ export default function Header(): ReactElement {
                                 <Button
                                     shadow="3"
                                     hoverShadow="4"
+                                    className="nav-btn"
                                     m={{ r: { xs: "0rem", md: "1rem" } }}
                                     p="1rem"
                                     onClick={() => setMenu(!menu)}
@@ -94,6 +95,7 @@ export default function Header(): ReactElement {
                                 <Button
                                     shadow="3"
                                     hoverShadow="4"
+                                    className="nav-btn"
                                     m={{ r: { xs: "0rem", md: "1rem" } }}
                                     p="1rem"
                                     onClick={() => setMenu(!menu)}
@@ -122,6 +124,7 @@ export default function Header(): ReactElement {
                                                 <Button
                                                     shadow="3"
                                                     hoverShadow="4"
+                                                    className="nav-btn"
                                                     m={{
                                                         r: {
                                                             xs: "0rem",
@@ -141,6 +144,7 @@ export default function Header(): ReactElement {
                                             <Button
                                                 shadow="3"
                                                 hoverShadow="4"
+                                                className="nav-btn"
                                                 m={{
                                                     r: {
                                                         xs: "0rem",
@@ -161,6 +165,7 @@ export default function Header(): ReactElement {
                                     <div className="py-2">
                                         <div
                                             role="button"
+                                            className="nav-btn"
                                             tabIndex={0}
                                             onClick={() => {
                                                 handleSignIn()
