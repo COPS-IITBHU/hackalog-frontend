@@ -22,8 +22,5 @@ export default function SignInButton() {
             </Div>
         </>
     )
-<<<<<<< HEAD
+    
 }
-=======
-}
->>>>>>> ecbf5b4581de8ddc00ff38eafe828bcd9a1c1c0b
