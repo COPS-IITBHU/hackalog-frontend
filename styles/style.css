@@ -20,6 +20,9 @@ button:focus {
     background-color: rgb(65, 65, 65);
     transform: scale(1.1); 
 }
+.sign-in-btn:hover{
+    background: none;
+}
 
 h1,
 h2,

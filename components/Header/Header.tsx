@@ -165,7 +165,7 @@ export default function Header(): ReactElement {
                                     <div className="py-2">
                                         <div
                                             role="button"
-                                            className="nav-btn"
+                                            className="sign-in-btn nav-btn"
                                             tabIndex={0}
                                             onClick={() => {
                                                 handleSignIn()

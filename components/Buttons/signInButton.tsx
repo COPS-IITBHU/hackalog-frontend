@@ -11,7 +11,7 @@ export default function SignInButton() {
                 rounded="sm"
                 shadow="2"
                 hoverShadow="4"
-                cursor="pointer"
+                cursor="pointer" 
             >
                 <Div m={{ x: "0.7rem", y: "auto" }}>
                     <FcGoogle />
