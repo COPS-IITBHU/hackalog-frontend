@@ -104,7 +104,11 @@ export default function SubmissionDetail() {
                     )}
                     <meta
                         name="title"
-                        content={team?`Team ${team.name + "'s"} Submission`:'Submission Details'}
+                        content={
+                            team
+                                ? `Team ${team.name + "'s"} Submission`
+                                : "Submission Details"
+                        }
                     />
                     <meta
                         name="description"
@@ -201,7 +205,7 @@ export default function SubmissionDetail() {
                                                             href={`/profile/${team.leader.username}`}
                                                             passHref
                                                         >
-                                                            <a href="#/">
+                                                            <a>
                                                                 @
                                                                 {
                                                                     team.leader
@@ -221,7 +225,7 @@ export default function SubmissionDetail() {
                                                                     href={`/profile/${elm.username}`}
                                                                     passHref
                                                                 >
-                                                                    <a href="/#">
+                                                                    <a>
                                                                         @
                                                                         {
                                                                             elm.username
@@ -345,7 +349,7 @@ export default function SubmissionDetail() {
                         href={`/hackathon/${submission!.hackathon.slug}`}
                         passHref
                     >
-                        <a href="/#">
+                        <a>
                             <Button className="mb-3" bg="purple">
                                 View Other Submissions
                             </Button>

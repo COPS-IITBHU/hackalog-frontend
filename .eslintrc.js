@@ -6,38 +6,30 @@ module.exports = {
     },
     extends: [
         "eslint:recommended",
-        "plugin:react/recommended",
         "plugin:import/errors",
         "plugin:import/warnings",
-        "plugin:jsx-a11y/recommended",
         "prettier/@typescript-eslint",
+        "next/core-web-vitals",
         "prettier",
         "prettier/react",
+        // TODO: Fix TypeScript Problems and then enable
+        //"plugin:@typescript-eslint/recommended",
     ],
     parser: "@typescript-eslint/parser",
     parserOptions: {
         ecmaFeatures: {
             jsx: true,
         },
-        ecmaVersion: 2018,
+        ecmaVersion: "latest",
         sourceType: "module",
     },
-    plugins: [
-        "react",
-        "@typescript-eslint",
-        "import",
-        "jsx-a11y",
-        "react-hooks",
-    ],
+    plugins: ["@typescript-eslint"],
     rules: {
-        "react/prop-types": "off",
         "no-console": "warn",
         "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/interface-name-prefix": "off",
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/ban-ts-ignore": "off",
-        // needed for NextJS's jsx without react import
-        "react/react-in-jsx-scope": "off",
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": 1,
         "react/jsx-filename-extension": [
@@ -47,12 +39,6 @@ module.exports = {
         "no-unused-vars": "warn",
     },
     settings: {
-        react: {
-            version: "detect",
-        },
-        "import/parsers": {
-            "@typescript-eslint/parser": [".ts", ".tsx"],
-        },
         "import/resolver": {
             typescript: {},
         },

@@ -88,9 +88,7 @@ export function Participants({ slug }: ParticipantsPropTypes) {
                                                 href={`/profile/${team.leader.username}`}
                                                 passHref
                                             >
-                                                <a href="/#">
-                                                    {team.leader.username}
-                                                </a>
+                                                <a>{team.leader.username}</a>
                                             </Link>
                                         </td>
                                     </tr>
@@ -116,7 +114,7 @@ export function Participants({ slug }: ParticipantsPropTypes) {
                                                         href={`/profile/${team.members[i].username}`}
                                                         passHref
                                                     >
-                                                        <a href="/#">
+                                                        <a>
                                                             {
                                                                 team.members[i]
                                                                     .username

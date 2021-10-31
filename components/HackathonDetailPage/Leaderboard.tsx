@@ -24,7 +24,7 @@ export function Leaderboard({
                 <td> {submission.score}</td>
                 <td>
                     <Link href={`/submission/${submission.id}`} passHref>
-                        <a href="/#">{submission.title}</a>
+                        <a>{submission.title}</a>
                     </Link>
                 </td>
             </tr>

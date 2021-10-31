@@ -52,7 +52,7 @@ export default function HackathonCard({ hackathon }: HackathonCardProps) {
                                 href={`/hackathon/${hackathon.slug}`}
                                 passHref
                             >
-                                <a href="/#">
+                                <a>
                                     <Button
                                         hoverBg="black300"
                                         m={{ l: "auto" }}
