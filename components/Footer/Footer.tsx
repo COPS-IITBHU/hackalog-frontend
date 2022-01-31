@@ -137,7 +137,7 @@ export default function Footer(): ReactElement {
                                     href="https://www.linkedin.com/company/cops-iitbhu/mycompany/"
                                     passHref
                                 >
-                                    <a>
+                                    <a target="_blank">
                                         <i
                                             className="fab fa-linkedin fa-2x"
                                             style={{ margin: "10px 5px" }}
@@ -148,7 +148,7 @@ export default function Footer(): ReactElement {
                                     href="https://github.com/COPS-IITBHU"
                                     passHref
                                 >
-                                    <a>
+                                    <a target="_blank">
                                         <i
                                             className="fab fa-github fa-2x"
                                             style={{ margin: "10px 5px" }}
@@ -159,7 +159,7 @@ export default function Footer(): ReactElement {
                                     href="https://www.facebook.com/cops.iitbhu/"
                                     passHref
                                 >
-                                    <a>
+                                    <a target="_blank">
                                         <i
                                             className="fab fa-facebook fa-2x"
                                             style={{ margin: "10px 5px" }}
@@ -170,7 +170,7 @@ export default function Footer(): ReactElement {
                                     href="https://cops-discord-freshers.herokuapp.com/"
                                     passHref
                                 >
-                                    <a>
+                                    <a target="_blank">
                                         <i
                                             className="fab fa-discord fa-2x"
                                             style={{ margin: "10px 5px" }}
