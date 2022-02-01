@@ -138,6 +138,7 @@ export default function Footer(): ReactElement {
                                     passHref
                                 >
                                     <a target="_blank">
+                                        <span className="sr-only">LinkedIn</span>
                                         <i
                                             className="fab fa-linkedin fa-2x"
                                             style={{ margin: "10px 5px" }}
@@ -149,6 +150,7 @@ export default function Footer(): ReactElement {
                                     passHref
                                 >
                                     <a target="_blank">
+                                        <span className="sr-only">Github</span>
                                         <i
                                             className="fab fa-github fa-2x"
                                             style={{ margin: "10px 5px" }}
@@ -160,6 +162,7 @@ export default function Footer(): ReactElement {
                                     passHref
                                 >
                                     <a target="_blank">
+                                        <span className="sr-only">Facebook</span>
                                         <i
                                             className="fab fa-facebook fa-2x"
                                             style={{ margin: "10px 5px" }}
@@ -171,6 +174,7 @@ export default function Footer(): ReactElement {
                                     passHref
                                 >
                                     <a target="_blank">
+                                        <span className="sr-only">Discord</span>
                                         <i
                                             className="fab fa-discord fa-2x"
                                             style={{ margin: "10px 5px" }}
