@@ -14,6 +14,7 @@ module.exports = {
         "prettier/react",
         // TODO: Fix TypeScript Problems and then enable
         //"plugin:@typescript-eslint/recommended",
+        // hello i am a fresher
     ],
     parser: "@typescript-eslint/parser",
     parserOptions: {
