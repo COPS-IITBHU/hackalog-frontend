@@ -3,7 +3,7 @@ import { Button } from "atomize"
 import { Spinner } from "react-bootstrap"
 import { useAuth } from "../../context/auth"
 import Link from "next/link"
-import { HamburgerSpin } from "react-animated-burgers"
+import Hamburger from "hamburger-react"
 import SignInButton from "../Buttons/signInButton"
 
 export default function Header(): ReactElement {
@@ -61,11 +61,11 @@ export default function Header(): ReactElement {
                     </a>
                 </Link>
                 <div className="d-block d-md-none">
-                    <HamburgerSpin
-                        isActive={menu}
-                        toggleButton={() => setMenu(!menu)}
-                        buttonWidth={23}
-                        barColor="#003e54"
+                    <Hamburger
+                        toggled={menu}
+                        toggle={setMenu}
+                        size={23}
+                        color="#003e54"
                     />
                 </div>
                 <div
